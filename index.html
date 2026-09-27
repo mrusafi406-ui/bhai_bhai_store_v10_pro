@@ -1,1 +1,1341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#073D33">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<title>Bhai Bhai Store — Sales & Inventory System</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#F2F7F5;--surface:#fff;--surface-2:#EAF3F0;--surface-3:#D9E9E3;
+  --primary:#0E7C66;--primary-dark:#073D33;--primary-light:#DCEFE9;
+  --accent:#FF7A33;--accent-dark:#D9601E;--accent-light:#FFE8D6;
+  --success:#1E9E6B;--success-light:#DFF5EA;
+  --danger:#E0393E;--danger-light:#FBE1E1;
+  --warning:#C9860A;--warning-light:#FBECD2;
+  --purple:#A8386B;--purple-light:#F6E2EC;
+  --lemon:#F2C94C;
+  --text:#0B241F;--text-2:#25453E;--muted:#5E7B74;--muted-2:#96AFA8;
+  --border:#DCE7E2;--radius:16px;--radius-sm:11px;--radius-lg:22px;
+  --grad:linear-gradient(135deg,var(--primary-dark),var(--primary) 65%,#129A7C);
+  --grad-accent:linear-gradient(135deg,var(--accent),var(--lemon));
+  --shadow-1:0 1px 2px rgba(9,38,32,.06);
+  --shadow-2:0 10px 28px rgba(7,61,51,.12);
+}
+html,body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+body{padding-bottom:78px;min-height:100vh;overflow-x:hidden}
+button{font-family:inherit;cursor:pointer;border:none;outline:none}
+input,select,textarea{font-family:inherit;font-size:14px;outline:none}
+h1,h2,h3,.brandfont{font-family:'Sora','Inter',-apple-system,sans-serif}
+::selection{background:var(--accent-light);color:var(--accent-dark)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.001s!important}}
+
+.watermark{text-align:center;font-size:10px;color:var(--muted-2);padding:22px 16px 30px;font-weight:600;border-top:1px dashed var(--border);margin-top:22px;letter-spacing:.2px}
+
+/* ===== LOGIN ===== */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:var(--grad);position:relative;overflow:hidden}
+.login-wrap::before{content:'';position:absolute;width:460px;height:460px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.08),transparent 70%);top:-160px;right:-140px}
+.login-wrap::after{content:'';position:absolute;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,rgba(255,122,51,.18),transparent 70%);bottom:-140px;left:-100px}
+.bubble{position:absolute;bottom:-40px;border-radius:50%;background:rgba(255,255,255,.16);animation:rise linear infinite}
+@keyframes rise{0%{transform:translateY(0) scale(1);opacity:0}10%{opacity:1}90%{opacity:.5}100%{transform:translateY(-115vh) scale(1.3);opacity:0}}
+.login-card{background:#fff;padding:38px 26px 30px;border-radius:26px;width:100%;max-width:400px;box-shadow:0 30px 90px rgba(4,30,25,.45);position:relative;z-index:2;animation:cardIn .5s cubic-bezier(.2,.8,.2,1)}
+@keyframes cardIn{from{opacity:0;transform:translateY(18px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+.login-logo{width:78px;height:78px;margin:0 auto 16px;background:var(--grad);border-radius:24px;display:flex;align-items:center;justify-content:center;font-size:36px;box-shadow:0 12px 26px rgba(14,124,102,.4);position:relative}
+.login-logo::after{content:'';position:absolute;inset:-6px;border-radius:28px;border:1.5px solid rgba(14,124,102,.25)}
+.login-card h1{text-align:center;font-size:22px;margin-bottom:3px;font-weight:800;color:var(--text);letter-spacing:-.2px}
+.login-card .sub{text-align:center;color:var(--accent-dark);font-size:11px;margin-bottom:26px;letter-spacing:1px;text-transform:uppercase;font-weight:800}
+.login-card label{display:block;font-size:11px;color:var(--text-2);margin-bottom:7px;font-weight:700;letter-spacing:0.3px}
+.login-card select,.login-card input{width:100%;padding:13px 14px;background:var(--surface-2);border:1.5px solid var(--border);border-radius:12px;color:var(--text);font-size:14px;font-weight:500;transition:all 0.15s}
+.login-card select:focus,.login-card input:focus{border-color:var(--primary);background:#fff;box-shadow:0 0 0 3px var(--primary-light)}
+.login-card .field{margin-bottom:15px}
+.btn{width:100%;padding:14px;border-radius:13px;background:var(--grad);color:#fff;font-size:14px;font-weight:800;font-family:'Sora',sans-serif;box-shadow:0 10px 24px rgba(14,124,102,.35);transition:transform .15s,box-shadow .15s;margin-top:6px;letter-spacing:.2px}
+.btn:active{transform:scale(0.98);box-shadow:0 4px 14px rgba(14,124,102,.35)}
+
+/* ===== BUTTONS ===== */
+.btn-sm{padding:10px 14px;border-radius:11px;background:var(--primary);color:#fff;font-size:12px;font-weight:700;font-family:'Sora',sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:5px;transition:transform .12s}
+.btn-sm:active{transform:scale(0.96)}
+.btn-sm.green{background:var(--success)}
+.btn-sm.red{background:var(--danger)}
+.btn-sm.orange{background:var(--warning)}
+.btn-sm.purple{background:var(--purple)}
+.btn-sm.gray{background:var(--muted)}
+.btn-block{width:100%;padding:12px}
+.btn-row{display:flex;gap:8px;margin-top:12px}
+
+/* ===== HEADER / NAV ===== */
+.header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.9);backdrop-filter:blur(10px);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+.header-left{display:flex;align-items:center;gap:11px;min-width:0}
+.header-logo{width:40px;height:40px;background:var(--grad);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;box-shadow:0 6px 14px rgba(14,124,102,.3)}
+.header-title{font-family:'Sora',sans-serif;font-size:14px;font-weight:800;color:var(--text);line-height:1.2;letter-spacing:-.1px}
+.header-sub{font-size:9.5px;color:var(--accent-dark);font-weight:800;text-transform:uppercase;letter-spacing:.6px;margin-top:2px}
+.header-right{display:flex;gap:6px;align-items:center}
+.icon-btn{width:36px;height:36px;border-radius:10px;background:var(--surface-2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--text-2);transition:transform .15s}
+.icon-btn:active{background:var(--surface-3);transform:scale(.94)}
+.icon-btn.spin-once{animation:spinOnce .6s ease}
+@keyframes spinOnce{to{transform:rotate(360deg)}}
+.user-chip{display:flex;align-items:center;gap:7px;background:var(--surface-2);padding:5px 10px 5px 5px;border-radius:20px;font-size:11px;border:1px solid var(--border);font-weight:700;color:var(--text-2);max-width:120px}
+.user-avatar{width:26px;height:26px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff;flex-shrink:0}
+.user-avatar.role-so{background:linear-gradient(135deg,var(--accent-dark),var(--accent))}
+.user-avatar.role-guest{background:linear-gradient(135deg,var(--purple),#c95a90)}
+.user-chip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tab-nav{display:flex;gap:6px;padding:10px 12px;overflow-x:auto;scrollbar-width:none;background:#fff;border-bottom:1px solid var(--border);position:sticky;top:63px;z-index:99}
+.tab-nav::-webkit-scrollbar{display:none}
+.tab-btn{flex-shrink:0;padding:8px 14px;border-radius:10px;background:var(--surface-2);border:1px solid var(--border);color:var(--muted);font-size:11px;font-weight:700;font-family:'Sora',sans-serif;white-space:nowrap;transition:all 0.15s}
+.tab-btn.active{background:var(--grad);color:#fff;border-color:transparent;box-shadow:0 6px 14px rgba(14,124,102,.3)}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-top:1px solid var(--border);display:flex;justify-content:space-around;padding:6px 2px 8px;z-index:99}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 2px;color:var(--muted);font-size:9px;font-weight:700;cursor:pointer;border-radius:8px;min-width:0}
+.nav-item.active{color:var(--primary)}
+.nav-item .ico{font-size:17px;line-height:1;transition:transform 0.2s}
+.nav-item.active .ico{transform:scale(1.18) translateY(-1px)}
+.nav-item .lbl{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+
+/* ===== LAYOUT / CARDS ===== */
+.container{padding:14px 14px 20px}
+.card{background:var(--surface);border-radius:var(--radius);padding:15px;margin-bottom:12px;border:1px solid var(--border);box-shadow:var(--shadow-1)}
+.card-title{font-family:'Sora',sans-serif;font-size:12px;font-weight:700;color:var(--text);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;letter-spacing:.1px}
+.card-title .badge{font-size:9px;padding:3px 9px;border-radius:20px;background:var(--primary-light);color:var(--primary-dark);font-weight:800}
+.card-title .badge.green{background:var(--success-light);color:var(--success)}
+.card-title .badge.orange{background:var(--warning-light);color:var(--warning)}
+.card-title .badge.purple{background:var(--purple-light);color:var(--purple)}
+
+/* ===== KPI TILES ===== */
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.kpi-grid.three{grid-template-columns:1fr 1fr 1fr}
+.kpi{background:var(--surface);border-radius:var(--radius);padding:13px;border:1px solid var(--border);position:relative;overflow:hidden;transition:transform .15s}
+.kpi::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px}
+.kpi.blue::before{background:var(--primary)}
+.kpi.green::before{background:var(--success)}
+.kpi.orange::before{background:var(--accent)}
+.kpi.red::before{background:var(--danger)}
+.kpi.purple::before{background:var(--purple)}
+.kpi-icon{font-size:14px;opacity:.8;display:inline-block;margin-bottom:4px}
+.kpi-label{font-size:9px;color:var(--muted);letter-spacing:.4px;margin-bottom:5px;font-weight:800}
+.kpi-value{font-family:'Sora',sans-serif;font-size:18px;font-weight:800;color:var(--text);line-height:1.15;font-variant-numeric:tabular-nums}
+.kpi-sub{font-size:9px;color:var(--muted);margin-top:4px;font-weight:600}
+.kpi.blue .kpi-value{color:var(--primary)}
+.kpi.green .kpi-value{color:var(--success)}
+.kpi.orange .kpi-value{color:var(--accent-dark)}
+.kpi.red .kpi-value{color:var(--danger)}
+.kpi.purple .kpi-value{color:var(--purple)}
+.kpi.celebrate{animation:pulseGlow 1.4s ease 2}
+@keyframes pulseGlow{0%,100%{box-shadow:0 0 0 rgba(255,122,51,0)}50%{box-shadow:0 0 0 6px rgba(255,122,51,.15)}}
+
+/* ===== FORMS / TABLES ===== */
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.form-group{margin-bottom:10px}
+.form-group label{display:block;font-size:10px;color:var(--text-2);margin-bottom:5px;font-weight:700;letter-spacing:0.3px}
+.form-group input,.form-group select{width:100%;padding:10px 12px;background:var(--surface-2);border:1.5px solid var(--border);border-radius:10px;color:var(--text);font-size:13px;font-weight:500;transition:all 0.15s}
+.form-group input:focus,.form-group select:focus{border-color:var(--primary);background:#fff}
+.tbl-wrap{overflow-x:auto;border-radius:var(--radius-sm);border:1px solid var(--border);background:#fff}
+table{width:100%;border-collapse:collapse;font-size:11px}
+th{background:var(--surface-2);padding:9px 8px;text-align:left;font-weight:800;color:var(--text-2);font-size:9px;white-space:nowrap;letter-spacing:.3px;border-bottom:1px solid var(--border)}
+td{padding:9px 8px;border-top:1px solid var(--border);white-space:nowrap;font-weight:500;color:var(--text-2);font-variant-numeric:tabular-nums}
+tr:nth-child(even) td{background:#F8FBFA}
+.chart-box{position:relative;height:220px;margin-top:6px}
+.list-item{display:flex;align-items:center;justify-content:space-between;padding:11px 12px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:8px;transition:background .15s}
+.list-item.me{border-color:var(--primary);background:var(--primary-light)}
+.list-item-name{font-size:13px;font-weight:700;color:var(--text)}
+.list-item-sub{font-size:10px;color:var(--muted);margin-top:2px;font-weight:500}
+.list-item-actions{display:flex;gap:6px}
+.mini-btn{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:13px;background:var(--surface-3)}
+.mini-btn.del{background:var(--danger-light);color:var(--danger)}
+.mini-btn:active{transform:scale(0.92)}
+
+/* ===== MODAL / TOAST / LOADER ===== */
+.modal-bg{position:fixed;inset:0;background:rgba(6,28,23,.55);backdrop-filter:blur(2px);z-index:500;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-bg.show{display:flex}
+.modal{background:#fff;border-radius:var(--radius-lg);padding:22px;width:100%;max-width:420px;max-height:82vh;overflow-y:auto;animation:cardIn .25s ease}
+.modal h3{font-family:'Sora',sans-serif;font-size:16px;font-weight:800;margin-bottom:16px;color:var(--text)}
+.toast{position:fixed;bottom:92px;left:50%;transform:translateX(-50%) translateY(120px);background:var(--text);color:#fff;padding:12px 20px;border-radius:14px;font-size:12px;font-weight:700;z-index:999;opacity:0;transition:all 0.3s cubic-bezier(.2,.8,.2,1);max-width:90vw;text-align:center;box-shadow:0 12px 30px rgba(0,0,0,.25)}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.toast.error{background:var(--danger)}
+.loader{position:fixed;inset:0;z-index:9999;background:rgba(242,247,245,0.95);display:none;align-items:center;justify-content:center;flex-direction:column;gap:14px}
+.loader.show{display:flex}
+.loader p{color:var(--text-2);font-weight:700;font-size:12px}
+.spinner{width:44px;height:44px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.section{display:none}
+.section.active{display:block}
+.section.active .card,.section.active .kpi{animation:fadeIn .35s ease backwards}
+.section.active .kpi-grid .kpi:nth-child(1){animation-delay:.02s}
+.section.active .kpi-grid .kpi:nth-child(2){animation-delay:.06s}
+.section.active .kpi-grid .kpi:nth-child(3){animation-delay:.1s}
+.section.active .card:nth-of-type(1){animation-delay:.05s}
+.section.active .card:nth-of-type(2){animation-delay:.09s}
+.section.active .card:nth-of-type(3){animation-delay:.13s}
+.section.active .card:nth-of-type(4){animation-delay:.17s}
+.search-box{position:relative;margin-bottom:10px}
+.search-box input{padding-left:34px}
+.search-box::before{content:'🔍';position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:13px;opacity:0.6}
+.progress{height:8px;background:var(--surface-3);border-radius:5px;overflow:hidden;margin-top:6px;position:relative}
+.progress-bar{height:100%;background:var(--grad-accent);border-radius:5px;transition:width 0.6s cubic-bezier(.2,.8,.2,1);position:relative}
+.progress-bar::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);animation:shimmer 2.2s infinite}
+@keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+.rank-badge{display:inline-flex;width:22px;height:22px;border-radius:50%;align-items:center;justify-content:center;font-size:10px;font-weight:800}
+.rank-badge.gold{background:linear-gradient(135deg,#F2C94C,#E0A82E);color:#fff}
+.rank-badge.silver{background:linear-gradient(135deg,#cbd5e1,#94a3b8);color:#fff}
+.rank-badge.bronze{background:linear-gradient(135deg,#d97706,#92400e);color:#fff}
+.rank-badge.normal{background:var(--surface-3);color:var(--muted)}
+.filter-chips{display:flex;gap:6px;overflow-x:auto;margin-bottom:12px;scrollbar-width:none;padding:2px 0}
+.filter-chips::-webkit-scrollbar{display:none}
+.chip{padding:7px 14px;border-radius:20px;background:var(--surface-2);border:1px solid var(--border);font-size:11px;font-weight:700;color:var(--muted);white-space:nowrap;transition:all .15s}
+.chip.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.empty{text-align:center;padding:36px 14px;color:var(--muted);font-size:12px;font-weight:600}
+.empty .icon{font-size:36px;margin-bottom:8px;opacity:0.6}
+.info-banner{background:var(--grad);color:#fff;padding:18px;border-radius:var(--radius);margin-bottom:12px;position:relative;overflow:hidden}
+.info-banner::after{content:'';position:absolute;width:170px;height:170px;border-radius:50%;background:radial-gradient(circle,rgba(255,122,51,.25),transparent 70%);top:-60px;right:-50px}
+.info-banner h2{font-family:'Sora',sans-serif;font-size:15px;font-weight:800;margin-bottom:3px;position:relative;z-index:2;letter-spacing:-.1px}
+.info-banner p{font-size:10.5px;opacity:0.85;font-weight:600;position:relative;z-index:2}
+</style>
+</head>
+<body>
+
+<div class="loader" id="loader"><div class="spinner"></div><p>লোড হচ্ছে...</p></div>
+
+<div id="loginScreen" class="login-wrap">
+  <div class="bubble" style="width:14px;height:14px;left:12%;animation-duration:7s;animation-delay:0s"></div>
+  <div class="bubble" style="width:9px;height:9px;left:24%;animation-duration:9s;animation-delay:1.2s"></div>
+  <div class="bubble" style="width:18px;height:18px;left:38%;animation-duration:8s;animation-delay:2.4s"></div>
+  <div class="bubble" style="width:11px;height:11px;left:58%;animation-duration:6.5s;animation-delay:.6s"></div>
+  <div class="bubble" style="width:15px;height:15px;left:72%;animation-duration:10s;animation-delay:3s"></div>
+  <div class="bubble" style="width:8px;height:8px;left:85%;animation-duration:7.5s;animation-delay:1.8s"></div>
+  <div class="bubble" style="width:12px;height:12px;left:94%;animation-duration:9.5s;animation-delay:.3s"></div>
+  <div class="login-card">
+    <div class="login-logo">🏪</div>
+    <h1>Bhai Bhai Store</h1>
+    <div class="sub">সেলস ও ইনভেন্টরি সিস্টেম</div>
+    <div class="field">
+      <label>ইউজার সিলেক্ট করুন</label>
+      <select id="loginUser"></select>
+    </div>
+    <div class="field">
+      <label>পাসওয়ার্ড</label>
+      <input type="password" id="loginPin" placeholder="পাসওয়ার্ড দিন" inputmode="numeric">
+    </div>
+    <button class="btn" onclick="doLogin()">সাইন ইন →</button>
+    <p style="text-align:center;font-size:10px;color:var(--muted);margin-top:20px">©2026-27. Developed by Maruf@Hossain</p>
+  </div>
+</div>
+
+<div id="appScreen" style="display:none">
+  <div class="header">
+    <div class="header-left">
+      <div class="header-logo">🏪</div>
+      <div>
+        <div class="header-title">Bhai Bhai Store</div>
+        <div class="header-sub" id="hdrSub">v8 PRO</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="icon-btn" onclick="loadFromSheet()">🔄</div>
+      <div class="user-chip">
+        <div class="user-avatar" id="userAvatar">A</div>
+        <span id="userName">Admin</span>
+      </div>
+      <div class="icon-btn" onclick="doLogout()">⏻</div>
+    </div>
+  </div>
+
+  <div class="tab-nav" id="tabNav"></div>
+
+  <div class="container">
+    <div id="sec-dashboard" class="section active">
+      <div class="info-banner"><h2 id="dashGreeting">স্বাগতম, Admin</h2><p><span id="dashMonth"></span> মাসের ব্যবসায়িক ওভারভিউ</p></div>
+      <div class="form-row" style="margin-bottom:12px">
+        <div class="form-group" style="margin-bottom:0"><label>মাস</label><select id="dashMonthSel" onchange="renderDashboard()"></select></div>
+        <div class="form-group" style="margin-bottom:0"><label>বছর</label><select id="dashYearSel" onchange="renderDashboard()"></select></div>
+      </div>
+      <div class="kpi-grid three">
+        <div class="kpi blue"><div class="kpi-label">💰 মোট বিক্রি</div><div class="kpi-value" id="kpiSales">৳0</div></div>
+        <div class="kpi purple"><div class="kpi-label">🎯 টার্গেট</div><div class="kpi-value" id="kpiTarget">৳0</div></div>
+        <div class="kpi green"><div class="kpi-label">📈 অর্জন</div><div class="kpi-value" id="kpiAchv">0%</div></div>
+      </div>
+      <div class="kpi-grid three">
+        <div class="kpi orange"><div class="kpi-label">🧾 অর্ডার</div><div class="kpi-value" id="kpiOrder">৳0</div></div>
+        <div class="kpi red"><div class="kpi-label">💥 ড্যামেজ</div><div class="kpi-value" id="kpiDamage">0</div></div>
+        <div class="kpi purple"><div class="kpi-label">🎁 কমিশন</div><div class="kpi-value" id="kpiComm">৳0</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">মাসিক অগ্রগতি <span class="badge" id="monthBadge"></span></div>
+        <div class="progress"><div class="progress-bar" id="monthProgress"></div></div>
+        <div style="display:flex;justify-content:space-between;font-size:10px;margin-top:7px;color:var(--muted);font-weight:700">
+          <span id="monthElapsed">0 দিন পার হয়েছে</span>
+          <span id="monthRemain">0 দিন বাকি</span>
+        </div>
+      </div>
+      <div class="card"><div class="card-title">বিক্রি বনাম টার্গেট</div><div class="chart-box"><canvas id="chartSO"></canvas></div></div>
+      <div class="card"><div class="card-title">৭ দিনের বিক্রি ট্রেন্ড</div><div class="chart-box"><canvas id="chartWeek"></canvas></div></div>
+      <div class="card"><div class="card-title">🏆 সেরা ৫ পণ্য</div><div id="top5List"></div></div>
+      <div class="card"><div class="card-title">সেলস অফিসার র‍্যাংকিং</div>
+        <div class="tbl-wrap"><table><thead><tr><th>#</th><th>অফিসার</th><th>বিক্রি</th><th>অর্জন%</th></tr></thead><tbody id="rankTable"></tbody></table></div>
+      </div>
+      <div class="watermark">©2026-27. Developed by Maruf@Hossain. All rights reserved.</div>
+    </div>
+
+    <div id="sec-stock" class="section">
+      <div class="info-banner"><h2>স্টক রিপোর্ট</h2><p>গুদামের স্টক ওভারভিউ</p></div>
+      <div class="form-row">
+        <div class="form-group"><label>মাস</label><select id="stockMonthSel" onchange="renderInventory()"></select></div>
+        <div class="form-group"><label>বছর</label><select id="stockYearSel" onchange="renderInventory()"></select></div>
+      </div>
+      <div class="kpi-grid">
+        <div class="kpi blue"><div class="kpi-label">📥 ওপেনিং</div><div class="kpi-value" id="invOpening">0</div><div class="kpi-sub" id="invOpeningVal">৳0</div></div>
+        <div class="kpi green"><div class="kpi-label">🚚 লিফটিং</div><div class="kpi-value" id="invLifting">0</div><div class="kpi-sub" id="invLiftingVal">৳0</div></div>
+        <div class="kpi orange"><div class="kpi-label">💰 বিক্রি</div><div class="kpi-value" id="invSales">0</div><div class="kpi-sub" id="invSalesVal">৳0</div></div>
+        <div class="kpi red"><div class="kpi-label">📦 বর্তমান</div><div class="kpi-value" id="invPresent">0</div><div class="kpi-sub" id="invPresentVal">৳0</div></div>
+      </div>
+      <div class="card"><div class="card-title">স্টক রিপোর্ট <span class="badge">কার্টন</span></div>
+        <div class="tbl-wrap"><table><thead><tr><th>পণ্য</th><th>ওপেনিং</th><th>লিফটিং</th><th>বিক্রি</th><th>বর্তমান</th></tr></thead><tbody id="invTable"></tbody></table></div>
+      </div>
+      <div class="card" id="stockEntryCard" style="display:none">
+        <div class="card-title">স্টক এন্ট্রি <span class="badge purple">অ্যাডমিন</span></div>
+        <div class="form-row">
+          <div class="form-group"><label>ধরন</label>
+            <select id="stockType"><option value="opening">ওপেনিং স্টক</option><option value="lifting">লিফটিং</option></select>
+          </div>
+          <div class="form-group"><label>তারিখ</label><input type="date" id="stockDate"></div>
+        </div>
+        <div id="stockInputs" style="max-height:280px;overflow-y:auto"></div>
+        <button class="btn-sm green btn-block" style="margin-top:10px" onclick="saveStock()">💾 স্টক সেভ করুন</button>
+      </div>
+      <div class="watermark">©2026-27. Developed by Maruf@Hossain. All rights reserved.</div>
+    </div>
+
+    <div id="sec-report" class="section">
+      <div class="info-banner"><h2>রিপোর্ট</h2><p>পারফরম্যান্স অ্যানালিটিক্স</p></div>
+      <div class="form-row">
+        <div class="form-group"><label>মাস</label><select id="repMonthSel" onchange="renderReports()"></select></div>
+        <div class="form-group"><label>বছর</label><select id="repYearSel" onchange="renderReports()"></select></div>
+      </div>
+      <div class="card"><div class="card-title">সেলস অফিসার পারফরম্যান্স</div>
+        <div class="tbl-wrap"><table><thead><tr><th>অফিসার</th><th>টার্গেট</th><th>বিক্রি</th><th>অর্জন%</th></tr></thead><tbody id="repTable"></tbody></table></div>
+      </div>
+      <div class="card"><div class="card-title">দৈনিক বিক্রি ট্রেন্ড</div><div class="chart-box"><canvas id="chartTrend"></canvas></div></div>
+      <div class="card"><div class="card-title">ড্যামেজ রিপোর্ট</div>
+        <div class="tbl-wrap"><table><thead><tr><th>অফিসার</th><th>গুদাম</th><th>ফেরত</th><th>বর্তমান</th></tr></thead><tbody id="damageReportTable"></tbody></table></div>
+      </div>
+      <div class="watermark">©2026-27. Developed by Maruf@Hossain. All rights reserved.</div>
+    </div>
+
+    <div id="sec-top" class="section">
+      <div class="info-banner"><h2>সেরা বিক্রিত পণ্য</h2><p>সেরা পারফরমারগণ</p></div>
+      <div class="form-row">
+        <div class="form-group"><label>মাস</label><select id="topMonthSel" onchange="renderTopProducts()"></select></div>
+        <div class="form-group"><label>বছর</label><select id="topYearSel" onchange="renderTopProducts()"></select></div>
+      </div>
+      <div class="filter-chips" id="topFilter"></div>
+      <div class="card"><div class="card-title">🏆 সেরা ১০ পণ্য <span class="badge" id="topBadge">Combined</span></div><div id="topList"></div></div>
+      <div class="card"><div class="card-title">সেরা ১০ তুলনা</div><div class="chart-box" style="height:280px"><canvas id="chartTop"></canvas></div></div>
+      <div class="card"><div class="card-title">বিস্তারিত</div>
+        <div class="tbl-wrap"><table><thead><tr><th>#</th><th>পণ্য</th><th>কার্টন</th><th>মূল্য</th><th>%</th></tr></thead><tbody id="topTable"></tbody></table></div>
+      </div>
+      <div class="watermark">©2026-27. Developed by Maruf@Hossain. All rights reserved.</div>
+    </div>
+
+    <div id="sec-automation" class="section">
+      <div class="info-banner"><h2>অটোমেশন ও ভিসি কুলার</h2><p>SPRO ও DMS ট্র্যাকিং</p></div>
+      <div class="kpi-grid three">
+        <div class="kpi blue"><div class="kpi-label">🏬 আজকের আউটলেট</div><div class="kpi-value" id="autoTodayOutlet">0</div></div>
+        <div class="kpi green"><div class="kpi-label">✅ আজকের ভিজিট</div><div class="kpi-value" id="autoTodayVisit">0</div></div>
+        <div class="kpi purple"><div class="kpi-label">📊 ভিজিট%</div><div class="kpi-value" id="autoTodayVisitPct">0%</div></div>
+      </div>
+      <div class="kpi-grid three">
+        <div class="kpi orange"><div class="kpi-label">🧊 ভিসি কুলার</div><div class="kpi-value" id="autoVCCooler">0</div></div>
+        <div class="kpi purple"><div class="kpi-label">🧊 ভিসি ভিজিট</div><div class="kpi-value" id="autoVCVisit">0</div></div>
+        <div class="kpi green"><div class="kpi-label">📊 ভিসি%</div><div class="kpi-value" id="autoVCPct">0%</div></div>
+      </div>
+      <div class="card"><div class="card-title">SPRO ও DMS — সাপ্তাহিক রিপোর্ট</div>
+        <div class="tbl-wrap"><table><thead><tr><th>অফিসার</th><th>আউটলেট</th><th>ভিজিট</th><th>ভিজিট%</th><th>DMS</th></tr></thead><tbody id="autoWeekTable"></tbody></table></div>
+      </div>
+      <div class="card" id="autoEntryCard">
+        <div class="card-title">SPRO ও DMS — এন্ট্রি <span class="badge purple">অ্যাডমিন</span></div>
+        <div class="form-row">
+          <div class="form-group"><label>তারিখ</label><input type="date" id="autoDate"></div>
+          <div class="form-group"><label>অফিসার</label><select id="autoSO"></select></div>
+        </div>
+        <div class="form-group"><label>Route</label><select id="autoRoute"></select></div>
+        <div class="form-row">
+          <div class="form-group"><label>Outlet</label><input type="number" id="autoOutlet" min="0" placeholder="0" inputmode="numeric"></div>
+          <div class="form-group"><label>Visit</label><input type="number" id="autoVisit" min="0" placeholder="0" inputmode="numeric"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>VC Cooler</label><input type="number" id="autoVC" min="0" placeholder="0" inputmode="numeric"></div>
+          <div class="form-group"><label>VC Visit</label><input type="number" id="autoVCV" min="0" placeholder="0" inputmode="numeric"></div>
+        </div>
+        <div class="form-group"><label>DMS</label>
+          <select id="autoDMS"><option value="Yes">✅ হ্যাঁ</option><option value="No">❎ না</option></select>
+        </div>
+        <button class="btn-sm green btn-block" onclick="saveAutomation()">💾 এন্ট্রি সেভ করুন</button>
+      </div>
+      <div class="watermark">©2026-27. Developed by Maruf@Hossain. All rights reserved.</div>
+    </div>
+
+    <div id="sec-damage" class="section">
+      <div class="info-banner"><h2>ড্যামেজ ও কমিশন</h2><p>গুদাম ড্যামেজ ও রিটার্ন</p></div>
+      <div class="form-row">
+        <div class="form-group"><label>মাস</label><select id="dmgMonthSel" onchange="renderDamage()"></select></div>
+        <div class="form-group"><label>বছর</label><select id="dmgYearSel" onchange="renderDamage()"></select></div>
+      </div>
+      <div class="kpi-grid three">
+        <div class="kpi orange"><div class="kpi-label">🏚️ গুদাম ড্যামেজ</div><div class="kpi-value" id="dmgWarehouse">0</div></div>
+        <div class="kpi red"><div class="kpi-label">↩️ কোম্পানিতে ফেরত</div><div class="kpi-value" id="dmgReturn">0</div></div>
+        <div class="kpi purple"><div class="kpi-label">📦 মোট ড্যামেজ স্টক</div><div class="kpi-value" id="dmgTotal">0</div></div>
+      </div>
+      <div class="card" id="dmgEntryCard">
+        <div class="card-title">ড্যামেজ এন্ট্রি <span class="badge purple">অ্যাডমিন</span></div>
+        <div class="form-row">
+          <div class="form-group"><label>তারিখ</label><input type="date" id="dmgDate"></div>
+          <div class="form-group"><label>ধরন</label>
+            <select id="dmgType"><option value="warehouse">গুদাম ড্যামেজ</option><option value="return">কোম্পানিতে ফেরত</option></select>
+          </div>
+        </div>
+        <div id="dmgInputs" style="max-height:280px;overflow-y:auto"></div>
+        <button class="btn-sm green btn-block" style="margin-top:10px" onclick="saveDamage()">💾 ড্যামেজ সেভ করুন</button>
+      </div>
+      <div class="card"><div class="card-title">ড্যামেজ রিপোর্ট <span class="badge">কার্টন</span></div>
+        <div class="tbl-wrap"><table><thead><tr><th>পণ্য</th><th>গুদাম</th><th>ফেরত</th><th>মোট</th></tr></thead><tbody id="dmgTable"></tbody></table></div>
+      </div>
+      <div class="card"><div class="card-title">অফিসার অনুযায়ী ড্যামেজ</div><div class="chart-box"><canvas id="chartDmg"></canvas></div></div>
+      <div class="watermark">©2026-27. Developed by Maruf@Hossain. All rights reserved.</div>
+    </div>
+
+    <div id="sec-entry" class="section">
+      <div class="info-banner"><h2>দৈনিক এন্ট্রি</h2><p id="entryWelcome">স্বাগতম</p></div>
+      <div class="card">
+        <div class="card-title">এন্ট্রি ফর্ম <span class="badge" id="todayDate"></span></div>
+        <div class="form-row">
+          <div class="form-group"><label>তারিখ</label><input type="date" id="entryDate"></div>
+          <div class="form-group"><label>রুট</label><select id="entryRoute"></select></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>DSR</label><select id="entryDSR"></select></div>
+          <div class="form-group"><label>এন্ট্রির ধরন</label>
+            <select id="entryType" onchange="renderEntryProducts()">
+              <option value="order">অর্ডার</option>
+              <option value="sales">বিক্রি</option>
+              <option value="damage">ড্যামেজ</option>
+              <option value="commission">কমিশন (৳)</option>
+            </select>
+          </div>
+        </div>
+        <div class="search-box" id="prodSearchWrap"><input type="text" id="prodSearch" placeholder="পণ্য খুঁজুন..." oninput="filterProducts(this.value)"></div>
+        <div id="productInputs" style="max-height:340px;overflow-y:auto;padding-right:4px"></div>
+        <div class="btn-row" style="display:flex;gap:8px">
+          <button class="btn-sm green" style="flex:1;padding:12px" onclick="saveEntry()">💾 এন্ট্রি সেভ করুন</button>
+          <button class="btn-sm gray" style="flex:0.4;padding:12px" onclick="clearEntry()">🔄</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">আজকের সারসংক্ষেপ</div>
+        <div class="kpi-grid three">
+          <div class="kpi blue"><div class="kpi-label">অর্ডার কার্টন</div><div class="kpi-value" id="tOrdCtn">0</div></div>
+          <div class="kpi blue"><div class="kpi-label">অর্ডার ৳</div><div class="kpi-value" id="tOrdVal">৳0</div></div>
+          <div class="kpi green"><div class="kpi-label">বিক্রি কার্টন</div><div class="kpi-value" id="tSalCtn">0</div></div>
+          <div class="kpi green"><div class="kpi-label">বিক্রি ৳</div><div class="kpi-value" id="tSalVal">৳0</div></div>
+          <div class="kpi orange"><div class="kpi-label">ড্যামেজ</div><div class="kpi-value" id="tDmg">0</div></div>
+          <div class="kpi purple"><div class="kpi-label">কমিশন</div><div class="kpi-value" id="tDisc">৳0</div></div>
+        </div>
+      </div>
+      <div class="watermark">©2026-27. Developed by Maruf@Hossain. All rights reserved.</div>
+    </div>
+
+    <div id="sec-setup" class="section">
+      <div class="info-banner"><h2>সেটআপ</h2><p>মাস্টার ডেটা ম্যানেজমেন্ট</p></div>
+      <div class="card">
+        <div class="card-title">পণ্যের তালিকা <span class="badge" id="prodCount">0</span></div>
+        <button class="btn-sm green btn-block" style="margin-bottom:10px" onclick="openProductModal()">➕ নতুন পণ্য</button>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>#</th><th>নাম</th><th>প্যাক</th><th>TP</th><th>কার্টন TP</th><th>DP</th><th>কার্টন DP</th><th></th></tr></thead>
+          <tbody id="prodTable"></tbody>
+        </table></div>
+      </div>
+      <div class="card">
+        <div class="card-title">সেলস অফিসার <span class="badge" id="soCount">0</span></div>
+        <button class="btn-sm green btn-block" style="margin-bottom:10px" onclick="openSOModal()">➕ নতুন সেলস অফিসার</button>
+        <div id="soList"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">DSR তালিকা <span class="badge" id="dsrCount">0</span></div>
+        <button class="btn-sm green btn-block" style="margin-bottom:10px" onclick="openDSRModal()">➕ নতুন DSR</button>
+        <div id="dsrList"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">রুট তালিকা <span class="badge" id="routeCount">0</span></div>
+        <button class="btn-sm green btn-block" style="margin-bottom:10px" onclick="openRouteModal()">➕ নতুন রুট</button>
+        <div id="routeList"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">স্পেশাল গেস্ট <span class="badge purple" id="guestCount">0</span></div>
+        <button class="btn-sm green btn-block" style="margin-bottom:10px" onclick="openGuestModal()">➕ নতুন গেস্ট</button>
+        <div id="guestList"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">মাসিক টার্গেট সেটআপ <span class="badge">কার্টন</span></div>
+        <div class="form-row">
+          <div class="form-group"><label>সেলস অফিসার</label><select id="setupSO" onchange="renderTargetInputs()"></select></div>
+          <div class="form-group"><label>মাস</label><input type="month" id="setupMonth" onchange="renderTargetInputs()"></div>
+        </div>
+        <div id="targetInputs" style="max-height:340px;overflow-y:auto"></div>
+        <div style="margin-top:12px;padding:12px;background:var(--surface-2);border-radius:10px;border:1px solid var(--border)">
+          <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px"><span style="font-weight:700">মোট কার্টন:</span><span id="tgtTotalCtn" style="font-weight:800;color:var(--primary)">0</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px"><span style="font-weight:700">মোট মূল্য:</span><span id="tgtTotalVal" style="font-weight:800;color:var(--success)">৳0</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:12px"><span style="font-weight:700">দৈনিক টার্গেট:</span><span id="tgtDailyVal" style="font-weight:800;color:var(--warning)">৳0</span></div>
+        </div>
+        <button class="btn-sm green btn-block" style="margin-top:10px" onclick="saveTarget()">💾 টার্গেট সেভ করুন</button>
+      </div>
+      <div class="card">
+        <div class="card-title">অ্যাডমিন পাসওয়ার্ড</div>
+        <div class="form-row">
+          <div class="form-group"><label>নতুন পাসওয়ার্ড</label><input type="text" id="newAdminPass" placeholder="৪+ ডিজিট" inputmode="numeric"></div>
+          <div class="form-group" style="display:flex;align-items:flex-end"><button class="btn-sm purple btn-block" onclick="changeAdminPass()">🔑 পরিবর্তন</button></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">ডেটা ম্যানেজমেন্ট</div>
+        <div class="btn-row">
+          <button class="btn-sm btn-block" onclick="exportData()">⬇️ এক্সপোর্ট</button>
+          <button class="btn-sm orange btn-block" onclick="document.getElementById('importFile').click()">⬆️ ইমপোর্ট</button>
+        </div>
+        <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
+        <button class="btn-sm red btn-block" style="margin-top:10px" onclick="resetAll()">🗑️ সব রিসেট করুন</button>
+      </div>
+      <div class="watermark">©2026-27. Developed by Maruf@Hossain. All rights reserved.</div>
+    </div>
+  </div>
+
+  <div class="bottom-nav" id="bottomNav"></div>
+</div>
+
+<div class="modal-bg" id="modalBg" onclick="closeModal(event)">
+  <div class="modal" id="modalContent" onclick="event.stopPropagation()"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============= CONFIG ============= */
+const SYNC_URL = "https://script.google.com/macros/s/AKfycbwK1Cz32Eo8tXaH5ffWxlpTnbeQUFpl4CSl62GiYFOPc4j8hJ1-SeE4JZMGdXPHjxR4Aw/exec";
+
+/* ============= DEFAULT DATA ============= */
+const DEFAULT_PRODUCTS=[
+{sl:1,name:"P-up 250ml",pcs:24,tp:15.21,dp:12.7},
+{sl:2,name:"P-up 750ml",pcs:12,tp:31.04,dp:28.35},
+{sl:3,name:"P-up 2000ml",pcs:6,tp:79.93,dp:73.41},
+{sl:4,name:"Maxx 250ml",pcs:24,tp:27.03,dp:24.9},
+{sl:5,name:"Maxx 500ml",pcs:12,tp:42.30,dp:38.95},
+{sl:6,name:"Maxx 1000ml",pcs:12,tp:75.20,dp:66.22},
+{sl:7,name:"Maxx 2000ml",pcs:6,tp:131.42,dp:121.56},
+{sl:8,name:"Lemon 250ml",pcs:24,tp:16.52,dp:14.5},
+{sl:9,name:"Lemon 400ml",pcs:24,tp:25.56,dp:22.7},
+{sl:10,name:"Lemon 1000ml",pcs:12,tp:56.11,dp:51.3},
+{sl:11,name:"Lachi 250ml",pcs:24,tp:19.07,dp:17.74},
+{sl:12,name:"Lachi 500ml",pcs:24,tp:34.95,dp:30.8},
+{sl:13,name:"Lachi 1000ml",pcs:12,tp:45.90,dp:38.92},
+{sl:14,name:"Drinko Mango",pcs:24,tp:22.91,dp:20.4},
+{sl:15,name:"Drinko 250ml",pcs:24,tp:27.40,dp:25.18},
+{sl:16,name:"D-Water 500ml",pcs:24,tp:14.83,dp:12.9},
+{sl:17,name:"D-Water 1000ml",pcs:12,tp:25.20,dp:20.1},
+{sl:18,name:"D-Water 2000ml",pcs:6,tp:35.00,dp:28.8},
+{sl:19,name:"Mlp",pcs:24,tp:17.21,dp:15.1},
+{sl:20,name:"Fasto 250ml",pcs:24,tp:31.96,dp:29.5},
+{sl:21,name:"Fasto 500ml",pcs:24,tp:54.80,dp:50.5},
+{sl:22,name:"Fasto 1000ml",pcs:12,tp:80.11,dp:73.8},
+{sl:23,name:"Mango Pack 150ml",pcs:80,tp:11.05,dp:10.0},
+{sl:24,name:"Power",pcs:24,tp:18.29,dp:14.3},
+{sl:25,name:"Zera pant",pcs:24,tp:24.29,dp:20.2},
+{sl:26,name:"Jelly Ship",pcs:96,tp:7.92,dp:6.9},
+{sl:27,name:"Lolipop (jar)",pcs:100,tp:3.55,dp:3.1},
+{sl:28,name:"Coffee (pcs)",pcs:50,tp:12.51,dp:10.5},
+{sl:29,name:"Pulse candy (jar)",pcs:170,tp:1.55,dp:1.3}
+];
+const DEFAULT_SOS=[{id:"maruf",name:"Maruf Hossain",pass:"1234"},{id:"raju",name:"Raju Hossain",pass:"2345"},{id:"sumon",name:"Sumon Islam",pass:"3456"}];
+const DEFAULT_DSRS=["Tapon Das","Sunil Das","Niloy Das","Akram","Mojnu Mia","Abdul Lotif","Ramim"];
+const DEFAULT_ROUTES=["Joydebpur Bazar","Dhaka Road","Mymensingh Road West","Mymensingh Road East","Tangail Road North","Tangail Road South","Islampur","Banarupa","Dhirasrom","Kajibari","Salna West","Salna East","Porabari Masterbari","Shimultuly","Deshipara Duet","Harinal","Lokkhipura","Bosir Shorok"];
+const DEFAULT_GUESTS=[{id:"ahsanul",name:"Ahsanul Haque (GM)",pass:"1111"},{id:"anisur",name:"Anisur Rahman (TSM)",pass:"2222"},{id:"jahidul",name:"Jahidul Islam (Dealer)",pass:"3333"},{id:"abdul",name:"Abdul Kader (ATSM)",pass:"4444"}];
+
+/* ============= STORAGE ============= */
+const DB={load(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}},save(k,v){localStorage.setItem(k,JSON.stringify(v))}};
+let products=DB.load('bb_products',DEFAULT_PRODUCTS);
+let sos=DB.load('bb_sos',DEFAULT_SOS);
+let dsrs=DB.load('bb_dsrs',DEFAULT_DSRS);
+let routes=DB.load('bb_routes',DEFAULT_ROUTES);
+let guests=DB.load('bb_guests',DEFAULT_GUESTS);
+let entries=DB.load('bb_entries',[]);
+let targets=DB.load('bb_targets',{});
+let stock=DB.load('bb_stock',{lifting:{},opening:{}});
+let damages=DB.load('bb_damages',{warehouse:{},return:{}});
+let automations=DB.load('bb_automations',[]);
+let adminPass=DB.load('bb_admin_pass','1111');
+let currentUser=null,currentRole=null,topFilter='all';
+
+/* ============= SECURITY: PASSWORD HASHING =============
+   Passwords are hashed with SHA-256 before they are stored in
+   localStorage, shown anywhere, or sent to the Google Sheet — so a
+   plain-text password never sits in the page source, browser storage,
+   or the spreadsheet. NOTE: this is still a fully client-side app
+   (a static HTML file), so this protects against casual snooping
+   (view-source, spreadsheet access) but cannot fully replace a real
+   server-side login — someone with browser dev-tools access could
+   still bypass the check in the running page. */
+async function hashPass(str){
+  const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(String(str)));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+function isHashed(v){return typeof v==='string'&&/^[a-f0-9]{64}$/.test(v)}
+async function migratePasswords(){
+  let changed=false;
+  if(!isHashed(adminPass)){adminPass=await hashPass(adminPass);DB.save('bb_admin_pass',adminPass);changed=true}
+  for(const s of sos){if(!isHashed(s.pass)){s.pass=await hashPass(s.pass);changed=true}}
+  for(const g of guests){if(!isHashed(g.pass)){g.pass=await hashPass(g.pass);changed=true}}
+  if(changed){DB.save('bb_sos',sos);DB.save('bb_guests',guests)}
+}
+
+/* ============= INIT ============= */
+window.addEventListener('load',async()=>{
+  await migratePasswords();
+  buildLoginList();
+  const s=DB.load('bb_current_user',null),r=DB.load('bb_current_role',null);
+  if(s&&r){currentUser=s;currentRole=r;bootApp()}
+});
+function buildLoginList(){const sel=document.getElementById('loginUser');if(!sel)return;let h='<option value="">-- ইউজার সিলেক্ট করুন --</option><option value="admin">🔑 Admin</option><optgroup label="সেলস অফিসার">';sos.forEach(s=>h+=`<option value="so:${s.id}">${s.name}</option>`);h+='</optgroup><optgroup label="স্পেশাল গেস্ট">';guests.forEach(g=>h+=`<option value="guest:${g.id}">${g.name}</option>`);h+='</optgroup>';sel.innerHTML=h}
+
+/* ============= LOGIN ============= */
+async function doLogin(){
+  const u=document.getElementById('loginUser').value,p=document.getElementById('loginPin').value.trim();
+  if(!u){toast('ইউজার সিলেক্ট করুন',true);return}
+  if(!p){toast('পাসওয়ার্ড দিন',true);return}
+  const hp=await hashPass(p);
+  if(u==='admin'){if(hp!==adminPass){toast('❌ ভুল পাসওয়ার্ড!',true);return}currentUser='admin';currentRole='admin'}
+  else if(u.startsWith('so:')){const id=u.slice(3),so=sos.find(s=>s.id===id);if(!so||so.pass!==hp){toast('❌ ভুল পাসওয়ার্ড!',true);return}currentUser=id;currentRole='so'}
+  else if(u.startsWith('guest:')){const id=u.slice(6),g=guests.find(x=>x.id===id);if(!g||g.pass!==hp){toast('❌ ভুল পাসওয়ার্ড!',true);return}currentUser=id;currentRole='guest'}
+  else{toast('ভুল ইউজার',true);return}
+  DB.save('bb_current_user',currentUser);DB.save('bb_current_role',currentRole);bootApp();toast('✅ স্বাগতম!')
+}
+function doLogout(){if(!confirm('লগআউট করবেন?'))return;localStorage.removeItem('bb_current_user');localStorage.removeItem('bb_current_role');location.reload()}
+
+/* ============= BOOT ============= */
+function bootApp(){
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('appScreen').style.display='block';
+  let dn='Admin';
+  if(currentRole==='so')dn=sos.find(s=>s.id===currentUser)?.name||'SO';
+  else if(currentRole==='guest')dn=guests.find(g=>g.id===currentUser)?.name||'Guest';
+  const rl=currentRole==='admin'?'অ্যাডমিন':(currentRole==='so'?'সেলস অফিসার':'স্পেশাল গেস্ট');
+  document.getElementById('userName').textContent=dn.split(' ')[0];
+  const av=document.getElementById('userAvatar');av.textContent=dn[0];av.className='user-avatar'+(currentRole==='so'?' role-so':currentRole==='guest'?' role-guest':'');
+  document.getElementById('hdrSub').textContent=rl;
+  const gr=document.getElementById('dashGreeting');if(gr)gr.textContent='স্বাগতম, '+dn.split(' ')[0];
+  buildTabs();
+  const today=new Date().toISOString().split('T')[0],nowMonth=today.slice(0,7);
+  ['entryDate','stockDate','dmgDate','autoDate'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=today});
+  const sm=document.getElementById('setupMonth');if(sm)sm.value=nowMonth;
+  const td=document.getElementById('todayDate');if(td)td.textContent=today;
+  buildMonthYearSelectors();fillDropdowns();renderEntryProducts();renderTodaySummary();renderProductMaster();renderSetupLists();setupPermissionUI();
+}
+function setupPermissionUI(){
+  const isAdmin=currentRole==='admin';
+  const sc=document.getElementById('stockEntryCard');if(sc)sc.style.display=isAdmin?'block':'none';
+  const ac=document.getElementById('autoEntryCard');if(ac)ac.style.display=isAdmin?'block':'none';
+  const dc=document.getElementById('dmgEntryCard');if(dc)dc.style.display=isAdmin?'block':'none';
+  const ew=document.getElementById('entryWelcome');
+  if(ew){if(currentRole==='so'){const so=sos.find(s=>s.id===currentUser);ew.textContent='স্বাগতম, '+(so?.name||'')}else if(currentRole==='guest'){ew.textContent='শুধু দেখার মোড'}else{ew.textContent='অ্যাডমিন মোড — যেকোনো অফিসারের হয়ে এন্ট্রি দিন'}}
+}
+
+/* ============= TABS ============= */
+const TABS=[
+{id:'dashboard',label:'📊 ড্যাশবোর্ড',icon:'📊',short:'হোম',roles:['admin','so','guest']},
+{id:'stock',label:'📦 স্টক রিপোর্ট',icon:'📦',short:'স্টক',roles:['admin','so','guest']},
+{id:'report',label:'📈 রিপোর্ট',icon:'📈',short:'রিপোর্ট',roles:['admin','so','guest']},
+{id:'top',label:'🏆 সেরা পণ্য',icon:'🏆',short:'সেরা',roles:['admin','so','guest']},
+{id:'automation',label:'⚙️ অটোমেশন',icon:'⚙️',short:'অটো',roles:['admin','so','guest']},
+{id:'damage',label:'🔴 ড্যামেজ',icon:'🔴',short:'ড্যামেজ',roles:['admin','so','guest']},
+{id:'entry',label:'📝 এন্ট্রি',icon:'📝',short:'এন্ট্রি',roles:['admin','so']},
+{id:'setup',label:'🛠️ সেটআপ',icon:'🛠️',short:'সেটআপ',roles:['admin']}
+];
+function buildTabs(){const v=TABS.filter(t=>t.roles.includes(currentRole));
+document.getElementById('tabNav').innerHTML=v.map((t,i)=>`<button class="tab-btn${i===0?' active':''}" onclick="switchTab('${t.id}',this)">${t.label}</button>`).join('');
+document.getElementById('bottomNav').innerHTML=v.map((t,i)=>`<div class="nav-item${i===0?' active':''}" onclick="switchTab('${t.id}',this)"><span class="ico">${t.icon}</span><span class="lbl">${t.short}</span></div>`).join('')}
+function switchTab(id,el){
+  const tab=TABS.find(t=>t.id===id);
+  if(!tab||!tab.roles.includes(currentRole)){toast('অনুমতি নেই',true);return}
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  if(el&&el.classList.contains('tab-btn'))el.classList.add('active');
+  const v=TABS.filter(t=>t.roles.includes(currentRole)),idx=v.findIndex(t=>t.id===id);
+  if(idx>=0){const n=document.querySelectorAll('.nav-item')[idx];if(n)n.classList.add('active')}
+  if(id==='dashboard')renderDashboard();
+  if(id==='stock'){renderInventory();renderStockInputs()}
+  if(id==='report')renderReports();
+  if(id==='top')renderTopProducts();
+  if(id==='automation')renderAutomation();
+  if(id==='damage'){renderDamage();renderDamageInputs()}
+  if(id==='entry'){renderEntryProducts();renderTodaySummary()}
+  if(id==='setup'){renderProductMaster();renderSetupLists();fillDropdowns()}
+}
+
+/* ============= MONTH SELECTORS ============= */
+function buildMonthYearSelectors(){
+  const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const now=new Date(),cm=now.getMonth(),cy=now.getFullYear();
+  const years=[];for(let y=cy-2;y<=cy+1;y++)years.push(y);
+  const mo=months.map((m,i)=>`<option value="${i+1}"${i===cm?' selected':''}>${m}</option>`).join('');
+  const yo=years.map(y=>`<option value="${y}"${y===cy?' selected':''}>${y}</option>`).join('');
+  ['dashMonthSel','repMonthSel','topMonthSel','stockMonthSel','dmgMonthSel'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=mo});
+  ['dashYearSel','repYearSel','topYearSel','stockYearSel','dmgYearSel'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=yo});
+  const dm=document.getElementById('dashMonth');if(dm)dm.textContent=months[cm]+' '+cy;
+}
+function monthKey(prefix){const m=document.getElementById(prefix+'MonthSel')?.value||(new Date().getMonth()+1),y=document.getElementById(prefix+'YearSel')?.value||new Date().getFullYear();return `${y}-${String(m).padStart(2,'0')}`}
+function getSelectedMonth(){return monthKey('dash')}
+function getSelectedReportMonth(){return monthKey('rep')}
+function getSelectedTopMonth(){return monthKey('top')}
+function getSelectedStockMonth(){return monthKey('stock')}
+function getSelectedDmgMonth(){return monthKey('dmg')}
+function filterByMonth(arr,m){return arr.filter(e=>e.date&&e.date.startsWith(m))}
+function filterByUser(arr){if(currentRole==='admin')return arr;return arr.filter(e=>e.user_id===currentUser)}
+
+/* ============= DROPDOWNS ============= */
+function fillDropdowns(){
+  const re=document.getElementById('entryRoute');if(re)re.innerHTML=routes.map(r=>`<option>${r}</option>`).join('');
+  const de=document.getElementById('entryDSR');if(de)de.innerHTML=dsrs.map(d=>`<option>${d}</option>`).join('');
+  const ss=document.getElementById('setupSO');if(ss)ss.innerHTML=sos.map(s=>`<option value="${s.id}">${s.name}</option>`).join('');
+  const as=document.getElementById('autoSO');if(as)as.innerHTML=sos.map(s=>`<option value="${s.id}">${s.name}</option>`).join('');
+  const ar=document.getElementById('autoRoute');if(ar)ar.innerHTML=routes.map(r=>`<option>${r}</option>`).join('');
+}
+
+/* ============= ENTRY ============= */
+function renderEntryProducts(f){
+  const box=document.getElementById('productInputs');if(!box)return;
+  const type=document.getElementById('entryType')?.value;
+  const sw=document.getElementById('prodSearchWrap');if(sw)sw.style.display=type==='commission'?'none':'block';
+  if(type==='commission'){
+    const prev=document.getElementById('commissionAmount')?.value||'';
+    box.innerHTML=`<div class="form-group"><label>কমিশন এমাউন্ট (৳)</label><input type="number" id="commissionAmount" min="0" step="0.01" value="${prev}" placeholder="0" inputmode="decimal" style="padding:10px;background:var(--surface-2);border:1.5px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;text-align:center;width:100%"></div>`;
+    return;
+  }
+  const list=f?products.filter(p=>p.name.toLowerCase().includes(f.toLowerCase())):products;
+  if(list.length===0){box.innerHTML='<div class="empty">😕 কোনো পণ্য পাওয়া যায়নি</div>';return}
+  const ex={};products.forEach((p,i)=>{const el=document.getElementById('pin_'+i);if(el)ex[i]=el.value});
+  box.innerHTML=list.map(p=>{
+    const i=products.indexOf(p),v=ex[i]||'';
+    return `<div class="form-row" style="align-items:center;margin-bottom:8px"><div style="font-size:11px;font-weight:600">${p.name}<br><span style="font-size:9px;color:var(--muted)">৳${p.tp} • ${p.pcs}pcs/ctn</span></div><input type="number" id="pin_${i}" value="${v}" min="0" placeholder="0" inputmode="numeric" style="padding:9px;background:var(--surface-2);border:1.5px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;text-align:center"></div>`;
+  }).join('');
+}
+function filterProducts(v){renderEntryProducts(v)}
+function clearEntry(){products.forEach((_,i)=>{const el=document.getElementById('pin_'+i);if(el)el.value=''});const ca=document.getElementById('commissionAmount');if(ca)ca.value='';toast('মুছে ফেলা হয়েছে')}
+function saveEntry(){
+  if(currentRole==='guest'){toast('শুধু দেখার অনুমতি',true);return}
+  const date=document.getElementById('entryDate').value,route=document.getElementById('entryRoute').value,dsr=document.getElementById('entryDSR').value,type=document.getElementById('entryType').value;
+  let userId=currentUser;if(currentRole==='admin')userId='admin';
+  let ed;
+  if(type==='commission'){
+    const amount=Math.max(0,parseFloat(document.getElementById('commissionAmount')?.value)||0);
+    if(amount<=0){toast('কমিশনের পরিমাণ দিন',true);return}
+    ed={id:Date.now(),date,route,dsr,type,items:{},amount,user_id:userId,user_role:currentRole,ts:new Date().toISOString()};
+  }else{
+    const items={};let total=0;
+    products.forEach((p,i)=>{const el=document.getElementById('pin_'+i);const v=el?Math.max(0,parseInt(el.value)||0):0;if(v>0){items[p.name]=v;total+=v}});
+    if(total===0){toast('কমপক্ষে একটি পণ্যের পরিমাণ দিন',true);return}
+    ed={id:Date.now(),date,route,dsr,type,items,amount:0,user_id:userId,user_role:currentRole,ts:new Date().toISOString()};
+  }
+  entries.push(ed);DB.save('bb_entries',entries);syncToSheet('saveEntry',ed);clearEntry();renderTodaySummary();toast('✅ এন্ট্রি সেভ হয়েছে!');
+}
+function renderTodaySummary(){
+  const today=document.getElementById('entryDate')?.value||new Date().toISOString().split('T')[0];
+  let mine=entries.filter(e=>e.date===today);
+  if(currentRole==='so')mine=mine.filter(e=>e.user_id===currentUser);
+  else if(currentRole==='guest')mine=[];
+  let oC=0,oV=0,sC=0,sV=0,d=0,disc=0;
+  mine.forEach(e=>{products.forEach(p=>{const q=e.items[p.name]||0;if(e.type==='order'){oC+=q/p.pcs;oV+=q*p.tp}if(e.type==='sales'){sC+=q/p.pcs;sV+=q*p.tp}if(e.type==='damage')d+=q});if(e.type==='commission')disc+=(e.amount||0)});
+  const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v};
+  set('tOrdCtn',oC.toFixed(1));set('tOrdVal','৳'+Math.round(oV).toLocaleString());
+  set('tSalCtn',sC.toFixed(1));set('tSalVal','৳'+Math.round(sV).toLocaleString());
+  set('tDmg',d);set('tDisc','৳'+Math.round(disc).toLocaleString());
+}
+
+/* ============= DASHBOARD ============= */
+function renderDashboard(){
+  const month=getSelectedMonth(),me=filterByMonth(entries,month),fl=filterByUser(me);
+  let ts=0,to=0,td=0,tc=0;const soSales={};
+  fl.forEach(e=>{
+    if(e.type==='sales'){let v=0;products.forEach(p=>v+=(e.items[p.name]||0)*p.tp);ts+=v;soSales[e.user_id]=(soSales[e.user_id]||0)+v}
+    if(e.type==='order'){let v=0;products.forEach(p=>v+=(e.items[p.name]||0)*p.tp);to+=v}
+    if(e.type==='damage')products.forEach(p=>td+=(e.items[p.name]||0));
+    if(e.type==='commission')tc+=(e.amount||0);
+  });
+  let tt=0;
+  if(currentRole==='admin'){sos.forEach(s=>{tt+=(targets[`${s.id}_${month}`]?.totalValue||0)})}
+  else if(currentRole==='so'){tt=targets[`${currentUser}_${month}`]?.totalValue||0}
+  const a=tt?(ts/tt*100):0;
+  animateNum('kpiSales',ts,{prefix:'৳'});
+  animateNum('kpiTarget',tt,{prefix:'৳'});
+  animateNum('kpiAchv',a,{suffix:'%',decimals:1});
+  animateNum('kpiOrder',to,{prefix:'৳'});
+  animateNum('kpiDamage',td);
+  animateNum('kpiComm',tc,{prefix:'৳'});
+  const achvKpi=document.getElementById('kpiAchv')?.closest('.kpi');
+  if(achvKpi)achvKpi.classList.toggle('celebrate',a>=100);
+  const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v};
+  const parts=month.split('-');const yy=Number(parts[0]),mm=Number(parts[1]);
+  const now=new Date(),dim=new Date(yy,mm,0).getDate();
+  let el;
+  if(now.getFullYear()===yy&&(now.getMonth()+1)===mm)el=now.getDate();
+  else if(new Date(yy,mm-1)<now)el=dim;else el=0;
+  const pct=(el/dim*100).toFixed(0);
+  const mb=document.getElementById('monthBadge');if(mb)mb.textContent=new Date(yy,mm-1).toLocaleDateString('en-US',{month:'short',year:'numeric'});
+  const mp=document.getElementById('monthProgress');if(mp)mp.style.width=pct+'%';
+  set('monthElapsed',el+' days elapsed');set('monthRemain',(dim-el)+' days left');
+  const soList=currentRole==='so'?sos.filter(s=>s.id===currentUser):sos;
+  drawBarChart('chartSO',soList.map(s=>s.name.split(' ')[0]),[
+    {label:'বিক্রি',data:soList.map(s=>soSales[s.id]||0),bg:'#0E7C66'},
+    {label:'টার্গেট',data:soList.map(s=>targets[`${s.id}_${month}`]?.totalValue||0),bg:'#FF7A33'}
+  ]);
+  const l7=[];
+  for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);const key=d.toISOString().split('T')[0];let v=0;fl.filter(e=>e.date===key&&e.type==='sales').forEach(e=>{products.forEach(p=>v+=(e.items[p.name]||0)*p.tp)});l7.push({label:key.slice(8),val:v})}
+  drawLineChart('chartWeek',l7.map(x=>x.label),l7.map(x=>x.val));
+  const prodSales={};
+  fl.filter(e=>e.type==='sales').forEach(e=>{products.forEach(p=>{const q=e.items[p.name]||0;if(q)prodSales[p.name]=(prodSales[p.name]||0)+q*p.tp})});
+  const t5=Object.entries(prodSales).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  const t5el=document.getElementById('top5List');
+  if(t5el){
+    if(t5.length===0)t5el.innerHTML='<div class="empty"><div class="icon">📦</div>এখনো কোনো বিক্রি হয়নি — Entry ট্যাব থেকে যোগ করুন</div>';
+    else t5el.innerHTML=t5.map((x,i)=>{
+      const c=['gold','silver','bronze','normal','normal'];
+      return `<div class="list-item" style="margin-bottom:6px"><div style="display:flex;align-items:center;gap:10px"><span class="rank-badge ${c[i]}">${i+1}</span><div><div class="list-item-name">${x[0]}</div></div></div><div style="font-weight:800;color:var(--success);font-size:12px">৳${Math.round(x[1]).toLocaleString()}</div></div>`;
+    }).join('');
+  }
+  const rk=document.getElementById('rankTable');
+  if(rk){
+    if(currentRole==='admin'){
+      const ranks=sos.map(s=>({name:s.name,sales:soSales[s.id]||0,target:targets[`${s.id}_${month}`]?.totalValue||0})).sort((a,b)=>b.sales-a.sales);
+      rk.innerHTML=ranks.map((r,i)=>{
+        const c=i===0?'gold':i===1?'silver':i===2?'bronze':'normal';
+        const pct=r.target?(r.sales/r.target*100).toFixed(1):'0';
+        return `<tr><td><span class="rank-badge ${c}">${i+1}</span></td><td>${r.name}</td><td>৳${Math.round(r.sales).toLocaleString()}</td><td>${pct}%</td></tr>`;
+      }).join('');
+    } else {
+      rk.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:20px">শুধু অ্যাডমিন র‍্যাংকিং দেখতে পারবে</td></tr>';
+    }
+  }
+}
+
+/* ============= STOCK ============= */
+function renderStockInputs(){
+  const el=document.getElementById('stockInputs');if(!el)return;
+  el.innerHTML=products.map((p,i)=>`<div class="form-row" style="align-items:center;margin-bottom:8px"><div style="font-size:11px;font-weight:600">${p.name}<br><span style="font-size:9px;color:var(--muted)">${p.pcs}pcs/ctn</span></div><input type="number" id="stk_${i}" min="0" placeholder="0" inputmode="numeric" style="padding:9px;background:var(--surface-2);border:1.5px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;text-align:center"></div>`).join('');
+}
+function saveStock(){
+  if(currentRole!=='admin'){toast('শুধু অ্যাডমিন স্টক এন্ট্রি দিতে পারবে',true);return}
+  const type=document.getElementById('stockType').value,date=document.getElementById('stockDate').value,month=date.slice(0,7);
+  const items={};let total=0;
+  products.forEach((p,i)=>{const el=document.getElementById('stk_'+i);const v=el?Math.max(0,parseInt(el.value)||0):0;if(v>0){items[p.name]=v;total+=v}});
+  if(total===0){toast('পরিমাণ দিন',true);return}
+  const key=`${type}_${month}`;
+  if(!stock[key])stock[key]={};
+  Object.keys(items).forEach(k=>{stock[key][k]=(stock[key][k]||0)+items[k]});
+  DB.save('bb_stock',stock);syncToSheet('saveStock',{type,month,items});
+  products.forEach((_,i)=>{const el=document.getElementById('stk_'+i);if(el)el.value=''});
+  renderInventory();toast('✅ স্টক সেভ হয়েছে!');
+}
+function renderInventory(){
+  const month=getSelectedStockMonth();
+  const me=filterByMonth(entries,month);
+  const op=stock[`opening_${month}`]||{},lf=stock[`lifting_${month}`]||{};
+  let to=0,tl=0,tsv=0,tc=0,toV=0,tlV=0,tsvV=0,tcV=0;
+  let rows='';
+  products.forEach(p=>{
+    const o=op[p.name]||0,l=lf[p.name]||0;
+    let s=0;me.forEach(e=>{if(e.type==='sales')s+=e.items[p.name]||0});
+    const c=(o*p.pcs)+(l*p.pcs)-s;
+    to+=o*p.pcs;tl+=l*p.pcs;tsv+=s;tc+=c;
+    toV+=o*p.pcs*p.dp;tlV+=l*p.pcs*p.dp;tsvV+=s*p.dp;tcV+=(c/p.pcs)*p.pcs*p.dp;
+    rows+=`<tr><td>${p.name}</td><td>${o}</td><td>${l}</td><td>${(s/p.pcs).toFixed(1)}</td><td style="font-weight:700;color:${c<0?'var(--danger)':'var(--success)'}">${(c/p.pcs).toFixed(1)}</td></tr>`;
+  });
+  const t=document.getElementById('invTable');if(t)t.innerHTML=rows;
+  const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v};
+  set('invOpening',(to/24).toFixed(0)+' ctn');set('invOpeningVal','৳'+Math.round(toV).toLocaleString());
+  set('invLifting',(tl/24).toFixed(0)+' ctn');set('invLiftingVal','৳'+Math.round(tlV).toLocaleString());
+  set('invSales',(tsv/24).toFixed(0)+' ctn');set('invSalesVal','৳'+Math.round(tsvV).toLocaleString());
+  set('invPresent',(tc/24).toFixed(0)+' ctn');set('invPresentVal','৳'+Math.round(tcV).toLocaleString());
+}
+
+/* ============= REPORTS ============= */
+function renderReports(){
+  const month=getSelectedReportMonth();
+  const me=filterByMonth(entries,month),fl=filterByUser(me);
+  const soSales={};
+  fl.filter(e=>e.type==='sales').forEach(e=>{let v=0;products.forEach(p=>v+=(e.items[p.name]||0)*p.tp);soSales[e.user_id]=(soSales[e.user_id]||0)+v});
+  const list=currentRole==='so'?sos.filter(s=>s.id===currentUser):sos;
+  const rt=document.getElementById('repTable');
+  if(rt){
+    rt.innerHTML=list.map(s=>{
+      const tgt=targets[`${s.id}_${month}`]?.totalValue||0;
+      const sl=soSales[s.id]||0;
+      const a=tgt?(sl/tgt*100).toFixed(1):'0';
+      const color=a>=100?'var(--success)':a>=70?'var(--warning)':'var(--danger)';
+      return `<tr><td>${s.name}</td><td>৳${Math.round(tgt).toLocaleString()}</td><td>৳${Math.round(sl).toLocaleString()}</td><td style="font-weight:700;color:${color}">${a}%</td></tr>`;
+    }).join('');
+  }
+  const days={};
+  fl.filter(e=>e.type==='sales').forEach(e=>{let v=0;products.forEach(p=>v+=(e.items[p.name]||0)*p.tp);days[e.date]=(days[e.date]||0)+v});
+  const sorted=Object.keys(days).sort();
+  drawLineChart('chartTrend',sorted.map(d=>d.slice(8)),Object.values(days));
+  const wh=(damages.warehouse||{})[`warehouse_${month}`]||{};
+  const rt2=(damages.return||{})[`return_${month}`]||{};
+  const dmgBySO={};
+  me.filter(e=>e.type==='damage').forEach(e=>{let total=0;products.forEach(p=>total+=(e.items[p.name]||0));dmgBySO[e.user_id]=(dmgBySO[e.user_id]||0)+total});
+  const dmgTable=document.getElementById('damageReportTable');
+  if(dmgTable){
+    const dmgList=currentRole==='so'?sos.filter(s=>s.id===currentUser):sos;
+    dmgTable.innerHTML=dmgList.map(s=>{
+      let whs=0,rts=0;
+      if(wh[s.id])products.forEach(p=>whs+=(wh[s.id][p.name]||0));
+      if(rt2[s.id])products.forEach(p=>rts+=(rt2[s.id][p.name]||0));
+      const total=(dmgBySO[s.id]||0)+whs;
+      return `<tr><td>${s.name.split(' ')[0]}</td><td>${whs}</td><td>${rts}</td><td style="font-weight:700">${total-rts}</td></tr>`;
+    }).join('');
+  }
+}
+
+/* ============= TOP SELLING ============= */
+function renderTopProducts(){
+  const month=getSelectedTopMonth();
+  const me=filterByMonth(entries,month);
+  const chips=document.getElementById('topFilter');
+  if(chips){
+    if(currentRole==='admin'){
+      chips.innerHTML=`<div class="chip${topFilter==='all'?' active':''}" onclick="topFilter='all';renderTopProducts()">সম্মিলিত</div>`+sos.map(s=>`<div class="chip${topFilter===s.id?' active':''}" onclick="topFilter='${s.id}';renderTopProducts()">${s.name.split(' ')[0]}</div>`).join('');
+    } else if(currentRole==='so'){chips.innerHTML=`<div class="chip active">My Products</div>`}
+    else {chips.innerHTML=`<div class="chip active">সম্মিলিত</div>`}
+  }
+  let filtered=me.filter(e=>e.type==='sales');
+  if(currentRole==='so'){filtered=filtered.filter(e=>e.user_id===currentUser)}
+  else if(currentRole==='admin'&&topFilter!=='all'){filtered=filtered.filter(e=>e.user_id===topFilter)}
+  const prodSales={};
+  filtered.forEach(e=>{products.forEach(p=>{const q=e.items[p.name]||0;if(q){if(!prodSales[p.name])prodSales[p.name]={qty:0,val:0,pcs:p.pcs};prodSales[p.name].qty+=q;prodSales[p.name].val+=q*p.tp}})});
+  const sorted=Object.entries(prodSales).sort((a,b)=>b[1].val-a[1].val).slice(0,10);
+  const totalVal=Object.values(prodSales).reduce((s,x)=>s+x.val,0);
+  const badge=topFilter==='all'?'সম্মিলিত':(currentRole==='so'?'আমার':(sos.find(s=>s.id===topFilter)?.name.split(' ')[0]||''));
+  const tb=document.getElementById('topBadge');if(tb)tb.textContent=badge;
+  const tl=document.getElementById('topList');
+  if(tl){
+    if(sorted.length===0){tl.innerHTML='<div class="empty"><div class="icon">📦</div>কোনো বিক্রি ডেটা নেই</div>'}
+    else{
+      const colors=['gold','silver','bronze','normal','normal','normal','normal','normal','normal','normal'];
+      tl.innerHTML=sorted.map(([name,d],i)=>{
+        const pct=totalVal?(d.val/totalVal*100).toFixed(1):0;
+        return `<div class="list-item" style="margin-bottom:6px"><div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0"><span class="rank-badge ${colors[i]}">${i+1}</span><div style="min-width:0;flex:1"><div class="list-item-name">${name}</div><div class="list-item-sub">${(d.qty/d.pcs).toFixed(1)} ctn • ${pct}%</div></div></div><div style="font-weight:800;color:var(--success);font-size:12px">৳${Math.round(d.val).toLocaleString()}</div></div>`;
+      }).join('');
+    }
+  }
+  drawBarChart('chartTop',sorted.map(x=>x[0].split(' ')[0]),[{label:'বিক্রি',data:sorted.map(x=>x[1].val),bg:'#1E9E6B'}]);
+  const tt=document.getElementById('topTable');
+  if(tt){
+    if(sorted.length===0){tt.innerHTML='<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--muted)">কোনো ডেটা নেই</td></tr>'}
+    else{tt.innerHTML=sorted.map(([name,d],i)=>{const pct=totalVal?(d.val/totalVal*100).toFixed(1):0;return `<tr><td><b>${i+1}</b></td><td>${name}</td><td>${(d.qty/d.pcs).toFixed(1)}</td><td>৳${Math.round(d.val).toLocaleString()}</td><td>${pct}%</td></tr>`}).join('')}
+  }
+}
+
+/* ============= AUTOMATION ============= */
+function renderAutomation(){
+  const today=new Date().toISOString().split('T')[0];
+  const wa=new Date();wa.setDate(wa.getDate()-7);
+  const weekStart=wa.toISOString().split('T')[0];
+  let tO=0,tV=0,tVC=0,tVCV=0;
+  automations.filter(a=>a.date===today).forEach(a=>{tO+=a.outlet||0;tV+=a.visit||0;tVC+=a.vc||0;tVCV+=a.vcv||0});
+  const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v};
+  set('autoTodayOutlet',tO);set('autoTodayVisit',tV);
+  set('autoTodayVisitPct',tO?(tV/tO*100).toFixed(1)+'%':'0%');
+  set('autoVCCooler',tVC);set('autoVCVisit',tVCV);
+  set('autoVCPct',tVC?(tVCV/tVC*100).toFixed(1)+'%':'0%');
+  const weekData={};
+  automations.filter(a=>a.date>=weekStart&&a.date<=today).forEach(a=>{
+    if(!weekData[a.so_id])weekData[a.so_id]={outlet:0,visit:0,vc:0,vcv:0,dmsYes:0,dmsTotal:0};
+    weekData[a.so_id].outlet+=a.outlet||0;
+    weekData[a.so_id].visit+=a.visit||0;
+    weekData[a.so_id].vc+=a.vc||0;
+    weekData[a.so_id].vcv+=a.vcv||0;
+    weekData[a.so_id].dmsTotal+=1;
+    if(a.dms==='Yes')weekData[a.so_id].dmsYes+=1;
+  });
+  const wt=document.getElementById('autoWeekTable');
+  if(wt){
+    const list=currentRole==='so'?sos.filter(s=>s.id===currentUser):sos;
+    wt.innerHTML=list.map(s=>{
+      const d=weekData[s.id]||{outlet:0,visit:0,dmsYes:0,dmsTotal:0};
+      const pct=d.outlet?(d.visit/d.outlet*100).toFixed(1)+'%':'0%';
+      return `<tr><td>${s.name.split(' ')[0]}</td><td>${d.outlet}</td><td>${d.visit}</td><td style="font-weight:700;color:var(--success)">${pct}</td><td>${d.dmsYes}/${d.dmsTotal}</td></tr>`;
+    }).join('');
+  }
+}
+function saveAutomation(){
+  if(currentRole!=='admin'){toast('শুধু অ্যাডমিন এন্ট্রি দিতে পারবে',true);return}
+  const date=document.getElementById('autoDate').value,so_id=document.getElementById('autoSO').value,route=document.getElementById('autoRoute').value;
+  const outlet=Math.max(0,parseInt(document.getElementById('autoOutlet').value)||0);
+  const visit=Math.max(0,parseInt(document.getElementById('autoVisit').value)||0);
+  const vc=Math.max(0,parseInt(document.getElementById('autoVC').value)||0);
+  const vcv=Math.max(0,parseInt(document.getElementById('autoVCV').value)||0);
+  const dms=document.getElementById('autoDMS').value;
+  if(!outlet&&!visit&&!vc&&!vcv){toast('অন্তত একটি মান দিন',true);return}
+  const entry={id:Date.now(),date,so_id,route,outlet,visit,vc,vcv,dms,ts:new Date().toISOString()};
+  automations.push(entry);DB.save('bb_automations',automations);syncToSheet('saveAutomation',entry);
+  ['autoOutlet','autoVisit','autoVC','autoVCV'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=''});
+  renderAutomation();toast('✅ সেভ হয়েছে!');
+}
+
+/* ============= DAMAGE ============= */
+function renderDamageInputs(){
+  const el=document.getElementById('dmgInputs');if(!el)return;
+  el.innerHTML=products.map((p,i)=>`<div class="form-row" style="align-items:center;margin-bottom:8px"><div style="font-size:11px;font-weight:600">${p.name}<br><span style="font-size:9px;color:var(--muted)">${p.pcs}pcs/ctn</span></div><input type="number" id="dmg_${i}" min="0" placeholder="0" inputmode="numeric" style="padding:9px;background:var(--surface-2);border:1.5px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;text-align:center"></div>`).join('');
+}
+function saveDamage(){
+  if(currentRole!=='admin'){toast('শুধু অ্যাডমিন এন্ট্রি দিতে পারবে',true);return}
+  const type=document.getElementById('dmgType').value,date=document.getElementById('dmgDate').value,month=date.slice(0,7);
+  const items={};let total=0;
+  products.forEach((p,i)=>{const el=document.getElementById('dmg_'+i);const v=el?Math.max(0,parseInt(el.value)||0):0;if(v>0){items[p.name]=v;total+=v}});
+  if(total===0){toast('পরিমাণ দিন',true);return}
+  const bucket=type==='warehouse'?'warehouse':'return';
+  const key=`${bucket}_${month}`;
+  if(!damages[bucket])damages[bucket]={};
+  if(!damages[bucket][key])damages[bucket][key]={};
+  Object.keys(items).forEach(k=>{damages[bucket][key][k]=(damages[bucket][key][k]||0)+items[k]});
+  DB.save('bb_damages',damages);syncToSheet('saveDamage',{type,month,items});
+  products.forEach((_,i)=>{const el=document.getElementById('dmg_'+i);if(el)el.value=''});
+  renderDamage();toast('✅ ড্যামেজ সেভ হয়েছে!');
+}
+function renderDamage(){
+  const month=getSelectedDmgMonth();
+  const me=filterByMonth(entries,month);
+  const wh=(damages.warehouse||{})[`warehouse_${month}`]||{};
+  const rt=(damages.return||{})[`return_${month}`]||{};
+  const dailyDmg={};
+  me.filter(e=>e.type==='damage').forEach(e=>{products.forEach(p=>{const q=e.items[p.name]||0;if(q)dailyDmg[p.name]=(dailyDmg[p.name]||0)+q})});
+  let tWH=0,tRT=0,tAll=0;let rows='';
+  products.forEach(p=>{
+    const w=wh[p.name]||0,r=rt[p.name]||0,d=dailyDmg[p.name]||0;
+    const tw=w+d,present=tw-r;
+    tWH+=tw;tRT+=r;tAll+=present;
+    rows+=`<tr><td>${p.name}</td><td>${(tw/p.pcs).toFixed(1)}</td><td>${(r/p.pcs).toFixed(1)}</td><td style="font-weight:700;color:var(--danger)">${(present/p.pcs).toFixed(1)}</td></tr>`;
+  });
+  const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v};
+  set('dmgWarehouse',(tWH/24).toFixed(0)+' ctn');
+  set('dmgReturn',(tRT/24).toFixed(0)+' ctn');
+  set('dmgTotal',(tAll/24).toFixed(0)+' ctn');
+  const dt=document.getElementById('dmgTable');if(dt)dt.innerHTML=rows;
+  const bySO={};
+  me.filter(e=>e.type==='damage').forEach(e=>{let total=0;products.forEach(p=>total+=e.items[p.name]||0);bySO[e.user_id]=(bySO[e.user_id]||0)+total});
+  const soList=sos.map(s=>({name:s.name.split(' ')[0],val:bySO[s.id]||0}));
+  drawBarChart('chartDmg',soList.map(x=>x.name),[{label:'ড্যামেজ (পিস)',data:soList.map(x=>x.val),bg:'#E0393E'}]);
+}
+
+/* ============= SETUP ============= */
+function renderProductMaster(){
+  const el=document.getElementById('prodCount');if(el)el.textContent=products.length;
+  const t=document.getElementById('prodTable');
+  if(t)t.innerHTML=products.map((p,i)=>`<tr><td>${i+1}</td><td>${p.name}</td><td>${p.pcs}</td><td>৳${p.tp}</td><td>৳${(p.tp*p.pcs).toFixed(2)}</td><td>৳${p.dp}</td><td>৳${(p.dp*p.pcs).toFixed(2)}</td><td><button class="mini-btn del" onclick="deleteProduct(${i})">🗑️</button></td></tr>`).join('');
+}
+function renderSetupLists(){
+  const sc=document.getElementById('soCount');if(sc)sc.textContent=sos.length;
+  const sl=document.getElementById('soList');
+  if(sl)sl.innerHTML=sos.map((s,i)=>`<div class="list-item"><div><div class="list-item-name">${s.name}</div><div class="list-item-sub">🔒 পাসওয়ার্ড সংরক্ষিত আছে</div></div><div class="list-item-actions"><button class="mini-btn" style="background:var(--primary-light);color:var(--primary)" onclick="resetSOPassword(${i})">🔑</button><button class="mini-btn del" onclick="deleteSO(${i})">🗑️</button></div></div>`).join('');
+  const dc=document.getElementById('dsrCount');if(dc)dc.textContent=dsrs.length;
+  const dl=document.getElementById('dsrList');
+  if(dl)dl.innerHTML=dsrs.map((d,i)=>`<div class="list-item"><div><div class="list-item-name">${d}</div></div><div class="list-item-actions"><button class="mini-btn del" onclick="deleteDSR(${i})">🗑️</button></div></div>`).join('');
+  const rc=document.getElementById('routeCount');if(rc)rc.textContent=routes.length;
+  const rl=document.getElementById('routeList');
+  if(rl)rl.innerHTML=routes.map((r,i)=>`<div class="list-item"><div><div class="list-item-name">${r}</div></div><div class="list-item-actions"><button class="mini-btn del" onclick="deleteRoute(${i})">🗑️</button></div></div>`).join('');
+  const gc=document.getElementById('guestCount');if(gc)gc.textContent=guests.length;
+  const gl=document.getElementById('guestList');
+  if(gl)gl.innerHTML=guests.map((g,i)=>`<div class="list-item"><div><div class="list-item-name">${g.name}</div><div class="list-item-sub">🔒 পাসওয়ার্ড সংরক্ষিত আছে</div></div><div class="list-item-actions"><button class="mini-btn" style="background:var(--primary-light);color:var(--primary)" onclick="resetGuestPassword(${i})">🔑</button><button class="mini-btn del" onclick="deleteGuest(${i})">🗑️</button></div></div>`).join('');
+}
+
+/* TARGET SETUP */
+function renderTargetInputs(){
+  const so=document.getElementById('setupSO')?.value;
+  const monthEl=document.getElementById('setupMonth');
+  if(!so||!monthEl)return;
+  const month=monthEl.value;
+  const key=`${so}_${month}`;
+  const tgt=targets[key]?.items||{};
+  const box=document.getElementById('targetInputs');
+  if(!box)return;
+  box.innerHTML=products.map((p,i)=>`<div class="form-row" style="align-items:center;margin-bottom:8px"><div style="font-size:11px;font-weight:600">${p.name}<br><span style="font-size:9px;color:var(--muted)">৳${p.tp} • ${p.pcs}pcs/ctn</span></div><input type="number" id="tgt_${i}" value="${tgt[p.name]||''}" min="0" placeholder="0" inputmode="numeric" oninput="calcTargetTotals()" style="padding:9px;background:var(--surface-2);border:1.5px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;text-align:center"></div>`).join('');
+  calcTargetTotals();
+}
+function calcTargetTotals(){
+  let ctn=0,val=0;
+  products.forEach((p,i)=>{const el=document.getElementById('tgt_'+i);const c=Math.max(0,parseInt(el?.value)||0);if(c>0){ctn+=c;val+=c*p.pcs*p.tp}});
+  const a=document.getElementById('tgtTotalCtn');if(a)a.textContent=ctn;
+  const b=document.getElementById('tgtTotalVal');if(b)b.textContent='৳'+Math.round(val).toLocaleString();
+  const c=document.getElementById('tgtDailyVal');if(c)c.textContent='৳'+Math.round(val/26).toLocaleString();
+}
+function saveTarget(){
+  const so=document.getElementById('setupSO').value;
+  const month=document.getElementById('setupMonth').value;
+  if(!so||!month){toast('সেলস অফিসার ও মাস সিলেক্ট করুন',true);return}
+  const items={};let tv=0;
+  products.forEach((p,i)=>{const ctn=Math.max(0,parseInt(document.getElementById('tgt_'+i).value)||0);if(ctn>0){items[p.name]=ctn;tv+=ctn*p.pcs*p.tp}});
+  const key=`${so}_${month}`;
+  targets[key]={items,totalValue:tv};
+  DB.save('bb_targets',targets);
+  syncToSheet('saveTarget',{so,month,items,totalValue:tv});
+  toast('✅ Target saved! (৳'+Math.round(tv).toLocaleString()+')');
+}
+
+/* MODALS */
+function openModal(html){const mc=document.getElementById('modalContent'),mb=document.getElementById('modalBg');if(mc)mc.innerHTML=html;if(mb)mb.classList.add('show')}
+function closeModal(e){if(e)e.stopPropagation();const mb=document.getElementById('modalBg');if(mb)mb.classList.remove('show')}
+
+function openProductModal(){
+  openModal(`<h3>➕ নতুন পণ্য</h3>
+    <div class="form-group"><label>নাম</label><input type="text" id="np_name" placeholder="যেমন: Maxx 500ml"></div>
+    <div class="form-row">
+      <div class="form-group"><label>প্যাক সাইজ</label><input type="number" id="np_pcs" placeholder="24" inputmode="numeric"></div>
+      <div class="form-group"><label>TP (প্রতি পিস)</label><input type="number" id="np_tp" placeholder="0" step="0.01"></div>
+    </div>
+    <div class="form-group"><label>DP (প্রতি পিস)</label><input type="number" id="np_dp" placeholder="0" step="0.01"></div>
+    <button class="btn-sm green btn-block" onclick="addProduct()">✅ যোগ করুন</button>
+    <button class="btn-sm gray btn-block" style="margin-top:8px" onclick="closeModal()">বাতিল</button>`);
+}
+function addProduct(){
+  const name=document.getElementById('np_name').value.trim();
+  const pcs=parseInt(document.getElementById('np_pcs').value)||0;
+  const tp=parseFloat(document.getElementById('np_tp').value)||0;
+  const dp=parseFloat(document.getElementById('np_dp').value)||0;
+  if(!name||!pcs||!tp){toast('সব ঘর পূরণ করুন',true);return}
+  products.push({sl:products.length+1,name,pcs,tp,dp});
+  DB.save('bb_products',products);syncToSheet('saveProduct',{name,pcs,tp,dp});
+  closeModal();renderProductMaster();renderEntryProducts();renderStockInputs();renderDamageInputs();toast('✅ পণ্য যোগ হয়েছে');
+}
+function deleteProduct(i){if(!confirm(products[i].name+' মুছে ফেলবেন?'))return;const name=products[i].name;products.splice(i,1);DB.save('bb_products',products);syncToSheet('deleteProduct',{name});renderProductMaster();renderEntryProducts();toast('🗑️ মুছে ফেলা হয়েছে')}
+
+function openSOModal(){
+  openModal(`<h3>➕ নতুন সেলস অফিসার</h3>
+    <div class="form-group"><label>নাম</label><input type="text" id="ns_name" placeholder="যেমন: করিম মিয়া"></div>
+    <div class="form-group"><label>পাসওয়ার্ড</label><input type="text" id="ns_pass" placeholder="৪+ ডিজিট" inputmode="numeric"></div>
+    <button class="btn-sm green btn-block" onclick="addSO()">✅ যোগ করুন</button>
+    <button class="btn-sm gray btn-block" style="margin-top:8px" onclick="closeModal()">বাতিল</button>`);
+}
+async function addSO(){
+  const name=document.getElementById('ns_name').value.trim();
+  const passRaw=document.getElementById('ns_pass').value.trim();
+  if(!name||passRaw.length<4){toast('নাম ও ৪+ ডিজিটের পাসওয়ার্ড দিন',true);return}
+  const id=name.toLowerCase().replace(/\s+/g,'_');
+  const pass=await hashPass(passRaw);
+  sos.push({id,name,pass});
+  DB.save('bb_sos',sos);syncToSheet('saveSO',{id,name,pass});
+  closeModal();buildLoginList();renderSetupLists();fillDropdowns();buildTabs();toast('✅ যোগ করা হয়েছে');
+}
+function deleteSO(i){if(!confirm(sos[i].name+' মুছে ফেলবেন?'))return;const id=sos[i].id;sos.splice(i,1);DB.save('bb_sos',sos);syncToSheet('deleteSO',{id});buildLoginList();renderSetupLists();fillDropdowns();buildTabs();toast('🗑️ মুছে ফেলা হয়েছে')}
+
+function openDSRModal(){
+  openModal(`<h3>➕ নতুন DSR</h3>
+    <div class="form-group"><label>নাম</label><input type="text" id="nd_name" placeholder="যেমন: তপন দাস"></div>
+    <button class="btn-sm green btn-block" onclick="addDSR()">✅ যোগ করুন</button>
+    <button class="btn-sm gray btn-block" style="margin-top:8px" onclick="closeModal()">বাতিল</button>`);
+}
+function addDSR(){
+  const name=document.getElementById('nd_name').value.trim();
+  if(!name){toast('নাম দিন',true);return}
+  dsrs.push(name);DB.save('bb_dsrs',dsrs);syncToSheet('saveDSR',{name});
+  closeModal();renderSetupLists();fillDropdowns();toast('✅ যোগ করা হয়েছে');
+}
+function deleteDSR(i){if(!confirm(dsrs[i]+' মুছে ফেলবেন?'))return;const name=dsrs[i];dsrs.splice(i,1);DB.save('bb_dsrs',dsrs);syncToSheet('deleteDSR',{name});renderSetupLists();fillDropdowns();toast('🗑️ মুছে ফেলা হয়েছে')}
+
+function openRouteModal(){
+  openModal(`<h3>➕ নতুন রুট</h3>
+    <div class="form-group"><label>নাম</label><input type="text" id="nr_name" placeholder="যেমন: নতুন বাজার"></div>
+    <button class="btn-sm green btn-block" onclick="addRoute()">✅ যোগ করুন</button>
+    <button class="btn-sm gray btn-block" style="margin-top:8px" onclick="closeModal()">বাতিল</button>`);
+}
+function addRoute(){
+  const name=document.getElementById('nr_name').value.trim();
+  if(!name){toast('নাম দিন',true);return}
+  routes.push(name);DB.save('bb_routes',routes);syncToSheet('saveRoute',{name});
+  closeModal();renderSetupLists();fillDropdowns();toast('✅ যোগ করা হয়েছে');
+}
+function deleteRoute(i){if(!confirm(routes[i]+' মুছে ফেলবেন?'))return;const name=routes[i];routes.splice(i,1);DB.save('bb_routes',routes);syncToSheet('deleteRoute',{name});renderSetupLists();fillDropdowns();toast('🗑️ মুছে ফেলা হয়েছে')}
+
+function openGuestModal(){
+  openModal(`<h3>➕ নতুন স্পেশাল গেস্ট</h3>
+    <div class="form-group"><label>নাম</label><input type="text" id="ng_name" placeholder="যেমন: রহিম খান (GM)"></div>
+    <div class="form-group"><label>পাসওয়ার্ড</label><input type="text" id="ng_pass" placeholder="৪+ ডিজিট" inputmode="numeric"></div>
+    <button class="btn-sm green btn-block" onclick="addGuest()">✅ যোগ করুন</button>
+    <button class="btn-sm gray btn-block" style="margin-top:8px" onclick="closeModal()">বাতিল</button>`);
+}
+async function addGuest(){
+  const name=document.getElementById('ng_name').value.trim();
+  const passRaw=document.getElementById('ng_pass').value.trim();
+  if(!name||passRaw.length<4){toast('নাম ও ৪+ ডিজিটের পাসওয়ার্ড দিন',true);return}
+  const id=name.toLowerCase().replace(/\s+/g,'_');
+  const pass=await hashPass(passRaw);
+  guests.push({id,name,pass});
+  DB.save('bb_guests',guests);syncToSheet('saveGuest',{id,name,pass});
+  closeModal();buildLoginList();renderSetupLists();toast('✅ যোগ করা হয়েছে');
+}
+function deleteGuest(i){if(!confirm(guests[i].name+' মুছে ফেলবেন?'))return;const id=guests[i].id;guests.splice(i,1);DB.save('bb_guests',guests);syncToSheet('deleteGuest',{id});buildLoginList();renderSetupLists();toast('🗑️ মুছে ফেলা হয়েছে')}
+
+async function resetSOPassword(i){
+  const np=prompt('নতুন পাসওয়ার্ড দিন (৪+ ডিজিট):');
+  if(np===null)return;
+  if(np.trim().length<4){toast('কমপক্ষে ৪ ডিজিট আবশ্যক',true);return}
+  sos[i].pass=await hashPass(np.trim());
+  DB.save('bb_sos',sos);syncToSheet('saveSO',{id:sos[i].id,name:sos[i].name,pass:sos[i].pass});
+  toast('✅ পাসওয়ার্ড পরিবর্তন হয়েছে');
+}
+async function resetGuestPassword(i){
+  const np=prompt('নতুন পাসওয়ার্ড দিন (৪+ ডিজিট):');
+  if(np===null)return;
+  if(np.trim().length<4){toast('কমপক্ষে ৪ ডিজিট আবশ্যক',true);return}
+  guests[i].pass=await hashPass(np.trim());
+  DB.save('bb_guests',guests);syncToSheet('saveGuest',{id:guests[i].id,name:guests[i].name,pass:guests[i].pass});
+  toast('✅ পাসওয়ার্ড পরিবর্তন হয়েছে');
+}
+
+async function changeAdminPass(){
+  const np=document.getElementById('newAdminPass').value.trim();
+  if(np.length<4){toast('কমপক্ষে ৪ ডিজিট',true);return}
+  adminPass=await hashPass(np);DB.save('bb_admin_pass',adminPass);
+  document.getElementById('newAdminPass').value='';
+  toast('✅ অ্যাডমিন পাসওয়ার্ড পরিবর্তন হয়েছে');
+}
+
+/* EXPORT/IMPORT */
+function exportData(){
+  const data={products,sos,dsrs,routes,guests,entries,targets,stock,damages,automations,adminPass};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='bhaibhai_backup_'+Date.now()+'.json';
+  a.click();
+  toast('✅ এক্সপোর্ট সম্পন্ন হয়েছে');
+}
+function importData(e){
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=ev=>{
+    try{
+      const d=JSON.parse(ev.target.result);
+      if(d.products){products=d.products;DB.save('bb_products',products)}
+      if(d.sos){sos=d.sos;DB.save('bb_sos',sos)}
+      if(d.dsrs){dsrs=d.dsrs;DB.save('bb_dsrs',dsrs)}
+      if(d.routes){routes=d.routes;DB.save('bb_routes',routes)}
+      if(d.guests){guests=d.guests;DB.save('bb_guests',guests)}
+      if(d.entries){entries=d.entries;DB.save('bb_entries',entries)}
+      if(d.targets){targets=d.targets;DB.save('bb_targets',targets)}
+      if(d.stock){stock=d.stock;DB.save('bb_stock',stock)}
+      if(d.damages){damages=d.damages;DB.save('bb_damages',damages)}
+      if(d.automations){automations=d.automations;DB.save('bb_automations',automations)}
+      if(d.adminPass){adminPass=d.adminPass;DB.save('bb_admin_pass',adminPass)}
+      toast('✅ ইমপোর্ট সম্পন্ন হয়েছে');
+      setTimeout(()=>location.reload(),800);
+    }catch(err){toast('ফাইলটি সঠিক নয়',true)}
+  };
+  r.readAsText(f);
+}
+function resetAll(){
+  if(!confirm('⚠️ সব ডেটা (এন্ট্রি, টার্গেট, স্টক, পাসওয়ার্ড) মুছে যাবে। এগিয়ে যাওয়ার আগে "Export" দিয়ে একটা ব্যাকআপ নেওয়ার পরামর্শ দেওয়া হচ্ছে। আপনি কি ব্যাকআপ ছাড়াই সব মুছে ফেলতে চান?'))return;
+  const typed=prompt('নিশ্চিত করতে বড় হাতের অক্ষরে DELETE লিখুন:');
+  if(typed!=='DELETE'){toast('বাতিল করা হয়েছে — কিছু মোছা হয়নি');return}
+  localStorage.clear();location.reload();
+}
+
+/* ============= SYNC ============= *
+ * mode:'no-cors' was removed here on purpose: with it, the browser
+ * never lets us read the server's response, so a failed sync looked
+ * identical to a successful one. Google Apps Script web apps deployed
+ * with "Anyone" access already allow their response to be read
+ * cross-origin, so a normal fetch works and lets us show real
+ * success/failure feedback and actually pull data back down.
+ * See the companion Apps Script file for the matching backend code. */
+async function syncToSheet(action,data){
+  const payload=Object.assign({action},data);
+  try{
+    const res=await fetch(SYNC_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)});
+    const json=await res.json().catch(()=>null);
+    if(!res.ok||(json&&json.success===false)){
+      toast('⚠️ সার্ভারে সিঙ্ক ব্যর্থ (ডেটা মোবাইলে সংরক্ষিত আছে)',true);
+      return null;
+    }
+    return json;
+  }catch(e){
+    console.log('Sync error:',e);
+    toast('⚠️ ইন্টারনেট/সার্ভার সমস্যা — ডেটা শুধু এই ডিভাইসে সংরক্ষিত হলো',true);
+    return null;
+  }
+}
+function showLoader(s){const l=document.getElementById('loader');if(l)l.classList.toggle('show',!!s)}
+
+/* Smoothly counts a KPI number up (or down) to its new value instead of
+   snapping instantly — a small, deliberate touch of polish. */
+function animateNum(id,end,opts){
+  const el=document.getElementById(id);if(!el)return;
+  const o=opts||{},prefix=o.prefix||'',suffix=o.suffix||'',decimals=o.decimals||0;
+  const start=parseFloat((el.textContent||'0').replace(/[^0-9.\-]/g,''))||0;
+  const t0=performance.now(),dur=650;
+  function step(t){
+    const p=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-p,3);
+    const val=start+(end-start)*e;
+    el.textContent=prefix+val.toLocaleString('en-US',{minimumFractionDigits:decimals,maximumFractionDigits:decimals})+suffix;
+    if(p<1)requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+async function loadFromSheet(){
+  if(!confirm('শিট থেকে সর্বশেষ ডেটা আনা হবে এবং এই ডিভাইসের বর্তমান ডেটা প্রতিস্থাপিত হবে। চালিয়ে যাবেন?'))return;
+  showLoader(true);
+  const result=await syncToSheet('loadAll',{});
+  showLoader(false);
+  const d=result&&result.data;
+  if(!d){toast('⚠️ সার্ভার থেকে ডেটা আনা যায়নি',true);return}
+  if(d.products)DB.save('bb_products',d.products);
+  if(d.sos)DB.save('bb_sos',d.sos);
+  if(d.dsrs)DB.save('bb_dsrs',d.dsrs);
+  if(d.routes)DB.save('bb_routes',d.routes);
+  if(d.guests)DB.save('bb_guests',d.guests);
+  if(d.entries)DB.save('bb_entries',d.entries);
+  if(d.targets)DB.save('bb_targets',d.targets);
+  if(d.stock)DB.save('bb_stock',d.stock);
+  if(d.damages)DB.save('bb_damages',d.damages);
+  if(d.automations)DB.save('bb_automations',d.automations);
+  toast('✅ শিট থেকে ডেটা আপডেট হয়েছে');
+  setTimeout(()=>location.reload(),700);
+}
+
+/* TOAST */
+function toast(msg,err){
+  const t=document.getElementById('toast');if(!t)return;
+  t.textContent=msg;
+  t.className='toast show'+(err?' error':'');
+  setTimeout(()=>t.className='toast',2200);
+}
+
+/* CHARTS */
+let chartInstances={};
+function drawBarChart(id,labels,datasets){
+  const el=document.getElementById(id);if(!el)return;
+  if(chartInstances[id])chartInstances[id].destroy();
+  chartInstances[id]=new Chart(el,{type:'bar',data:{labels,datasets:datasets.map(d=>({label:d.label,data:d.data,backgroundColor:d.bg,borderRadius:6,maxBarThickness:32}))},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#5E7B74',font:{size:10,weight:'600'},boxWidth:12}}},scales:{x:{ticks:{color:'#5E7B74',font:{size:9}},grid:{display:false}},y:{ticks:{color:'#5E7B74',font:{size:9}},grid:{color:'rgba(94,123,116,0.12)'}}}}});
+}
+function drawLineChart(id,labels,data){
+  const el=document.getElementById(id);if(!el)return;
+  if(chartInstances[id])chartInstances[id].destroy();
+  chartInstances[id]=new Chart(el,{type:'line',data:{labels,datasets:[{label:'বিক্রি',data,borderColor:'#0E7C66',backgroundColor:'rgba(14,124,102,0.12)',fill:true,tension:0.4,pointRadius:3,pointBackgroundColor:'#0E7C66'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#5E7B74',font:{size:10,weight:'600'},boxWidth:12}}},scales:{x:{ticks:{color:'#5E7B74',font:{size:9}},grid:{display:false}},y:{ticks:{color:'#5E7B74',font:{size:9}},grid:{color:'rgba(94,123,116,0.12)'}}}}});
+}
+function drawPieChart(id,labels,data){
+  const el=document.getElementById(id);if(!el)return;
+  if(chartInstances[id])chartInstances[id].destroy();
+  chartInstances[id]=new Chart(el,{type:'doughnut',data:{labels,datasets:[{data,backgroundColor:['#0E7C66','#FF7A33','#F2C94C','#A8386B','#3AB0A2','#E0393E','#6C8EBF','#8BC34A','#D9601E','#5B8C5A','#C9860A','#4E9F9A','#B5548A','#7FA88C','#E8A33D'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'#5E7B74',font:{size:9},boxWidth:10,padding:6}}}}});
+}
+</script>
+</body>
+</html>
 
