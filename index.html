@@ -340,7 +340,7 @@ tr:nth-child(even) td{background:#F8FBFA}
     </div>
 
     <div id="sec-automation" class="section">
-      <div class="info-banner"><h2>অটোমেশন ও ভিসি কুলার</h2><p>SPRO ও DMS ট্র্যাকিং</p></div>
+      <div class="info-banner"><h2>অটোমেশন ও ভিসি কুলার</h2><p>SPRO ট্র্যাকিং</p></div>
       <div class="kpi-grid three">
         <div class="kpi blue"><div class="kpi-label">🏬 আজকের আউটলেট</div><div class="kpi-value" id="autoTodayOutlet">0</div></div>
         <div class="kpi green"><div class="kpi-label">✅ আজকের ভিজিট</div><div class="kpi-value" id="autoTodayVisit">0</div></div>
@@ -351,16 +351,16 @@ tr:nth-child(even) td{background:#F8FBFA}
         <div class="kpi purple"><div class="kpi-label">🧊 ভিসি ভিজিট</div><div class="kpi-value" id="autoVCVisit">0</div></div>
         <div class="kpi green"><div class="kpi-label">📊 ভিসি%</div><div class="kpi-value" id="autoVCPct">0%</div></div>
       </div>
-      <div class="card"><div class="card-title">SPRO ও DMS — সাপ্তাহিক রিপোর্ট</div>
-        <div class="tbl-wrap"><table><thead><tr><th>অফিসার</th><th>আউটলেট</th><th>ভিজিট</th><th>ভিজিট%</th><th>DMS</th></tr></thead><tbody id="autoWeekTable"></tbody></table></div>
+      <div class="card"><div class="card-title">SPRO — সাপ্তাহিক রিপোর্ট</div>
+        <div class="tbl-wrap"><table><thead><tr><th>অফিসার</th><th>আউটলেট</th><th>ভিজিট</th><th>ভিজিট%</th></tr></thead><tbody id="autoWeekTable"></tbody></table></div>
       </div>
       <div class="card" id="autoEntryCard">
-        <div class="card-title">SPRO ও DMS — এন্ট্রি <span class="badge purple">অ্যাডমিন</span></div>
+        <div class="card-title">SPRO — এন্ট্রি <span class="badge purple">অ্যাডমিন</span></div>
         <div class="form-row">
           <div class="form-group"><label>তারিখ</label><input type="date" id="autoDate"></div>
           <div class="form-group"><label>অফিসার</label><select id="autoSO"></select></div>
         </div>
-        <div class="form-group"><label>Route</label><select id="autoRoute"></select></div>
+        <div class="form-group"><label>রুট</label><select id="autoRoute"></select></div>
         <div class="form-row">
           <div class="form-group"><label>Outlet</label><input type="number" id="autoOutlet" min="0" placeholder="0" inputmode="numeric"></div>
           <div class="form-group"><label>Visit</label><input type="number" id="autoVisit" min="0" placeholder="0" inputmode="numeric"></div>
@@ -368,9 +368,6 @@ tr:nth-child(even) td{background:#F8FBFA}
         <div class="form-row">
           <div class="form-group"><label>VC Cooler</label><input type="number" id="autoVC" min="0" placeholder="0" inputmode="numeric"></div>
           <div class="form-group"><label>VC Visit</label><input type="number" id="autoVCV" min="0" placeholder="0" inputmode="numeric"></div>
-        </div>
-        <div class="form-group"><label>DMS</label>
-          <select id="autoDMS"><option value="Yes">✅ হ্যাঁ</option><option value="No">❎ না</option></select>
         </div>
         <button class="btn-sm green btn-block" onclick="saveAutomation()">💾 এন্ট্রি সেভ করুন</button>
       </div>
@@ -700,7 +697,7 @@ function getSelectedTopMonth(){return monthKey('top')}
 function getSelectedStockMonth(){return monthKey('stock')}
 function getSelectedDmgMonth(){return monthKey('dmg')}
 function filterByMonth(arr,m){return arr.filter(e=>e.date&&e.date.startsWith(m))}
-function filterByUser(arr){if(currentRole==='admin')return arr;return arr.filter(e=>e.user_id===currentUser)}
+function filterByUser(arr){return arr}
 
 /* ============= DROPDOWNS ============= */
 function fillDropdowns(){
@@ -750,9 +747,7 @@ function saveEntry(){
 }
 function renderTodaySummary(){
   const today=document.getElementById('entryDate')?.value||new Date().toISOString().split('T')[0];
-  let mine=entries.filter(e=>e.date===today);
-  if(currentRole==='so')mine=mine.filter(e=>e.user_id===currentUser);
-  else if(currentRole==='guest')mine=[];
+  const mine=entries.filter(e=>e.date===today);
   let oC=0,oV=0,sC=0,sV=0,d=0,disc=0;
   mine.forEach(e=>{products.forEach(p=>{const q=e.items[p.name]||0;if(e.type==='order'){oC+=q/p.pcs;oV+=q*p.tp}if(e.type==='sales'){sC+=q/p.pcs;sV+=q*p.tp}if(e.type==='damage')d+=q});if(e.type==='commission')disc+=(e.amount||0)});
   const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v};
@@ -772,8 +767,7 @@ function renderDashboard(){
     if(e.type==='commission')tc+=(e.amount||0);
   });
   let tt=0;
-  if(currentRole==='admin'){sos.forEach(s=>{tt+=(targets[`${s.id}_${month}`]?.totalValue||0)})}
-  else if(currentRole==='so'){tt=targets[`${currentUser}_${month}`]?.totalValue||0}
+  sos.forEach(s=>{tt+=(targets[`${s.id}_${month}`]?.totalValue||0)});
   const a=tt?(ts/tt*100):0;
   animateNum('kpiSales',ts,{prefix:'৳'});
   animateNum('kpiTarget',tt,{prefix:'৳'});
@@ -793,7 +787,7 @@ function renderDashboard(){
   const mb=document.getElementById('monthBadge');if(mb)mb.textContent=new Date(yy,mm-1).toLocaleDateString('en-US',{month:'short',year:'numeric'});
   const mp=document.getElementById('monthProgress');if(mp)mp.style.width=pct+'%';
   set('monthElapsed',el+' days elapsed');set('monthRemain',(dim-el)+' days left');
-  const soList=currentRole==='so'?sos.filter(s=>s.id===currentUser):sos;
+  const soList=sos;
   drawBarChart('chartSO',soList.map(s=>s.name.split(' ')[0]),[
     {label:'বিক্রি',data:soList.map(s=>soSales[s.id]||0),bg:'#0E7C66'},
     {label:'টার্গেট',data:soList.map(s=>targets[`${s.id}_${month}`]?.totalValue||0),bg:'#FF7A33'}
@@ -814,16 +808,12 @@ function renderDashboard(){
   }
   const rk=document.getElementById('rankTable');
   if(rk){
-    if(currentRole==='admin'){
-      const ranks=sos.map(s=>({name:s.name,sales:soSales[s.id]||0,target:targets[`${s.id}_${month}`]?.totalValue||0})).sort((a,b)=>b.sales-a.sales);
-      rk.innerHTML=ranks.map((r,i)=>{
-        const c=i===0?'gold':i===1?'silver':i===2?'bronze':'normal';
-        const pct=r.target?(r.sales/r.target*100).toFixed(1):'0';
-        return `<tr><td><span class="rank-badge ${c}">${i+1}</span></td><td>${r.name}</td><td>৳${Math.round(r.sales).toLocaleString()}</td><td>${pct}%</td></tr>`;
-      }).join('');
-    } else {
-      rk.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:20px">শুধু অ্যাডমিন র‍্যাংকিং দেখতে পারবে</td></tr>';
-    }
+    const ranks=sos.map(s=>({name:s.name,sales:soSales[s.id]||0,target:targets[`${s.id}_${month}`]?.totalValue||0})).sort((a,b)=>b.sales-a.sales);
+    rk.innerHTML=ranks.map((r,i)=>{
+      const c=i===0?'gold':i===1?'silver':i===2?'bronze':'normal';
+      const pct=r.target?(r.sales/r.target*100).toFixed(1):'0';
+      return `<tr><td><span class="rank-badge ${c}">${i+1}</span></td><td>${r.name}</td><td>৳${Math.round(r.sales).toLocaleString()}</td><td>${pct}%</td></tr>`;
+    }).join('');
   }
 }
 
@@ -873,7 +863,7 @@ function renderReports(){
   const me=filterByMonth(entries,month),fl=filterByUser(me);
   const soSales={};
   fl.filter(e=>e.type==='sales').forEach(e=>{let v=0;products.forEach(p=>v+=(e.items[p.name]||0)*p.tp);soSales[e.user_id]=(soSales[e.user_id]||0)+v});
-  const list=currentRole==='so'?sos.filter(s=>s.id===currentUser):sos;
+  const list=sos;
   const rt=document.getElementById('repTable');
   if(rt){
     rt.innerHTML=list.map(s=>{
@@ -894,7 +884,7 @@ function renderReports(){
   me.filter(e=>e.type==='damage').forEach(e=>{let total=0;products.forEach(p=>total+=(e.items[p.name]||0));dmgBySO[e.user_id]=(dmgBySO[e.user_id]||0)+total});
   const dmgTable=document.getElementById('damageReportTable');
   if(dmgTable){
-    const dmgList=currentRole==='so'?sos.filter(s=>s.id===currentUser):sos;
+    const dmgList=sos;
     dmgTable.innerHTML=dmgList.map(s=>{
       let whs=0,rts=0;
       if(wh[s.id])products.forEach(p=>whs+=(wh[s.id][p.name]||0));
@@ -911,19 +901,15 @@ function renderTopProducts(){
   const me=filterByMonth(entries,month);
   const chips=document.getElementById('topFilter');
   if(chips){
-    if(currentRole==='admin'){
-      chips.innerHTML=`<div class="chip${topFilter==='all'?' active':''}" onclick="topFilter='all';renderTopProducts()">সম্মিলিত</div>`+sos.map(s=>`<div class="chip${topFilter===s.id?' active':''}" onclick="topFilter='${s.id}';renderTopProducts()">${s.name.split(' ')[0]}</div>`).join('');
-    } else if(currentRole==='so'){chips.innerHTML=`<div class="chip active">My Products</div>`}
-    else {chips.innerHTML=`<div class="chip active">সম্মিলিত</div>`}
+    chips.innerHTML=`<div class="chip${topFilter==='all'?' active':''}" onclick="topFilter='all';renderTopProducts()">সম্মিলিত</div>`+sos.map(s=>`<div class="chip${topFilter===s.id?' active':''}" onclick="topFilter='${s.id}';renderTopProducts()">${s.name.split(' ')[0]}</div>`).join('');
   }
   let filtered=me.filter(e=>e.type==='sales');
-  if(currentRole==='so'){filtered=filtered.filter(e=>e.user_id===currentUser)}
-  else if(currentRole==='admin'&&topFilter!=='all'){filtered=filtered.filter(e=>e.user_id===topFilter)}
+  if(topFilter!=='all'){filtered=filtered.filter(e=>e.user_id===topFilter)}
   const prodSales={};
   filtered.forEach(e=>{products.forEach(p=>{const q=e.items[p.name]||0;if(q){if(!prodSales[p.name])prodSales[p.name]={qty:0,val:0,pcs:p.pcs};prodSales[p.name].qty+=q;prodSales[p.name].val+=q*p.tp}})});
   const sorted=Object.entries(prodSales).sort((a,b)=>b[1].val-a[1].val).slice(0,10);
   const totalVal=Object.values(prodSales).reduce((s,x)=>s+x.val,0);
-  const badge=topFilter==='all'?'সম্মিলিত':(currentRole==='so'?'আমার':(sos.find(s=>s.id===topFilter)?.name.split(' ')[0]||''));
+  const badge=topFilter==='all'?'সম্মিলিত':(sos.find(s=>s.id===topFilter)?.name.split(' ')[0]||'');
   const tb=document.getElementById('topBadge');if(tb)tb.textContent=badge;
   const tl=document.getElementById('topList');
   if(tl){
@@ -958,21 +944,19 @@ function renderAutomation(){
   set('autoVCPct',tVC?(tVCV/tVC*100).toFixed(1)+'%':'0%');
   const weekData={};
   automations.filter(a=>a.date>=weekStart&&a.date<=today).forEach(a=>{
-    if(!weekData[a.so_id])weekData[a.so_id]={outlet:0,visit:0,vc:0,vcv:0,dmsYes:0,dmsTotal:0};
+    if(!weekData[a.so_id])weekData[a.so_id]={outlet:0,visit:0,vc:0,vcv:0};
     weekData[a.so_id].outlet+=a.outlet||0;
     weekData[a.so_id].visit+=a.visit||0;
     weekData[a.so_id].vc+=a.vc||0;
     weekData[a.so_id].vcv+=a.vcv||0;
-    weekData[a.so_id].dmsTotal+=1;
-    if(a.dms==='Yes')weekData[a.so_id].dmsYes+=1;
   });
   const wt=document.getElementById('autoWeekTable');
   if(wt){
-    const list=currentRole==='so'?sos.filter(s=>s.id===currentUser):sos;
+    const list=sos;
     wt.innerHTML=list.map(s=>{
-      const d=weekData[s.id]||{outlet:0,visit:0,dmsYes:0,dmsTotal:0};
+      const d=weekData[s.id]||{outlet:0,visit:0};
       const pct=d.outlet?(d.visit/d.outlet*100).toFixed(1)+'%':'0%';
-      return `<tr><td>${s.name.split(' ')[0]}</td><td>${d.outlet}</td><td>${d.visit}</td><td style="font-weight:700;color:var(--success)">${pct}</td><td>${d.dmsYes}/${d.dmsTotal}</td></tr>`;
+      return `<tr><td>${s.name.split(' ')[0]}</td><td>${d.outlet}</td><td>${d.visit}</td><td style="font-weight:700;color:var(--success)">${pct}</td></tr>`;
     }).join('');
   }
 }
@@ -983,9 +967,8 @@ function saveAutomation(){
   const visit=Math.max(0,parseInt(document.getElementById('autoVisit').value)||0);
   const vc=Math.max(0,parseInt(document.getElementById('autoVC').value)||0);
   const vcv=Math.max(0,parseInt(document.getElementById('autoVCV').value)||0);
-  const dms=document.getElementById('autoDMS').value;
   if(!outlet&&!visit&&!vc&&!vcv){toast('অন্তত একটি মান দিন',true);return}
-  const entry={id:Date.now(),date,so_id,route,outlet,visit,vc,vcv,dms,ts:new Date().toISOString()};
+  const entry={id:Date.now(),date,so_id,route,outlet,visit,vc,vcv,ts:new Date().toISOString()};
   automations.push(entry);DB.save('bb_automations',automations);syncToSheet('saveAutomation',entry);
   ['autoOutlet','autoVisit','autoVC','autoVCV'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=''});
   renderAutomation();toast('✅ সেভ হয়েছে!');
