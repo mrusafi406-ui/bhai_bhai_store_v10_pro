@@ -201,7 +201,9 @@ tr:nth-child(even) td{background:var(--surface-2)}
 .info-banner{background:var(--grad);color:#fff;padding:18px;border-radius:var(--radius);margin-bottom:12px;position:relative;overflow:hidden}
 .info-banner::after{content:'';position:absolute;width:170px;height:170px;border-radius:50%;background:radial-gradient(circle,rgba(255,122,51,.25),transparent 70%);top:-60px;right:-50px}
 .info-banner h2{font-family:'Sora',sans-serif;font-size:15px;font-weight:800;margin-bottom:3px;position:relative;z-index:2;letter-spacing:-.1px}
-.info-banner p{font-size:10.5px;opacity:0.85;font-weight:600;position:relative;z-index:2}
+.info-banner p{font-size:10.5px;opacity:0.85;font-weight:600;position:relative;z-index:2;max-width:65%}
+.banner-clock{position:absolute;top:12px;right:14px;background:rgba(255,255,255,.18);backdrop-filter:blur(6px);padding:5px 10px;border-radius:9px;font-size:11px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:.5px;color:#fff;z-index:3;font-family:'Sora',sans-serif;border:1px solid rgba(255,255,255,.18);display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.banner-clock::before{content:'🕐';font-size:11px}
 
 /* QUICK ACTIONS */
 .quick-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
@@ -245,7 +247,7 @@ tr:nth-child(even) td{background:var(--surface-2)}
     </div>
     <button class="btn" id="loginBtn" onclick="doLogin()">সাইন ইন →</button>
     <div id="lockoutMsg" style="display:none;text-align:center;font-size:10px;color:var(--danger);font-weight:700;margin-top:10px"></div>
-    <div class="login-version">V10.0 PRO</div>
+    <div class="login-version">V10.1 PRO</div>
     <p style="text-align:center;font-size:10px;color:var(--muted);margin-top:8px">©2026-27. Developed by Maruf@Hossain</p>
   </div>
 </div>
@@ -276,7 +278,10 @@ tr:nth-child(even) td{background:var(--surface-2)}
   <div class="container">
     <!-- DASHBOARD -->
     <div id="sec-dashboard" class="section active">
-      <div class="info-banner"><h2 id="dashGreeting">স্বাগতম, Admin</h2><p><span id="dashMonth"></span> মাসের ব্যবসায়িক ওভারভিউ</p></div>
+      <div class="info-banner">
+        <div class="banner-clock live-clock">--:--</div>
+        <h2 id="dashGreeting">স্বাগতম, Admin</h2><p><span id="dashMonth"></span> মাসের ব্যবসায়িক ওভারভিউ</p>
+      </div>
       <div class="quick-actions">
         <div class="quick-btn" onclick="switchTab('entry')"><span class="ico">📝</span><span class="lbl">নতুন এন্ট্রি</span></div>
         <div class="quick-btn" onclick="switchTab('report')"><span class="ico">📈</span><span class="lbl">রিপোর্ট</span></div>
@@ -311,13 +316,16 @@ tr:nth-child(even) td{background:var(--surface-2)}
       <div class="card"><div class="card-title">সেলস অফিসার র‍্যাংকিং</div>
         <div class="tbl-wrap"><table><thead><tr><th>#</th><th>অফিসার</th><th>বিক্রি</th><th>অর্জন%</th></tr></thead><tbody id="rankTable"></tbody></table></div>
       </div>
-      <div class="version-stamp">V10.0 PRO</div>
+      <div class="version-stamp">V10.1 PRO</div>
       <div class="watermark">©2026-27. Developed by Maruf@Hossain. All rights reserved.</div>
     </div>
 
     <!-- STOCK -->
     <div id="sec-stock" class="section">
-      <div class="info-banner"><h2>স্টক রিপোর্ট</h2><p>গুদামের স্টক ওভারভিউ</p></div>
+      <div class="info-banner">
+        <div class="banner-clock live-clock">--:--</div>
+        <h2>স্টক রিপোর্ট</h2><p>গুদামের স্টক ওভারভিউ</p>
+      </div>
       <div class="form-row">
         <div class="form-group"><label>মাস</label><select id="stockMonthSel" onchange="renderInventory()"></select></div>
         <div class="form-group"><label>বছর</label><select id="stockYearSel" onchange="renderInventory()"></select></div>
@@ -342,13 +350,16 @@ tr:nth-child(even) td{background:var(--surface-2)}
         <div id="stockInputs" style="max-height:280px;overflow-y:auto"></div>
         <button class="btn-sm green btn-block" style="margin-top:10px" onclick="saveStock()">💾 স্টক সেভ করুন</button>
       </div>
-      <div class="version-stamp">V10.0 PRO</div>
+      <div class="version-stamp">V10.1 PRO</div>
       <div class="watermark">©2026-27. Developed by Maruf@Hossain. All rights reserved.</div>
     </div>
 
     <!-- REPORT -->
     <div id="sec-report" class="section">
-      <div class="info-banner"><h2>রিপোর্ট</h2><p>পারফরম্যান্স অ্যানালিটিক্স</p></div>
+      <div class="info-banner">
+        <div class="banner-clock live-clock">--:--</div>
+        <h2>রিপোর্ট</h2><p>পারফরম্যান্স অ্যানালিটিক্স</p>
+      </div>
       <div class="form-row">
         <div class="form-group"><label>মাস</label><select id="repMonthSel" onchange="renderReports()"></select></div>
         <div class="form-group"><label>বছর</label><select id="repYearSel" onchange="renderReports()"></select></div>
@@ -360,13 +371,16 @@ tr:nth-child(even) td{background:var(--surface-2)}
       <div class="card"><div class="card-title">ড্যামেজ রিপোর্ট</div>
         <div class="tbl-wrap"><table><thead><tr><th>অফিসার</th><th>গুদাম</th><th>ফেরত</th><th>বর্তমান</th></tr></thead><tbody id="damageReportTable"></tbody></table></div>
       </div>
-      <div class="version-stamp">V10.0 PRO</div>
+      <div class="version-stamp">V10.1 PRO</div>
       <div class="watermark">©2026-27. Developed by Maruf@Hossain. All rights reserved.</div>
     </div>
 
     <!-- TOP -->
     <div id="sec-top" class="section">
-      <div class="info-banner"><h2>সেরা বিক্রিত পণ্য</h2><p>সেরা পারফরমারগণ</p></div>
+      <div class="info-banner">
+        <div class="banner-clock live-clock">--:--</div>
+        <h2>সেরা বিক্রিত পণ্য</h2><p>সেরা পারফরমারগণ</p>
+      </div>
       <div class="form-row">
         <div class="form-group"><label>মাস</label><select id="topMonthSel" onchange="renderTopProducts()"></select></div>
         <div class="form-group"><label>বছর</label><select id="topYearSel" onchange="renderTopProducts()"></select></div>
@@ -377,13 +391,16 @@ tr:nth-child(even) td{background:var(--surface-2)}
       <div class="card"><div class="card-title">বিস্তারিত</div>
         <div class="tbl-wrap"><table><thead><tr><th>#</th><th>পণ্য</th><th>কার্টন</th><th>মূল্য</th><th>%</th></tr></thead><tbody id="topTable"></tbody></table></div>
       </div>
-      <div class="version-stamp">V10.0 PRO</div>
+      <div class="version-stamp">V10.1 PRO</div>
       <div class="watermark">©2026-27. Developed by Maruf@Hossain. All rights reserved.</div>
     </div>
 
     <!-- AUTOMATION -->
     <div id="sec-automation" class="section">
-      <div class="info-banner"><h2>অটোমেশন ও ভিসি কুলার</h2><p>SPRO ট্র্যাকিং</p></div>
+      <div class="info-banner">
+        <div class="banner-clock live-clock">--:--</div>
+        <h2>অটোমেশন ও ভিসি কুলার</h2><p>SPRO ট্র্যাকিং</p>
+      </div>
       <div class="kpi-grid three">
         <div class="kpi blue"><div class="kpi-label">🏬 আজকের আউটলেট</div><div class="kpi-value" id="autoTodayOutlet">0</div></div>
         <div class="kpi green"><div class="kpi-label">✅ আজকের ভিজিট</div><div class="kpi-value" id="autoTodayVisit">0</div></div>
@@ -414,13 +431,16 @@ tr:nth-child(even) td{background:var(--surface-2)}
         </div>
         <button class="btn-sm green btn-block" onclick="saveAutomation()">💾 এন্ট্রি সেভ করুন</button>
       </div>
-      <div class="version-stamp">V10.0 PRO</div>
+      <div class="version-stamp">V10.1 PRO</div>
       <div class="watermark">©2026-27. Developed by Maruf@Hossain. All rights reserved.</div>
     </div>
 
     <!-- DAMAGE -->
     <div id="sec-damage" class="section">
-      <div class="info-banner"><h2>ড্যামেজ ও কমিশন</h2><p>গুদাম ড্যামেজ ও রিটার্ন</p></div>
+      <div class="info-banner">
+        <div class="banner-clock live-clock">--:--</div>
+        <h2>ড্যামেজ ও কমিশন</h2><p>গুদাম ড্যামেজ ও রিটার্ন</p>
+      </div>
       <div class="form-row">
         <div class="form-group"><label>মাস</label><select id="dmgMonthSel" onchange="renderDamage()"></select></div>
         <div class="form-group"><label>বছর</label><select id="dmgYearSel" onchange="renderDamage()"></select></div>
@@ -445,13 +465,16 @@ tr:nth-child(even) td{background:var(--surface-2)}
         <div class="tbl-wrap"><table><thead><tr><th>পণ্য</th><th>গুদাম</th><th>ফেরত</th><th>মোট</th></tr></thead><tbody id="dmgTable"></tbody></table></div>
       </div>
       <div class="card"><div class="card-title">অফিসার অনুযায়ী ড্যামেজ</div><div class="chart-box"><canvas id="chartDmg"></canvas></div></div>
-      <div class="version-stamp">V10.0 PRO</div>
+      <div class="version-stamp">V10.1 PRO</div>
       <div class="watermark">©2026-27. Developed by Maruf@Hossain. All rights reserved.</div>
     </div>
 
     <!-- ENTRY -->
     <div id="sec-entry" class="section">
-      <div class="info-banner"><h2>দৈনিক এন্ট্রি</h2><p id="entryWelcome">স্বাগতম</p></div>
+      <div class="info-banner">
+        <div class="banner-clock live-clock">--:--</div>
+        <h2>দৈনিক এন্ট্রি</h2><p id="entryWelcome">স্বাগতম</p>
+      </div>
       <div class="card">
         <div class="card-title">এন্ট্রি ফর্ম <span class="badge" id="todayDate"></span></div>
         <div class="form-row">
@@ -493,13 +516,16 @@ tr:nth-child(even) td{background:var(--surface-2)}
           <div class="kpi purple"><div class="kpi-label">কমিশন</div><div class="kpi-value" id="tDisc">৳0</div></div>
         </div>
       </div>
-      <div class="version-stamp">V10.0 PRO</div>
+      <div class="version-stamp">V10.1 PRO</div>
       <div class="watermark">©2026-27. Developed by Maruf@Hossain. All rights reserved.</div>
     </div>
 
     <!-- SETUP -->
     <div id="sec-setup" class="section">
-      <div class="info-banner"><h2>সেটআপ</h2><p>মাস্টার ডেটা ম্যানেজমেন্ট</p></div>
+      <div class="info-banner">
+        <div class="banner-clock live-clock">--:--</div>
+        <h2>সেটআপ</h2><p>মাস্টার ডেটা ম্যানেজমেন্ট</p>
+      </div>
       <div class="card">
         <div class="card-title">পণ্যের তালিকা <span class="badge" id="prodCount">0</span></div>
         <button class="btn-sm green btn-block" style="margin-bottom:10px" onclick="openProductModal()">➕ নতুন পণ্য</button>
@@ -558,7 +584,7 @@ tr:nth-child(even) td{background:var(--surface-2)}
         <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
         <button class="btn-sm red btn-block" style="margin-top:10px" onclick="resetAll()">🗑️ সব রিসেট করুন</button>
       </div>
-      <div class="version-stamp">V10.0 PRO</div>
+      <div class="version-stamp">V10.1 PRO</div>
       <div class="watermark">©2026-27. Developed by Maruf@Hossain. All rights reserved.</div>
     </div>
   </div>
@@ -576,7 +602,7 @@ tr:nth-child(even) td{background:var(--surface-2)}
 <script>
 /* ===== CONFIG ===== */
 const SYNC_URL = "https://script.google.com/macros/s/AKfycbwK1Cz32Eo8tXaH5ffWxlpTnbeQUFpl4CSl62GiYFOPc4j8hJ1-SeE4JZMGdXPHjxR4Aw/exec";
-const APP_VERSION = "10.0 PRO";
+const APP_VERSION = "10.1 PRO";
 const SESSION_TIMEOUT = 8 * 60 * 60 * 1000;
 const SESSION_WARNING_TIME = 5 * 60 * 1000;
 const MAX_LOGIN_ATTEMPTS = 5;
@@ -692,11 +718,20 @@ function applyTheme(){
   if(btn)btn.textContent=t==='dark'?'☀️':'🌙';
 }
 
+/* ===== LIVE CLOCK (all tabs) ===== */
+function updateClock(){
+  const now=new Date();
+  const time=now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',hour12:true});
+  document.querySelectorAll('.live-clock').forEach(el=>{el.textContent=time});
+}
+
 /* ===== INIT ===== */
 window.addEventListener('load',async()=>{
   await migratePasswords();
   applyTheme();
   buildLoginList();
+  updateClock();
+  setInterval(updateClock,30000);
   const s=DB.load('bb_current_user',null),r=DB.load('bb_current_role',null);
   if(s&&r){
     const saved=DB.load('bb_session_start',Date.now());
@@ -766,6 +801,7 @@ function bootApp(){
   const sm=document.getElementById('setupMonth');if(sm)sm.value=nowMonth;
   const td=document.getElementById('todayDate');if(td)td.textContent=today;
   buildMonthYearSelectors();fillDropdowns();renderEntryProducts();renderTodaySummary();renderProductMaster();renderSetupLists();setupPermissionUI();
+  updateClock();
   resetSessionTimer();
 }
 function setupPermissionUI(){
@@ -809,6 +845,7 @@ function switchTab(id,el){
   if(id==='damage'){renderDamage();renderDamageInputs()}
   if(id==='entry'){renderEntryProducts();renderTodaySummary()}
   if(id==='setup'){renderProductMaster();renderSetupLists();fillDropdowns()}
+  updateClock();
   resetSessionTimer();
 }
 
