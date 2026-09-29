@@ -1,39 +1,57 @@
 {
   "name": "Bhai Bhai Store — Sales & Inventory System",
-  "short_name": "Bhai Bhai Store",
-  "description": "Beverage distribution sales, stock and target tracking for Bhai Bhai Store, Gazipur.",
+  "short_name": "Bhai Bhai",
+  "description": "সেলস, স্টক, টার্গেট ও ইনভেন্টরি ম্যানেজমেন্ট সিস্টেম। Developed by Maruf@Hossain.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#F2F7F5",
   "theme_color": "#073D33",
+  "background_color": "#F2F7F5",
   "lang": "bn",
+  "dir": "ltr",
+  "categories": ["business", "productivity", "finance"],
   "icons": [
     {
       "src": "icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any"
+      "purpose": "any maskable"
     },
     {
       "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any"
+      "purpose": "any maskable"
     },
     {
       "src": "icon-192-maskable.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "নতুন এন্ট্রি",
+      "short_name": "এন্ট্রি",
+      "description": "দ্রুত দৈনিক এন্ট্রি দিন",
+      "url": "./index.html?tab=entry",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
     },
     {
-      "src": "icon-512-maskable.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
+      "name": "রিপোর্ট",
+      "short_name": "রিপোর্ট",
+      "description": "পারফরম্যান্স দেখুন",
+      "url": "./index.html?tab=report",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "ড্যাশবোর্ড",
+      "short_name": "হোম",
+      "description": "মাসিক ওভারভিউ",
+      "url": "./index.html",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
     }
   ]
 }
-
