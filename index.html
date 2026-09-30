@@ -1892,17 +1892,28 @@ async function loadFromSheet(){
   }catch(e){console.log('Load error:',e)}
   showLoader(false);
   if(!d){toast('⚠️ সার্ভার থেকে ডেটা আনা যায়নি',true);return}
-  if(d.products)DB.save('bb_products',d.products);
-  if(d.sos)DB.save('bb_sos',d.sos);
-  if(d.dsrs)DB.save('bb_dsrs',d.dsrs);
-  if(d.routes)DB.save('bb_routes',d.routes);
-  if(d.guests)DB.save('bb_guests',d.guests);
-  if(d.entries)DB.save('bb_entries',d.entries);
-  if(d.targets)DB.save('bb_targets',d.targets);
-  if(d.stock)DB.save('bb_stock',d.stock);
-  if(d.damages)DB.save('bb_damages',d.damages);
-  if(d.automations)DB.save('bb_automations',d.automations);
-  if(d.ledger)DB.save('bb_ledger',d.ledger);
+  const hasRows=(v)=>Array.isArray(v)?v.length>0:(v&&typeof v==='object'?Object.keys(v).length>0:!!v);
+  const incoming=['products','sos','dsrs','routes','guests','entries','targets','stock','damages','automations','ledger'].filter(k=>hasRows(d[k]));
+  if(incoming.length===0){
+    toast('⚠️ শিটে এখনো কোনো ডেটা নেই — ফোনের ডেটা অক্ষত রাখা হলো',true);
+    return;
+  }
+  const empty=['products','sos','dsrs','routes','guests','entries','targets','stock','damages','automations','ledger'].filter(k=>!hasRows(d[k]));
+  if(empty.length>0){
+    const proceed=confirm('⚠️ শিটে এই অংশগুলো খালি দেখাচ্ছে: '+empty.join(', ')+'\n\nএগুলো ফোনে থাকা ডেটার উপর ফাঁকা করে বসিয়ে দেওয়া হবে না — শুধু যেগুলোতে ডেটা আছে সেগুলোই আপডেট হবে। চালিয়ে যাবেন?');
+    if(!proceed)return;
+  }
+  if(hasRows(d.products))DB.save('bb_products',d.products);
+  if(hasRows(d.sos))DB.save('bb_sos',d.sos);
+  if(hasRows(d.dsrs))DB.save('bb_dsrs',d.dsrs);
+  if(hasRows(d.routes))DB.save('bb_routes',d.routes);
+  if(hasRows(d.guests))DB.save('bb_guests',d.guests);
+  if(hasRows(d.entries))DB.save('bb_entries',d.entries);
+  if(hasRows(d.targets))DB.save('bb_targets',d.targets);
+  if(hasRows(d.stock))DB.save('bb_stock',d.stock);
+  if(hasRows(d.damages))DB.save('bb_damages',d.damages);
+  if(hasRows(d.automations))DB.save('bb_automations',d.automations);
+  if(hasRows(d.ledger))DB.save('bb_ledger',d.ledger);
   toast('✅ শিট থেকে ডেটা আপডেট হয়েছে','success');
   setTimeout(()=>location.reload(),700);
 }
