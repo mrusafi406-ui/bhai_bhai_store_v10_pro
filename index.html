@@ -692,7 +692,7 @@ tr:nth-child(even) td{background:var(--surface-2)}
 
 <script>
 /* ===== CONFIG ===== */
-const SYNC_URL = "https://script.google.com/macros/s/AKfycbwK1Cz32Eo8tXaH5ffWxlpTnbeQUFpl4CSl62GiYFOPc4j8hJ1-SeE4JZMGdXPHjxR4Aw/exec";
+const SYNC_URL = "https://script.google.com/macros/s/AKfycbyX74lJdo-yGoAv2v0VtoMNUjMTwHoHKDsz6oh_VY4rtdC8f9FMg2FQ4jhYYxZ85_XFlw/exec";
 const APP_VERSION = "10.1 PRO";
 const SESSION_TIMEOUT = 8 * 60 * 60 * 1000;
 const SESSION_WARNING_TIME = 5 * 60 * 1000;
@@ -916,6 +916,9 @@ function updateOfflineBadge(){const b=document.getElementById('offlineBadge');if
 window.addEventListener('online',updateOfflineBadge);
 window.addEventListener('offline',updateOfflineBadge);
 window.addEventListener('load',async()=>{
+  if('serviceWorker' in navigator){
+    navigator.serviceWorker.register('./sw.js').catch(e=>console.log('SW register failed:',e));
+  }
   updateOfflineBadge();
   await migratePasswords();
   applyTheme();
