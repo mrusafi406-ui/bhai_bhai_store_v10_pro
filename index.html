@@ -1,16 +1,14 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#073D33">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700;800&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <title>Bhai Bhai Store — Sales & Inventory System</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.1/jspdf.plugin.autotable.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -35,13 +33,11 @@
   --text:#E8F0ED;--text-2:#B8CCC6;--muted:#7A9A92;--muted-2:#5A7A72;
   --border:#2A4540;--primary-light:#1A3D34;
 }
-html,body{font-family:'Inter','Hind Siliguri',-apple-system,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
-html[lang="bn"] body{font-family:'Hind Siliguri','Inter',sans-serif}
+html,body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
 body{padding-bottom:78px;min-height:100vh;overflow-x:hidden}
 button{font-family:inherit;cursor:pointer;border:none;outline:none}
 input,select,textarea{font-family:inherit;font-size:14px;outline:none}
 h1,h2,h3,.brandfont{font-family:'Sora','Inter',-apple-system,sans-serif}
-html[lang="bn"] h1,html[lang="bn"] h2,html[lang="bn"] h3{font-family:'Hind Siliguri','Sora',sans-serif}
 ::selection{background:var(--accent-light);color:var(--accent-dark)}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.001s!important}}
@@ -71,8 +67,6 @@ html[lang="bn"] h1,html[lang="bn"] h2,html[lang="bn"] h3{font-family:'Hind Silig
 .btn:active{transform:scale(0.98);box-shadow:0 4px 14px rgba(14,124,102,.35)}
 .btn:disabled{opacity:.6;cursor:not-allowed}
 .login-version{text-align:center;font-size:10px;font-weight:800;color:var(--accent-dark);letter-spacing:1.5px;margin-top:12px;text-transform:uppercase}
-.lang-toggle-login{position:absolute;top:16px;right:16px;z-index:10;background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.3);padding:7px 14px;border-radius:20px;font-size:11px;font-weight:800;backdrop-filter:blur(8px);cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .15s}
-.lang-toggle-login:active{transform:scale(.95);background:rgba(255,255,255,.28)}
 
 /* BUTTONS */
 .btn-sm{padding:10px 14px;border-radius:11px;background:var(--primary);color:#fff;font-size:12px;font-weight:700;font-family:'Sora',sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:5px;transition:transform .12s}
@@ -82,13 +76,8 @@ html[lang="bn"] h1,html[lang="bn"] h2,html[lang="bn"] h3{font-family:'Hind Silig
 .btn-sm.orange{background:var(--warning)}
 .btn-sm.purple{background:var(--purple)}
 .btn-sm.gray{background:var(--muted)}
-.btn-sm.blue{background:var(--primary)}
-.btn-sm.whatsapp{background:#25D366}
-.btn-sm.pdf{background:#E0393E}
-.btn-sm.img{background:#7C3AED}
 .btn-block{width:100%;padding:12px}
-.btn-row{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
-.btn-row .btn-sm{flex:1;min-width:calc(50% - 4px)}
+.btn-row{display:flex;gap:8px;margin-top:12px}
 .btn-icon{padding:8px 10px;border-radius:9px;background:var(--surface-2);border:1px solid var(--border);font-size:12px;font-weight:700;color:var(--text-2);display:inline-flex;align-items:center;gap:4px;cursor:pointer}
 .btn-icon:active{background:var(--surface-3)}
 
@@ -101,13 +90,10 @@ html[lang="bn"] h1,html[lang="bn"] h2,html[lang="bn"] h3{font-family:'Hind Silig
 .header-title{font-family:'Sora',sans-serif;font-size:13px;font-weight:800;color:var(--text);line-height:1.15;letter-spacing:-.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .header-sub{font-size:9px;color:var(--accent-dark);font-weight:800;text-transform:uppercase;letter-spacing:.4px;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .header-right{display:flex;gap:5px;align-items:center;flex-shrink:0}
-.icon-btn{width:34px;height:34px;border-radius:9px;background:var(--surface-2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-2);transition:transform .15s;cursor:pointer;flex-shrink:0;position:relative}
+.icon-btn{width:34px;height:34px;border-radius:9px;background:var(--surface-2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-2);transition:transform .15s;cursor:pointer;flex-shrink:0}
 .icon-btn:active{background:var(--surface-3);transform:scale(.94)}
 .icon-btn.spin-once{animation:spinOnce .6s ease}
-.icon-btn.saving::after{content:'';position:absolute;top:4px;right:4px;width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulseDot 1s infinite}
-@keyframes pulseDot{0%,100%{opacity:1}50%{opacity:.3}}
 @keyframes spinOnce{to{transform:rotate(360deg)}}
-.lang-btn{width:auto;padding:0 10px;font-size:11px;font-weight:800;gap:4px;display:flex;align-items:center}
 .user-chip{display:flex;align-items:center;gap:6px;background:var(--surface-2);padding:4px 8px 4px 4px;border-radius:18px;font-size:11px;border:1px solid var(--border);font-weight:700;color:var(--text-2);max-width:90px;flex-shrink:0}
 .user-avatar{width:24px;height:24px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#fff;flex-shrink:0}
 .user-avatar.role-so{background:linear-gradient(135deg,var(--accent-dark),var(--accent))}
@@ -127,18 +113,12 @@ html[lang="bn"] h1,html[lang="bn"] h2,html[lang="bn"] h3{font-family:'Hind Silig
 
 /* LAYOUT */
 .container{padding:14px 14px 20px}
-.card{background:var(--surface);border-radius:var(--radius);padding:15px;margin-bottom:12px;border:1px solid var(--border);box-shadow:var(--shadow-1);position:relative}
-.card-title{font-family:'Sora',sans-serif;font-size:12px;font-weight:700;color:var(--text);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;letter-spacing:.1px;gap:6px;flex-wrap:wrap}
+.card{background:var(--surface);border-radius:var(--radius);padding:15px;margin-bottom:12px;border:1px solid var(--border);box-shadow:var(--shadow-1)}
+.card-title{font-family:'Sora',sans-serif;font-size:12px;font-weight:700;color:var(--text);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;letter-spacing:.1px}
 .card-title .badge{font-size:9px;padding:3px 9px;border-radius:20px;background:var(--primary-light);color:var(--primary-dark);font-weight:800}
 .card-title .badge.green{background:var(--success-light);color:var(--success)}
 .card-title .badge.orange{background:var(--warning-light);color:var(--warning)}
 .card-title .badge.purple{background:var(--purple-light);color:var(--purple)}
-.card-actions{display:flex;gap:5px;align-items:center;flex-wrap:wrap}
-.mini-icon-btn{width:26px;height:26px;border-radius:7px;background:var(--surface-2);border:1px solid var(--border);display:inline-flex;align-items:center;justify-content:center;font-size:12px;cursor:pointer;color:var(--text-2);transition:transform .12s}
-.mini-icon-btn:active{transform:scale(.92);background:var(--surface-3)}
-.mini-icon-btn.pdf{background:var(--danger-light);color:var(--danger);border-color:transparent}
-.mini-icon-btn.img{background:var(--purple-light);color:var(--purple);border-color:transparent}
-.mini-icon-btn.wa{background:#DCF8C6;color:#075E54;border-color:transparent}
 
 /* KPI */
 .kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
@@ -196,18 +176,6 @@ tr:nth-child(even) td{background:var(--surface-2)}
 .loader p{color:var(--text-2);font-weight:700;font-size:12px}
 .spinner{width:44px;height:44px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* SKELETON */
-.skeleton{background:linear-gradient(90deg,var(--surface-2) 25%,var(--surface-3) 50%,var(--surface-2) 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;border-radius:8px}
-@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
-.skeleton-line{height:12px;margin-bottom:8px}
-.skeleton-line.w60{width:60%}
-.skeleton-line.w40{width:40%}
-.skeleton-line.w80{width:80%}
-.skeleton-kpi{height:70px;border-radius:14px;margin-bottom:10px}
-.skeleton-chart{height:220px;border-radius:14px}
-.skeleton-row{height:32px;border-radius:8px;margin-bottom:6px}
-
 @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 .section{display:none}
 .section.active{display:block}
@@ -233,6 +201,14 @@ tr:nth-child(even) td{background:var(--surface-2)}
 .activity-item{padding:9px 10px;border-bottom:1px solid var(--border);font-size:11px;color:var(--text-2)}
 .activity-item b{color:var(--text)}
 .badge-hot{background:var(--grad-accent);color:#fff;font-size:9px;padding:3px 8px;border-radius:20px;font-weight:800;margin-left:6px}
+.top-loader{position:fixed;top:0;left:0;height:3px;background:var(--grad-accent);z-index:1000;width:0%;opacity:0;transition:width .4s ease,opacity .2s}
+.top-loader.show{opacity:1;width:75%}
+.top-loader.done{width:100%;opacity:0;transition:width .2s ease,opacity .4s .2s}
+@keyframes shimmerBg{0%{background-position:-200% 0}100%{background-position:200% 0}}
+.skeleton{background:linear-gradient(90deg,var(--surface-2) 25%,var(--surface-3) 50%,var(--surface-2) 75%);background-size:200% 100%;animation:shimmerBg 1.4s ease infinite;border-radius:6px;color:transparent!important;pointer-events:none}
+.date-range-row{display:flex;gap:8px;align-items:center;margin-bottom:10px}
+.range-tabs{display:flex;gap:6px;margin-bottom:10px;overflow-x:auto}
+.range-tabs .chip{flex-shrink:0}
 .progress{height:8px;background:var(--surface-3);border-radius:5px;overflow:hidden;margin-top:6px;position:relative}
 .progress-bar{height:100%;background:var(--grad-accent);border-radius:5px;transition:width 0.6s cubic-bezier(.2,.8,.2,1)}
 .rank-badge{display:inline-flex;width:22px;height:22px;border-radius:50%;align-items:center;justify-content:center;font-size:10px;font-weight:800}
@@ -253,54 +229,6 @@ tr:nth-child(even) td{background:var(--surface-2)}
 .banner-clock{position:absolute;top:12px;right:14px;background:rgba(255,255,255,.18);backdrop-filter:blur(6px);padding:5px 10px;border-radius:9px;font-size:11px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:.5px;color:#fff;z-index:3;font-family:'Sora',sans-serif;border:1px solid rgba(255,255,255,.18);display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
 .banner-clock::before{content:'🕐';font-size:11px}
 
-/* DATE RANGE PICKER */
-.date-range-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px;margin-bottom:12px}
-.date-range-box .dr-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.date-range-box .dr-title{font-size:11px;font-weight:800;color:var(--text);display:flex;align-items:center;gap:6px}
-.date-range-box .dr-presets{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px}
-.dr-preset{padding:5px 10px;border-radius:8px;background:var(--surface-2);border:1px solid var(--border);font-size:10px;font-weight:700;color:var(--muted);cursor:pointer;transition:all .15s}
-.dr-preset.active{background:var(--primary);color:#fff;border-color:var(--primary)}
-.dr-preset:active{transform:scale(.95)}
-.dr-inputs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.dr-inputs input{width:100%;padding:9px 11px;background:var(--surface-2);border:1.5px solid var(--border);border-radius:9px;color:var(--text);font-size:12px;font-weight:600}
-
-/* EXPORT MENU */
-.export-menu{display:flex;gap:5px;flex-wrap:wrap}
-.export-chip{padding:6px 11px;border-radius:9px;font-size:10px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:4px;transition:transform .12s}
-.export-chip:active{transform:scale(.94)}
-.export-chip.pdf{background:var(--danger-light);color:var(--danger)}
-.export-chip.img{background:var(--purple-light);color:var(--purple)}
-.export-chip.wa{background:#DCF8C6;color:#075E54}
-.export-chip.csv{background:var(--primary-light);color:var(--primary)}
-
-/* WHATSAPP SHARE */
-.wa-preview{background:#DCF8C6;color:#0B141A;padding:14px;border-radius:12px;font-family:'Hind Siliguri',monospace;font-size:12px;line-height:1.6;white-space:pre-wrap;max-height:340px;overflow-y:auto;border:1px solid #25D366}
-
-/* SEARCH OVERLAY */
-.search-overlay{position:fixed;inset:0;background:rgba(6,28,23,.7);z-index:600;display:none;padding:60px 20px 20px;backdrop-filter:blur(4px)}
-.search-overlay.show{display:block}
-.search-panel{background:var(--surface);border-radius:var(--radius-lg);max-width:600px;margin:0 auto;max-height:70vh;overflow:hidden;display:flex;flex-direction:column;animation:cardIn .2s ease}
-.search-input-wrap{padding:14px;border-bottom:1px solid var(--border);position:relative}
-.search-input-wrap input{width:100%;padding:12px 14px 12px 40px;background:var(--surface-2);border:1.5px solid var(--border);border-radius:11px;color:var(--text);font-size:14px;font-weight:600}
-.search-input-wrap::before{content:'🔍';position:absolute;left:28px;top:50%;transform:translateY(-50%);font-size:15px;opacity:.5}
-.search-results{overflow-y:auto;padding:8px;flex:1}
-.search-result{padding:10px 12px;border-radius:10px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:background .12s}
-.search-result:hover,.search-result.active{background:var(--surface-2)}
-.search-result .sr-icon{width:32px;height:32px;border-radius:9px;background:var(--primary-light);color:var(--primary);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
-.search-result .sr-info{flex:1;min-width:0}
-.search-result .sr-title{font-size:12px;font-weight:700;color:var(--text)}
-.search-result .sr-sub{font-size:10px;color:var(--muted);margin-top:1px}
-.search-result .sr-tag{font-size:9px;font-weight:800;padding:3px 7px;border-radius:6px;background:var(--surface-3);color:var(--muted)}
-.search-hint{padding:12px;text-align:center;font-size:10px;color:var(--muted-2);font-weight:600}
-
-/* SESSION WARNING */
-.session-warning{position:fixed;top:70px;left:50%;transform:translateX(-50%);background:var(--warning);color:#fff;padding:8px 16px;border-radius:10px;font-size:11px;font-weight:700;z-index:200;box-shadow:var(--shadow-2);display:none}
-.session-warning.show{display:block;animation:fadeIn .3s ease}
-
-/* FAB */
-.fab{position:fixed;bottom:90px;right:16px;width:52px;height:52px;border-radius:50%;background:var(--grad-accent);color:#fff;font-size:24px;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(255,122,51,.45);z-index:98;transition:transform .15s;cursor:pointer}
-.fab:active{transform:scale(.92)}
-
 /* QUICK ACTIONS */
 .quick-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
 .quick-btn{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 6px;display:flex;flex-direction:column;align-items:center;gap:4px;transition:all .15s;cursor:pointer}
@@ -308,18 +236,21 @@ tr:nth-child(even) td{background:var(--surface-2)}
 .quick-btn .ico{font-size:20px}
 .quick-btn .lbl{font-size:9px;font-weight:700;color:var(--muted);text-align:center}
 
-/* DATE RANGE MODAL */
-.dr-modal-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
-.dr-modal-row input{width:100%;padding:11px;background:var(--surface-2);border:1.5px solid var(--border);border-radius:10px;color:var(--text);font-size:13px;font-weight:600}
+/* FAB */
+.fab{position:fixed;bottom:90px;right:16px;width:52px;height:52px;border-radius:50%;background:var(--grad-accent);color:#fff;font-size:24px;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(255,122,51,.45);z-index:98;transition:transform .15s;cursor:pointer}
+.fab:active{transform:scale(.92)}
+
+/* SESSION WARNING */
+.session-warning{position:fixed;top:70px;left:50%;transform:translateX(-50%);background:var(--warning);color:#fff;padding:8px 16px;border-radius:10px;font-size:11px;font-weight:700;z-index:200;box-shadow:var(--shadow-2);display:none}
+.session-warning.show{display:block;animation:fadeIn .3s ease}
 </style>
 </head>
 <body>
 
-<div class="offline-badge" id="offlineBadge">📡 <span data-i18n="offlineMsg">অফলাইন — ডেটা এই ডিভাইসে জমা থাকছে, নেট এলে সিঙ্ক হবে</span></div>
-<div class="loader" id="loader"><div class="spinner"></div><p id="loaderText">লোড হচ্ছে...</p></div>
+<div class="offline-badge" id="offlineBadge">📡 অফলাইন — ডেটা এই ডিভাইসে জমা থাকছে, নেট এলে সিঙ্ক হবে</div>
+<div class="top-loader" id="loader"></div>
 
 <div id="loginScreen" class="login-wrap">
-  <button class="lang-toggle-login" onclick="toggleLang()"><span>🌐</span><span id="loginLangLabel">EN</span></button>
   <div class="bubble" style="width:14px;height:14px;left:12%;animation-duration:7s;animation-delay:0s"></div>
   <div class="bubble" style="width:9px;height:9px;left:24%;animation-duration:9s;animation-delay:1.2s"></div>
   <div class="bubble" style="width:18px;height:18px;left:38%;animation-duration:8s;animation-delay:2.4s"></div>
@@ -330,18 +261,18 @@ tr:nth-child(even) td{background:var(--surface-2)}
   <div class="login-card">
     <div class="login-logo">🏪</div>
     <h1>Bhai Bhai Store</h1>
-    <div class="sub" data-i18n="loginSub">সেলস ও ইনভেন্টরি সিস্টেম</div>
+    <div class="sub" data-i18n="login_sub">Sales &amp; Inventory System</div>
     <div class="field">
-      <label data-i18n="selectUser">ইউজার সিলেক্ট করুন</label>
+      <label data-i18n="login_selectuser">Select User</label>
       <select id="loginUser"></select>
     </div>
     <div class="field">
-      <label data-i18n="password">পাসওয়ার্ড</label>
-      <input type="password" id="loginPin" placeholder="পাসওয়ার্ড দিন" inputmode="numeric" autocomplete="current-password">
+      <label data-i18n="login_password">Password</label>
+      <input type="password" id="loginPin" placeholder="Enter password" data-i18n-ph="login_password_ph" inputmode="numeric" autocomplete="current-password">
     </div>
-    <button class="btn" id="loginBtn" onclick="doLogin()"><span data-i18n="signIn">সাইন ইন</span> →</button>
+    <button class="btn" id="loginBtn" onclick="doLogin()" data-i18n="login_signin">Sign In →</button>
     <div id="lockoutMsg" style="display:none;text-align:center;font-size:10px;color:var(--danger);font-weight:700;margin-top:10px"></div>
-    <div class="login-version">V11.2 PRO</div>
+    <div class="login-version">V10.1 PRO</div>
     <p style="text-align:center;font-size:10px;color:var(--muted);margin-top:8px">©2026-27. Developed by Maruf@Hossain</p>
   </div>
 </div>
@@ -356,107 +287,71 @@ tr:nth-child(even) td{background:var(--surface-2)}
       </div>
     </div>
     <div class="header-right">
-      <div class="icon-btn lang-btn" onclick="toggleLang()" title="Language"><span>🌐</span><span id="langLabel">EN</span></div>
       <div class="icon-btn" onclick="toggleTheme()" id="themeBtn" title="Theme">🌙</div>
-      <div class="icon-btn" onclick="openSearch()" title="Search (Ctrl+K)">🔍</div>
       <div class="icon-btn" onclick="loadFromSheet()" title="Sync">🔄</div>
       <div class="user-chip" title="User">
         <div class="user-avatar" id="userAvatar">A</div>
         <span id="userName">Admin</span>
       </div>
+      <div class="icon-btn" onclick="toggleLang()" id="langBtn" title="Language">🇧🇩</div>
       <div class="icon-btn" onclick="openMySettings()" title="Settings">⚙️</div>
       <div class="icon-btn" onclick="doLogout()" title="Logout">⏻</div>
     </div>
   </div>
 
   <div class="tab-nav" id="tabNav"></div>
-  <div class="session-warning" id="sessionWarning">⏰ <span data-i18n="sessionExpires">সেশন শেষ হবে</span> <span id="sessionCountdown">5:00</span></div>
+  <div class="session-warning" id="sessionWarning">⏰ সেশন শেষ হবে <span id="sessionCountdown">5:00</span></div>
 
   <div class="container">
     <!-- DASHBOARD -->
     <div id="sec-dashboard" class="section active">
       <div class="info-banner">
         <div class="banner-clock live-clock">--:--</div>
-        <h2 id="dashGreeting">স্বাগতম, Admin</h2><p><span id="dashRangeLabel"></span> <span data-i18n="dashOverview">ব্যবসায়িক ওভারভিউ</span></p>
+        <h2 id="dashGreeting">স্বাগতম, Admin</h2><p><span id="dashMonth"></span> মাসের ব্যবসায়িক ওভারভিউ</p>
       </div>
       <div class="quick-actions">
-        <div class="quick-btn" onclick="switchTab('entry')"><span class="ico">📝</span><span class="lbl" data-i18n="qaNewEntry">নতুন এন্ট্রি</span></div>
-        <div class="quick-btn" onclick="switchTab('report')"><span class="ico">📈</span><span class="lbl" data-i18n="qaReport">রিপোর্ট</span></div>
-        <div class="quick-btn" onclick="switchTab('top')"><span class="ico">🏆</span><span class="lbl" data-i18n="qaTop">সেরা পণ্য</span></div>
-        <div class="quick-btn" onclick="exportData()"><span class="ico">⬇️</span><span class="lbl" data-i18n="qaExport">এক্সপোর্ট</span></div>
+        <div class="quick-btn" onclick="switchTab('entry')"><span class="ico">📝</span><span class="lbl">নতুন এন্ট্রি</span></div>
+        <div class="quick-btn" onclick="switchTab('report')"><span class="ico">📈</span><span class="lbl">রিপোর্ট</span></div>
+        <div class="quick-btn" onclick="switchTab('top')"><span class="ico">🏆</span><span class="lbl">সেরা পণ্য</span></div>
+        <div class="quick-btn" onclick="exportData()"><span class="ico">⬇️</span><span class="lbl">এক্সপোর্ট</span></div>
+        <div class="quick-btn" onclick="exportSectionAsImage('dashboardCaptureArea','Dashboard_Summary')"><span class="ico">📤</span><span class="lbl">শেয়ার করুন</span></div>
       </div>
-
-      <div class="date-range-box">
-        <div class="dr-header">
-          <div class="dr-title"><span>📅</span> <span data-i18n="dateRange">ডেট রেঞ্জ</span></div>
-          <span class="badge" id="drLabel">এই মাস</span>
-        </div>
-        <div class="dr-presets" id="drPresets"></div>
-        <div class="dr-inputs">
-          <input type="date" id="drFrom" onchange="applyCustomRange()">
-          <input type="date" id="drTo" onchange="applyCustomRange()">
-        </div>
+      <div class="range-tabs" id="rangeTabs-dash"></div>
+      <div class="form-row" style="margin-bottom:12px" id="monthSelRow-dash">
+        <div class="form-group" style="margin-bottom:0"><label>মাস</label><select id="dashMonthSel" onchange="renderDashboard()"></select></div>
+        <div class="form-group" style="margin-bottom:0"><label>বছর</label><select id="dashYearSel" onchange="renderDashboard()"></select></div>
       </div>
-
+      <div id="dashboardCaptureArea">
       <div class="kpi-grid three">
-        <div class="kpi blue"><div class="kpi-label">💰 <span data-i18n="totalSales">মোট বিক্রি</span></div><div class="kpi-value" id="kpiSales">৳0</div><div class="kpi-sub" id="kpiSalesTrend"></div></div>
-        <div class="kpi purple"><div class="kpi-label">🎯 <span data-i18n="target">টার্গেট</span></div><div class="kpi-value" id="kpiTarget">৳0</div></div>
-        <div class="kpi green"><div class="kpi-label">📈 <span data-i18n="achievement">অর্জন</span></div><div class="kpi-value" id="kpiAchv">0%</div><div class="kpi-sub" id="topPerformerBadge"></div></div>
+        <div class="kpi blue"><div class="kpi-label" data-i18n="k_totalsales">💰 Total Sales</div><div class="kpi-value" id="kpiSales">৳0</div><div class="kpi-sub" id="kpiSalesTrend"></div></div>
+        <div class="kpi purple"><div class="kpi-label" data-i18n="k_target">🎯 Target</div><div class="kpi-value" id="kpiTarget">৳0</div></div>
+        <div class="kpi green"><div class="kpi-label" data-i18n="k_achv">📈 Achievement</div><div class="kpi-value" id="kpiAchv">0%</div><div class="kpi-sub" id="topPerformerBadge"></div></div>
       </div>
       <div class="kpi-grid three">
-        <div class="kpi orange"><div class="kpi-label">🧾 <span data-i18n="orders">অর্ডার</span></div><div class="kpi-value" id="kpiOrder">৳0</div><div class="kpi-sub" id="kpiOrderTrend"></div></div>
-        <div class="kpi red"><div class="kpi-label">💥 <span data-i18n="damage">ড্যামেজ</span></div><div class="kpi-value" id="kpiDamage">0</div></div>
-        <div class="kpi purple"><div class="kpi-label">🎁 <span data-i18n="commission">কমিশন</span></div><div class="kpi-value" id="kpiComm">৳0</div></div>
-      </div>
-      <div class="card" id="entryReminderCard" style="display:none">
-        <div class="card-title">⏰ <span data-i18n="todayEntryPending">আজ এন্ট্রি বাকি</span> <span class="badge orange" id="reminderCount">0</span></div>
-        <div id="reminderList" style="display:flex;flex-wrap:wrap;gap:6px"></div>
+        <div class="kpi orange"><div class="kpi-label" data-i18n="k_order">🧾 Order</div><div class="kpi-value" id="kpiOrder">৳0</div><div class="kpi-sub" id="kpiOrderTrend"></div></div>
+        <div class="kpi red"><div class="kpi-label" data-i18n="k_damage">💥 Damage</div><div class="kpi-value" id="kpiDamage">0</div></div>
+        <div class="kpi purple"><div class="kpi-label" data-i18n="k_comm">🎁 Commission</div><div class="kpi-value" id="kpiComm">৳0</div></div>
       </div>
       <div class="card">
-        <div class="card-title"><span data-i18n="monthlyProgress">মাসিক অগ্রগতি</span> <span class="badge" id="monthBadge"></span></div>
+        <div class="card-title" data-i18n="c_monthprog">Monthly Progress <span class="badge" id="monthBadge"></span></div>
         <div class="progress"><div class="progress-bar" id="monthProgress"></div></div>
         <div style="display:flex;justify-content:space-between;font-size:10px;margin-top:7px;color:var(--muted);font-weight:700">
-          <span id="monthElapsed">0</span>
-          <span id="monthRemain">0</span>
+          <span id="monthElapsed">0 দিন পার হয়েছে</span>
+          <span id="monthRemain">0 দিন বাকি</span>
         </div>
       </div>
-      <div class="card">
-        <div class="card-title"><span data-i18n="salesVsTarget">বিক্রি বনাম টার্গেট</span>
-          <div class="card-actions">
-            <button class="mini-icon-btn pdf" onclick="exportChartPDF('chartSO','sales-vs-target')" title="PDF">📄</button>
-            <button class="mini-icon-btn wa" onclick="shareChartWA('chartSO','বিক্রি বনাম টার্গেট')" title="WhatsApp">📱</button>
-          </div>
-        </div>
-        <div class="chart-box" id="chartSO_box"><canvas id="chartSO"></canvas></div>
+      <div class="card"><div class="card-title" data-i18n="c_salesvtarget">Sales vs Target</div><div class="chart-box"><canvas id="chartSO"></canvas></div></div>
+      <div class="card"><div class="card-title" data-i18n="c_7daytrend">7-Day Sales Trend</div><div class="chart-box"><canvas id="chartWeek"></canvas></div></div>
+      <div class="card"><div class="card-title" data-i18n="c_top5">🏆 Top 5 Products</div><div id="top5List"></div></div>
+      <div class="card"><div class="card-title" data-i18n="c_soranking">Sales Officer Ranking</div>
+        <div class="tbl-wrap"><table><thead><tr><th>#</th><th data-i18n="th_officer">Officer</th><th data-i18n="th_sales">Sales</th><th data-i18n="th_achv">Achv%</th></tr></thead><tbody id="rankTable"></tbody></table></div>
       </div>
-      <div class="card">
-        <div class="card-title"><span data-i18n="weeklyTrend">৭ দিনের বিক্রি ট্রেন্ড</span>
-          <div class="card-actions">
-            <button class="mini-icon-btn pdf" onclick="exportChartPDF('chartWeek','weekly-trend')" title="PDF">📄</button>
-            <button class="mini-icon-btn wa" onclick="shareChartWA('chartWeek','৭ দিনের ট্রেন্ড')" title="WhatsApp">📱</button>
-          </div>
-        </div>
-        <div class="chart-box" id="chartWeek_box"><canvas id="chartWeek"></canvas></div>
       </div>
-      <div class="card">
-        <div class="card-title"><span>🏆 <span data-i18n="top5">সেরা ৫ পণ্য</span></span>
-          <div class="card-actions">
-            <button class="mini-icon-btn pdf" onclick="exportElementPDF('top5List','top-5-products')" title="PDF">📄</button>
-            <button class="mini-icon-btn wa" onclick="shareTopProductsWA()" title="WhatsApp">📱</button>
-          </div>
-        </div>
-        <div id="top5List"></div>
+      <div class="card" id="entryReminderCard" style="display:none">
+        <div class="card-title" data-i18n="c_reminder">⏰ Entries Pending Today <span class="badge orange" id="reminderCount">0</span></div>
+        <div id="reminderList" style="display:flex;flex-wrap:wrap;gap:6px"></div>
       </div>
-      <div class="card">
-        <div class="card-title"><span data-i18n="soRanking">সেলস অফিসার র‍্যাংকিং</span>
-          <div class="card-actions">
-            <button class="mini-icon-btn pdf" onclick="exportTablePDF('rankTable','SO-Ranking')" title="PDF">📄</button>
-            <button class="mini-icon-btn wa" onclick="shareRankingWA()" title="WhatsApp">📱</button>
-          </div>
-        </div>
-        <div class="tbl-wrap"><table><thead><tr><th>#</th><th data-i18n="officer">অফিসার</th><th data-i18n="sales">বিক্রি</th><th data-i18n="achvPct">অর্জন%</th></tr></thead><tbody id="rankTable"></tbody></table></div>
-      </div>
-      <div class="version-stamp">V11.2 PRO</div>
+      <div class="version-stamp">V10.1 PRO</div>
       <div class="watermark">©2026-27. Developed by Maruf@Hossain. All rights reserved.</div>
     </div>
 
@@ -464,49 +359,34 @@ tr:nth-child(even) td{background:var(--surface-2)}
     <div id="sec-stock" class="section">
       <div class="info-banner">
         <div class="banner-clock live-clock">--:--</div>
-        <h2 data-i18n="stockReport">স্টক রিপোর্ট</h2><p data-i18n="warehouseOverview">গুদামের স্টক ওভারভিউ</p>
+        <h2 data-i18n="h_stock">Stock Report</h2><p data-i18n="p_stock">Warehouse stock overview</p>
       </div>
-      <div class="date-range-box">
-        <div class="dr-header">
-          <div class="dr-title"><span>📅</span> <span data-i18n="dateRange">ডেট রেঞ্জ</span></div>
-          <span class="badge" id="drStockLabel">এই মাস</span>
-        </div>
-        <div class="dr-presets" id="drStockPresets"></div>
-        <div class="dr-inputs">
-          <input type="date" id="drStockFrom" onchange="applyStockRange()">
-          <input type="date" id="drStockTo" onchange="applyStockRange()">
-        </div>
+      <div class="range-tabs" id="rangeTabs-stock"></div>
+      <div class="form-row" id="monthSelRow-stock">
+        <div class="form-group"><label>মাস</label><select id="stockMonthSel" onchange="renderInventory()"></select></div>
+        <div class="form-group"><label>বছর</label><select id="stockYearSel" onchange="renderInventory()"></select></div>
       </div>
       <div class="kpi-grid">
-        <div class="kpi blue"><div class="kpi-label">📥 <span data-i18n="opening">ওপেনিং</span></div><div class="kpi-value" id="invOpening">0</div><div class="kpi-sub" id="invOpeningVal">৳0</div></div>
-        <div class="kpi green"><div class="kpi-label">🚚 <span data-i18n="lifting">লিফটিং</span></div><div class="kpi-value" id="invLifting">0</div><div class="kpi-sub" id="invLiftingVal">৳0</div></div>
-        <div class="kpi orange"><div class="kpi-label">💰 <span data-i18n="sales">বিক্রি</span></div><div class="kpi-value" id="invSales">0</div><div class="kpi-sub" id="invSalesVal">৳0</div></div>
-        <div class="kpi red"><div class="kpi-label">📦 <span data-i18n="present">বর্তমান</span></div><div class="kpi-value" id="invPresent">0</div><div class="kpi-sub" id="invPresentVal">৳0</div></div>
+        <div class="kpi blue"><div class="kpi-label" data-i18n="k_opening">📥 Opening</div><div class="kpi-value" id="invOpening">0</div><div class="kpi-sub" id="invOpeningVal">৳0</div></div>
+        <div class="kpi green"><div class="kpi-label" data-i18n="k_lifting">🚚 Lifting</div><div class="kpi-value" id="invLifting">0</div><div class="kpi-sub" id="invLiftingVal">৳0</div></div>
+        <div class="kpi orange"><div class="kpi-label" data-i18n="k_sales">💰 Sales</div><div class="kpi-value" id="invSales">0</div><div class="kpi-sub" id="invSalesVal">৳0</div></div>
+        <div class="kpi red"><div class="kpi-label" data-i18n="k_present">📦 Present</div><div class="kpi-value" id="invPresent">0</div><div class="kpi-sub" id="invPresentVal">৳0</div></div>
       </div>
-      <div class="card">
-        <div class="card-title"><span data-i18n="stockReport">স্টক রিপোর্ট</span> <span class="badge">কার্টন</span>
-          <div class="card-actions">
-            <button class="mini-icon-btn pdf" onclick="exportTablePDF('invTable','Stock-Report')" title="PDF">📄</button>
-            <button class="mini-icon-btn img" onclick="exportElementImage('stockCard','stock-report')" title="Image">🖼️</button>
-            <button class="mini-icon-btn wa" onclick="shareStockWA()" title="WhatsApp">📱</button>
-          </div>
-        </div>
-        <div id="stockCard">
-          <div class="tbl-wrap"><table><thead><tr><th data-i18n="product">পণ্য</th><th data-i18n="opening">ওপেনিং</th><th data-i18n="lifting">লিফটিং</th><th data-i18n="sales">বিক্রি</th><th data-i18n="present">বর্তমান</th></tr></thead><tbody id="invTable"></tbody></table></div>
-        </div>
+      <div class="card"><div class="card-title" data-i18n="c_stockreport">Stock Report <span class="badge" data-i18n="b_cartons">Cartons</span></div>
+        <div class="tbl-wrap"><table><thead><tr><th data-i18n="th_product">Product</th><th data-i18n="th_opening">Opening</th><th data-i18n="th_lifting">Lifting</th><th data-i18n="th_sales">Sales</th><th data-i18n="th_present">Present</th></tr></thead><tbody id="invTable"></tbody></table></div>
       </div>
       <div class="card" id="stockEntryCard" style="display:none">
-        <div class="card-title"><span data-i18n="stockEntry">স্টক এন্ট্রি</span> <span class="badge purple">অ্যাডমিন</span></div>
+        <div class="card-title" data-i18n="c_stockentry">Stock Entry <span class="badge purple" data-i18n="b_admin">Admin</span></div>
         <div class="form-row">
-          <div class="form-group"><label data-i18n="type">ধরন</label>
-            <select id="stockType"><option value="opening" data-i18n="openingStock">ওপেনিং স্টক</option><option value="lifting" data-i18n="lifting">লিফটিং</option></select>
+          <div class="form-group"><label>ধরন</label>
+            <select id="stockType"><option value="opening">ওপেনিং স্টক</option><option value="lifting">লিফটিং</option></select>
           </div>
-          <div class="form-group"><label data-i18n="date">তারিখ</label><input type="date" id="stockDate"></div>
+          <div class="form-group"><label>তারিখ</label><input type="date" id="stockDate"></div>
         </div>
         <div id="stockInputs" style="max-height:280px;overflow-y:auto"></div>
-        <button class="btn-sm green btn-block" style="margin-top:10px" onclick="saveStock()">💾 <span data-i18n="saveStock">স্টক সেভ করুন</span></button>
+        <button class="btn-sm green btn-block" style="margin-top:10px" onclick="saveStock()">💾 স্টক সেভ করুন</button>
       </div>
-      <div class="version-stamp">V11.2 PRO</div>
+      <div class="version-stamp">V10.1 PRO</div>
       <div class="watermark">©2026-27. Developed by Maruf@Hossain. All rights reserved.</div>
     </div>
 
@@ -514,55 +394,28 @@ tr:nth-child(even) td{background:var(--surface-2)}
     <div id="sec-report" class="section">
       <div class="info-banner">
         <div class="banner-clock live-clock">--:--</div>
-        <h2 data-i18n="reports">রিপোর্ট</h2><p data-i18n="performanceAnalytics">পারফরম্যান্স অ্যানালিটিক্স</p>
+        <h2 data-i18n="h_report">Report</h2><p data-i18n="p_report">Performance analytics</p>
       </div>
-      <div class="date-range-box">
-        <div class="dr-header">
-          <div class="dr-title"><span>📅</span> <span data-i18n="dateRange">ডেট রেঞ্জ</span></div>
-          <span class="badge" id="drRepLabel">এই মাস</span>
-        </div>
-        <div class="dr-presets" id="drRepPresets"></div>
-        <div class="dr-inputs">
-          <input type="date" id="drRepFrom" onchange="applyRepRange()">
-          <input type="date" id="drRepTo" onchange="applyRepRange()">
-        </div>
+      <div class="range-tabs" id="rangeTabs-rep"></div>
+      <div class="form-row" id="monthSelRow-rep">
+        <div class="form-group"><label>মাস</label><select id="repMonthSel" onchange="renderReports()"></select></div>
+        <div class="form-group"><label>বছর</label><select id="repYearSel" onchange="renderReports()"></select></div>
       </div>
-      <div class="card">
-        <div class="card-title"><span data-i18n="soPerformance">সেলস অফিসার পারফরম্যান্স</span>
-          <div class="card-actions">
-            <button class="mini-icon-btn pdf" onclick="exportTablePDF('repTable','SO-Performance')" title="PDF">📄</button>
-            <button class="mini-icon-btn wa" onclick="shareReportWA()" title="WhatsApp">📱</button>
-          </div>
-        </div>
+      <button class="btn-sm btn-block" style="margin-bottom:10px" onclick="exportSectionAsImage('reportCaptureArea','Report')">📤 ছবি হিসেবে শেয়ার করুন</button>
+      <div id="reportCaptureArea">
+      <div class="card"><div class="card-title" data-i18n="c_soperf">Sales Officer Performance</div>
         <div class="search-box"><input type="text" id="repSearch" placeholder="অফিসার খুঁজুন..." oninput="renderReports()"></div>
-        <div class="tbl-wrap"><table><thead><tr><th data-i18n="officer">অফিসার</th><th data-i18n="target">টার্গেট</th><th data-i18n="sales">বিক্রি</th><th data-i18n="achvPct">অর্জন%</th></tr></thead><tbody id="repTable"></tbody></table></div>
+        <div class="tbl-wrap"><table><thead><tr><th data-i18n="th_officer">Officer</th><th data-i18n="th_target">Target</th><th data-i18n="th_sales">Sales</th><th data-i18n="th_achv">Achv%</th></tr></thead><tbody id="repTable"></tbody></table></div>
       </div>
-      <div class="card">
-        <div class="card-title"><span data-i18n="dailyTrend">দৈনিক বিক্রি ট্রেন্ড</span>
-          <div class="card-actions">
-            <button class="mini-icon-btn pdf" onclick="exportChartPDF('chartTrend','daily-trend')" title="PDF">📄</button>
-            <button class="mini-icon-btn wa" onclick="shareChartWA('chartTrend','দৈনিক ট্রেন্ড')" title="WhatsApp">📱</button>
-          </div>
-        </div>
-        <div class="chart-box"><canvas id="chartTrend"></canvas></div>
+      <div class="card"><div class="card-title" data-i18n="c_dailytrend">Daily Sales Trend</div><div class="chart-box"><canvas id="chartTrend"></canvas></div></div>
+      <div class="card"><div class="card-title" data-i18n="c_routebreak">🗺️ Route-wise Best Product</div>
+        <div class="tbl-wrap"><table><thead><tr><th data-i18n="th_route">Route</th><th data-i18n="th_bestproduct">Best Product</th><th data-i18n="th_qty">Qty</th></tr></thead><tbody id="routeReportTable"></tbody></table></div>
       </div>
-      <div class="card">
-        <div class="card-title"><span>🗺️ <span data-i18n="routeWiseTop">রুট-ওয়াইজ সেরা পণ্য</span></span>
-          <div class="card-actions">
-            <button class="mini-icon-btn pdf" onclick="exportTablePDF('routeReportTable','Route-Wise')" title="PDF">📄</button>
-          </div>
-        </div>
-        <div class="tbl-wrap"><table><thead><tr><th data-i18n="route">রুট</th><th data-i18n="topProduct">সেরা পণ্য</th><th data-i18n="quantity">পরিমাণ</th></tr></thead><tbody id="routeReportTable"></tbody></table></div>
+      <div class="card"><div class="card-title" data-i18n="c_damagereport">Damage Report</div>
+        <div class="tbl-wrap"><table><thead><tr><th data-i18n="th_officer">Officer</th><th data-i18n="th_warehouse">Warehouse</th><th data-i18n="th_returned">Returned</th><th data-i18n="th_present">Present</th></tr></thead><tbody id="damageReportTable"></tbody></table></div>
       </div>
-      <div class="card">
-        <div class="card-title"><span data-i18n="damageReport">ড্যামেজ রিপোর্ট</span>
-          <div class="card-actions">
-            <button class="mini-icon-btn pdf" onclick="exportTablePDF('damageReportTable','Damage-Report')" title="PDF">📄</button>
-          </div>
-        </div>
-        <div class="tbl-wrap"><table><thead><tr><th data-i18n="officer">অফিসার</th><th data-i18n="warehouse">গুদাম</th><th data-i18n="return">ফেরত</th><th data-i18n="present">বর্তমান</th></tr></thead><tbody id="damageReportTable"></tbody></table></div>
       </div>
-      <div class="version-stamp">V11.2 PRO</div>
+      <div class="version-stamp">V10.1 PRO</div>
       <div class="watermark">©2026-27. Developed by Maruf@Hossain. All rights reserved.</div>
     </div>
 
@@ -570,47 +423,20 @@ tr:nth-child(even) td{background:var(--surface-2)}
     <div id="sec-top" class="section">
       <div class="info-banner">
         <div class="banner-clock live-clock">--:--</div>
-        <h2 data-i18n="topSelling">সেরা বিক্রিত পণ্য</h2><p data-i18n="topPerformers">সেরা পারফরমারগণ</p>
+        <h2 data-i18n="h_top">Top Selling Products</h2><p data-i18n="p_top">Best performers</p>
       </div>
-      <div class="date-range-box">
-        <div class="dr-header">
-          <div class="dr-title"><span>📅</span> <span data-i18n="dateRange">ডেট রেঞ্জ</span></div>
-          <span class="badge" id="drTopLabel">এই মাস</span>
-        </div>
-        <div class="dr-presets" id="drTopPresets"></div>
-        <div class="dr-inputs">
-          <input type="date" id="drTopFrom" onchange="applyTopRange()">
-          <input type="date" id="drTopTo" onchange="applyTopRange()">
-        </div>
+      <div class="range-tabs" id="rangeTabs-top"></div>
+      <div class="form-row" id="monthSelRow-top">
+        <div class="form-group"><label>মাস</label><select id="topMonthSel" onchange="renderTopProducts()"></select></div>
+        <div class="form-group"><label>বছর</label><select id="topYearSel" onchange="renderTopProducts()"></select></div>
       </div>
       <div class="filter-chips" id="topFilter"></div>
-      <div class="card">
-        <div class="card-title"><span>🏆 <span data-i18n="top10">সেরা ১০ পণ্য</span></span> <span class="badge" id="topBadge">Combined</span>
-          <div class="card-actions">
-            <button class="mini-icon-btn pdf" onclick="exportElementPDF('topList','Top-10-Products')" title="PDF">📄</button>
-            <button class="mini-icon-btn wa" onclick="shareTopProductsWA()" title="WhatsApp">📱</button>
-          </div>
-        </div>
-        <div id="topList"></div>
+      <div class="card"><div class="card-title" data-i18n="c_top10">🏆 Top 10 Products <span class="badge" id="topBadge">Combined</span></div><div id="topList"></div></div>
+      <div class="card"><div class="card-title" data-i18n="c_top10compare">Top 10 Comparison</div><div class="chart-box" style="height:280px"><canvas id="chartTop"></canvas></div></div>
+      <div class="card"><div class="card-title" data-i18n="c_details">Details</div>
+        <div class="tbl-wrap"><table><thead><tr><th>#</th><th data-i18n="th_product">Product</th><th data-i18n="th_cartons2">Cartons</th><th data-i18n="th_value">Value</th><th>%</th></tr></thead><tbody id="topTable"></tbody></table></div>
       </div>
-      <div class="card">
-        <div class="card-title"><span data-i18n="top10Compare">সেরা ১০ তুলনা</span>
-          <div class="card-actions">
-            <button class="mini-icon-btn pdf" onclick="exportChartPDF('chartTop','top-10-comparison')" title="PDF">📄</button>
-            <button class="mini-icon-btn wa" onclick="shareChartWA('chartTop','সেরা ১০ তুলনা')" title="WhatsApp">📱</button>
-          </div>
-        </div>
-        <div class="chart-box" style="height:280px"><canvas id="chartTop"></canvas></div>
-      </div>
-      <div class="card">
-        <div class="card-title"><span data-i18n="details">বিস্তারিত</span>
-          <div class="card-actions">
-            <button class="mini-icon-btn pdf" onclick="exportTablePDF('topTable','Top-Products-Details')" title="PDF">📄</button>
-          </div>
-        </div>
-        <div class="tbl-wrap"><table><thead><tr><th>#</th><th data-i18n="product">পণ্য</th><th data-i18n="carton">কার্টন</th><th data-i18n="value">মূল্য</th><th>%</th></tr></thead><tbody id="topTable"></tbody></table></div>
-      </div>
-      <div class="version-stamp">V11.2 PRO</div>
+      <div class="version-stamp">V10.1 PRO</div>
       <div class="watermark">©2026-27. Developed by Maruf@Hossain. All rights reserved.</div>
     </div>
 
@@ -618,33 +444,28 @@ tr:nth-child(even) td{background:var(--surface-2)}
     <div id="sec-automation" class="section">
       <div class="info-banner">
         <div class="banner-clock live-clock">--:--</div>
-        <h2 data-i18n="automationVC">অটোমেশন ও ভিসি কুলার</h2><p>SPRO ট্র্যাকিং</p>
+        <h2 data-i18n="h_auto">Automation &amp; VC Cooler</h2><p data-i18n="p_auto">SPRO tracking</p>
       </div>
       <div class="kpi-grid three">
-        <div class="kpi blue"><div class="kpi-label">🏬 <span data-i18n="todayOutlet">আজকের আউটলেট</span></div><div class="kpi-value" id="autoTodayOutlet">0</div></div>
-        <div class="kpi green"><div class="kpi-label">✅ <span data-i18n="todayVisit">আজকের ভিজিট</span></div><div class="kpi-value" id="autoTodayVisit">0</div></div>
-        <div class="kpi purple"><div class="kpi-label">📊 <span data-i18n="visitPct">ভিজিট%</span></div><div class="kpi-value" id="autoTodayVisitPct">0%</div></div>
+        <div class="kpi blue"><div class="kpi-label" data-i18n="k_todayoutlet">🏬 Today Outlet</div><div class="kpi-value" id="autoTodayOutlet">0</div></div>
+        <div class="kpi green"><div class="kpi-label" data-i18n="k_todayvisit">✅ Today Visit</div><div class="kpi-value" id="autoTodayVisit">0</div></div>
+        <div class="kpi purple"><div class="kpi-label" data-i18n="k_visitpct">📊 Visit%</div><div class="kpi-value" id="autoTodayVisitPct">0%</div></div>
       </div>
       <div class="kpi-grid three">
-        <div class="kpi orange"><div class="kpi-label">🧊 <span data-i18n="vcCooler">ভিসি কুলার</span></div><div class="kpi-value" id="autoVCCooler">0</div></div>
-        <div class="kpi purple"><div class="kpi-label">🧊 <span data-i18n="vcVisit">ভিসি ভিজিট</span></div><div class="kpi-value" id="autoVCVisit">0</div></div>
-        <div class="kpi green"><div class="kpi-label">📊 <span data-i18n="vcPct">ভিসি%</span></div><div class="kpi-value" id="autoVCPct">0%</div></div>
+        <div class="kpi orange"><div class="kpi-label" data-i18n="k_vccooler">🧊 VC Cooler</div><div class="kpi-value" id="autoVCCooler">0</div></div>
+        <div class="kpi purple"><div class="kpi-label" data-i18n="k_vcvisit">🧊 VC Visit</div><div class="kpi-value" id="autoVCVisit">0</div></div>
+        <div class="kpi green"><div class="kpi-label" data-i18n="k_vcpct">📊 VC%</div><div class="kpi-value" id="autoVCPct">0%</div></div>
       </div>
-      <div class="card">
-        <div class="card-title"><span>SPRO — <span data-i18n="weeklyReport">সাপ্তাহিক রিপোর্ট</span></span>
-          <div class="card-actions">
-            <button class="mini-icon-btn pdf" onclick="exportTablePDF('autoWeekTable','SPRO-Weekly')" title="PDF">📄</button>
-          </div>
-        </div>
-        <div class="tbl-wrap"><table><thead><tr><th data-i18n="officer">অফিসার</th><th data-i18n="outlet">আউটলেট</th><th data-i18n="visit">ভিজিট</th><th data-i18n="visitPct">ভিজিট%</th></tr></thead><tbody id="autoWeekTable"></tbody></table></div>
+      <div class="card"><div class="card-title" data-i18n="c_sproweekly">SPRO — Weekly Report</div>
+        <div class="tbl-wrap"><table><thead><tr><th data-i18n="th_officer">Officer</th><th data-i18n="th_outlet">Outlet</th><th data-i18n="th_visit">Visit</th><th data-i18n="th_visitpct">Visit%</th></tr></thead><tbody id="autoWeekTable"></tbody></table></div>
       </div>
       <div class="card" id="autoEntryCard">
-        <div class="card-title"><span>SPRO — <span data-i18n="entry">এন্ট্রি</span></span> <span class="badge purple">অ্যাডমিন</span></div>
+        <div class="card-title" data-i18n="c_sproentry">SPRO — Entry <span class="badge purple" data-i18n="b_admin">Admin</span></div>
         <div class="form-row">
-          <div class="form-group"><label data-i18n="date">তারিখ</label><input type="date" id="autoDate"></div>
-          <div class="form-group"><label data-i18n="officer">অফিসার</label><select id="autoSO"></select></div>
+          <div class="form-group"><label>তারিখ</label><input type="date" id="autoDate"></div>
+          <div class="form-group"><label>অফিসার</label><select id="autoSO"></select></div>
         </div>
-        <div class="form-group"><label data-i18n="route">রুট</label><select id="autoRoute"></select></div>
+        <div class="form-group"><label>রুট</label><select id="autoRoute"></select></div>
         <div class="form-row">
           <div class="form-group"><label>Outlet</label><input type="number" id="autoOutlet" min="0" placeholder="0" inputmode="numeric"></div>
           <div class="form-group"><label>Visit</label><input type="number" id="autoVisit" min="0" placeholder="0" inputmode="numeric"></div>
@@ -653,9 +474,9 @@ tr:nth-child(even) td{background:var(--surface-2)}
           <div class="form-group"><label>VC Cooler</label><input type="number" id="autoVC" min="0" placeholder="0" inputmode="numeric"></div>
           <div class="form-group"><label>VC Visit</label><input type="number" id="autoVCV" min="0" placeholder="0" inputmode="numeric"></div>
         </div>
-        <button class="btn-sm green btn-block" onclick="saveAutomation()">💾 <span data-i18n="saveEntry">এন্ট্রি সেভ করুন</span></button>
+        <button class="btn-sm green btn-block" onclick="saveAutomation()">💾 এন্ট্রি সেভ করুন</button>
       </div>
-      <div class="version-stamp">V11.2 PRO</div>
+      <div class="version-stamp">V10.1 PRO</div>
       <div class="watermark">©2026-27. Developed by Maruf@Hossain. All rights reserved.</div>
     </div>
 
@@ -663,96 +484,73 @@ tr:nth-child(even) td{background:var(--surface-2)}
     <div id="sec-damage" class="section">
       <div class="info-banner">
         <div class="banner-clock live-clock">--:--</div>
-        <h2 data-i18n="damageCommission">ড্যামেজ ও কমিশন</h2><p data-i18n="warehouseDamageReturn">গুদাম ড্যামেজ ও রিটার্ন</p>
+        <h2 data-i18n="h_damage">Damage &amp; Commission</h2><p data-i18n="p_damage">Warehouse damage &amp; returns</p>
       </div>
-      <div class="date-range-box">
-        <div class="dr-header">
-          <div class="dr-title"><span>📅</span> <span data-i18n="dateRange">ডেট রেঞ্জ</span></div>
-          <span class="badge" id="drDmgLabel">এই মাস</span>
-        </div>
-        <div class="dr-presets" id="drDmgPresets"></div>
-        <div class="dr-inputs">
-          <input type="date" id="drDmgFrom" onchange="applyDmgRange()">
-          <input type="date" id="drDmgTo" onchange="applyDmgRange()">
-        </div>
+      <div class="range-tabs" id="rangeTabs-dmg"></div>
+      <div class="form-row" id="monthSelRow-dmg">
+        <div class="form-group"><label>মাস</label><select id="dmgMonthSel" onchange="renderDamage()"></select></div>
+        <div class="form-group"><label>বছর</label><select id="dmgYearSel" onchange="renderDamage()"></select></div>
       </div>
       <div class="kpi-grid three">
-        <div class="kpi orange"><div class="kpi-label">🏚️ <span data-i18n="warehouseDamage">গুদাম ড্যামেজ</span></div><div class="kpi-value" id="dmgWarehouse">0</div></div>
-        <div class="kpi red"><div class="kpi-label">↩️ <span data-i18n="returnToCompany">কোম্পানিতে ফেরত</span></div><div class="kpi-value" id="dmgReturn">0</div></div>
-        <div class="kpi purple"><div class="kpi-label">📦 <span data-i18n="totalDamage">মোট ড্যামেজ স্টক</span></div><div class="kpi-value" id="dmgTotal">0</div></div>
+        <div class="kpi orange"><div class="kpi-label" data-i18n="k_whdamage">🏚️ Warehouse Damage</div><div class="kpi-value" id="dmgWarehouse">0</div></div>
+        <div class="kpi red"><div class="kpi-label" data-i18n="k_return">↩️ Return to Company</div><div class="kpi-value" id="dmgReturn">0</div></div>
+        <div class="kpi purple"><div class="kpi-label" data-i18n="k_totaldmgstock">📦 Total Damage Stock</div><div class="kpi-value" id="dmgTotal">0</div></div>
       </div>
       <div class="card" id="dmgEntryCard">
-        <div class="card-title"><span data-i18n="damageEntry">ড্যামেজ এন্ট্রি</span> <span class="badge purple">অ্যাডমিন</span></div>
+        <div class="card-title" data-i18n="c_damageentry">Damage Entry <span class="badge purple" data-i18n="b_admin">Admin</span></div>
         <div class="form-row">
-          <div class="form-group"><label data-i18n="date">তারিখ</label><input type="date" id="dmgDate"></div>
-          <div class="form-group"><label data-i18n="type">ধরন</label>
-            <select id="dmgType"><option value="warehouse" data-i18n="warehouseDamage">গুদাম ড্যামেজ</option><option value="return" data-i18n="returnToCompany">কোম্পানিতে ফেরত</option></select>
+          <div class="form-group"><label>তারিখ</label><input type="date" id="dmgDate"></div>
+          <div class="form-group"><label>ধরন</label>
+            <select id="dmgType"><option value="warehouse">গুদাম ড্যামেজ</option><option value="return">কোম্পানিতে ফেরত</option></select>
           </div>
         </div>
         <div id="dmgInputs" style="max-height:280px;overflow-y:auto"></div>
-        <button class="btn-sm green btn-block" style="margin-top:10px" onclick="saveDamage()">💾 <span data-i18n="saveDamage">ড্যামেজ সেভ করুন</span></button>
+        <button class="btn-sm green btn-block" style="margin-top:10px" onclick="saveDamage()">💾 ড্যামেজ সেভ করুন</button>
       </div>
-      <div class="card">
-        <div class="card-title"><span data-i18n="damageReport">ড্যামেজ রিপোর্ট</span> <span class="badge">কার্টন</span>
-          <div class="card-actions">
-            <button class="mini-icon-btn pdf" onclick="exportTablePDF('dmgTable','Damage-Report')" title="PDF">📄</button>
-            <button class="mini-icon-btn wa" onclick="shareDamageWA()" title="WhatsApp">📱</button>
-          </div>
-        </div>
-        <div class="tbl-wrap"><table><thead><tr><th data-i18n="product">পণ্য</th><th data-i18n="warehouse">গুদাম</th><th data-i18n="return">ফেরত</th><th data-i18n="total">মোট</th></tr></thead><tbody id="dmgTable"></tbody></table></div>
+      <div class="card"><div class="card-title" data-i18n="c_damagereport2">Damage Report <span class="badge" data-i18n="b_cartons">Cartons</span></div>
+        <div class="tbl-wrap"><table><thead><tr><th data-i18n="th_product">Product</th><th data-i18n="th_warehouse">Warehouse</th><th data-i18n="th_returned">Returned</th><th data-i18n="th_total">Total</th></tr></thead><tbody id="dmgTable"></tbody></table></div>
       </div>
-      <div class="card">
-        <div class="card-title"><span data-i18n="damageByOfficer">অফিসার অনুযায়ী ড্যামেজ</span>
-          <div class="card-actions">
-            <button class="mini-icon-btn pdf" onclick="exportChartPDF('chartDmg','damage-by-officer')" title="PDF">📄</button>
-          </div>
-        </div>
-        <div class="chart-box"><canvas id="chartDmg"></canvas></div>
-      </div>
-      <div class="version-stamp">V11.2 PRO</div>
+      <div class="card"><div class="card-title" data-i18n="c_damagebyofficer">Damage by Officer</div><div class="chart-box"><canvas id="chartDmg"></canvas></div></div>
+      <div class="version-stamp">V10.1 PRO</div>
       <div class="watermark">©2026-27. Developed by Maruf@Hossain. All rights reserved.</div>
     </div>
 
-    <!-- LEDGER -->
+    <!-- LEDGER (Credit & Debit) -->
     <div id="sec-ledger" class="section">
       <div class="info-banner">
         <div class="banner-clock live-clock">--:--</div>
-        <h2>💳 <span data-i18n="ledgerTitle">হিসাব (বাকি/আদায়)</span></h2><p>Credit &amp; Debit ট্র্যাকিং</p>
+        <h2 data-i18n="h_ledger">💳 Ledger (Credit/Debit)</h2><p data-i18n="p_ledger">Credit &amp; Debit tracking</p>
       </div>
       <div class="kpi-grid">
-        <div class="kpi red"><div class="kpi-label" data-i18n="totalCredit">মোট বাকি (Credit)</div><div class="kpi-value" id="ledgerCredit">৳0</div></div>
-        <div class="kpi green"><div class="kpi-label" data-i18n="totalDebit">মোট আদায় (Debit)</div><div class="kpi-value" id="ledgerDebit">৳0</div></div>
+        <div class="kpi red"><div class="kpi-label" data-i18n="k_totalcredit">Total Credit</div><div class="kpi-value" id="ledgerCredit">৳0</div></div>
+        <div class="kpi green"><div class="kpi-label" data-i18n="k_totaldebit">Total Debit</div><div class="kpi-value" id="ledgerDebit">৳0</div></div>
       </div>
       <div class="kpi-grid">
-        <div class="kpi purple" style="grid-column:span 2"><div class="kpi-label" data-i18n="netOutstanding">নীট বকেয়া (Outstanding)</div><div class="kpi-value" id="ledgerNet">৳0</div></div>
+        <div class="kpi purple" style="grid-column:span 2"><div class="kpi-label" data-i18n="k_netoutstanding">Net Outstanding</div><div class="kpi-value" id="ledgerNet">৳0</div></div>
       </div>
       <div class="card" id="ledgerEntryCard">
-        <div class="card-title" data-i18n="newTransaction">নতুন লেনদেন</div>
-        <div class="form-group"><label data-i18n="date">তারিখ</label><input type="date" id="ledgerDate"></div>
-        <div class="form-group"><label data-i18n="partyName">দোকান/পার্টির নাম</label><input type="text" id="ledgerParty" placeholder="যেমন: করিম স্টোর"></div>
+        <div class="card-title" data-i18n="c_newtxn">New Transaction</div>
+        <div class="form-group"><label>তারিখ</label><input type="date" id="ledgerDate"></div>
+        <div class="form-group"><label>দোকান/পার্টির নাম</label><input type="text" id="ledgerParty" placeholder="যেমন: করিম স্টোর"></div>
         <div class="form-row">
-          <div class="form-group"><label data-i18n="type">ধরন</label>
-            <select id="ledgerType"><option value="credit" data-i18n="creditType">বাকি (Credit)</option><option value="debit" data-i18n="debitType">আদায় (Debit)</option></select>
+          <div class="form-group"><label>ধরন</label>
+            <select id="ledgerType"><option value="credit">বাকি (Credit)</option><option value="debit">আদায় (Debit)</option></select>
           </div>
-          <div class="form-group"><label data-i18n="amountTk">পরিমাণ (৳)</label><input type="number" id="ledgerAmount" min="0" placeholder="0"></div>
+          <div class="form-group"><label>পরিমাণ (৳)</label><input type="number" id="ledgerAmount" min="0" placeholder="0"></div>
         </div>
-        <div class="form-group"><label data-i18n="noteOptional">মন্তব্য (ঐচ্ছিক)</label><input type="text" id="ledgerNote" placeholder="যেমন: ৫০% অগ্রিম"></div>
-        <button class="btn-sm green btn-block" onclick="saveLedger()">💾 <span data-i18n="save">সেভ করুন</span></button>
+        <div class="form-group"><label>মন্তব্য (ঐচ্ছিক)</label><input type="text" id="ledgerNote" placeholder="যেমন: ৫০% অগ্রিম"></div>
+        <button class="btn-sm green btn-block" onclick="saveLedger()">💾 সেভ করুন</button>
       </div>
       <div class="card">
-        <div class="card-title"><span data-i18n="partyWiseDue">পার্টি-ওয়াইজ বকেয়া</span>
-          <div class="card-actions">
-            <button class="mini-icon-btn pdf" onclick="exportTablePDF('ledgerPartyTable','Ledger-Party-Wise')" title="PDF">📄</button>
-          </div>
-        </div>
+        <div class="card-title" data-i18n="c_partywise">Party-wise Outstanding</div>
         <div class="search-box"><input type="text" id="ledgerSearch" placeholder="পার্টি খুঁজুন..." oninput="renderLedger()"></div>
-        <div class="tbl-wrap"><table><thead><tr><th data-i18n="party">পার্টি</th><th data-i18n="credit">বাকি</th><th data-i18n="debit">আদায়</th><th data-i18n="outstanding">বকেয়া</th></tr></thead><tbody id="ledgerPartyTable"></tbody></table></div>
+        <div class="tbl-wrap"><table><thead><tr><th data-i18n="th_party">Party</th><th data-i18n="th_credit">Credit</th><th data-i18n="th_debit">Debit</th><th data-i18n="th_outstanding">Outstanding</th></tr></thead><tbody id="ledgerPartyTable"></tbody></table></div>
       </div>
       <div class="card">
-        <div class="card-title"><span data-i18n="recentTransactions">সাম্প্রতিক লেনদেন</span></div>
+        <div class="card-title" data-i18n="c_recenttxn">Recent Transactions</div>
         <div id="ledgerRecentList"></div>
       </div>
-      <div class="version-stamp">V11.2 PRO</div>
+      <div class="version-stamp">V10.1 PRO</div>
       <div class="watermark">©2026-27. Developed by Maruf@Hossain. All rights reserved.</div>
     </div>
 
@@ -760,55 +558,51 @@ tr:nth-child(even) td{background:var(--surface-2)}
     <div id="sec-entry" class="section">
       <div class="info-banner">
         <div class="banner-clock live-clock">--:--</div>
-        <h2 data-i18n="dailyEntry">দৈনিক এন্ট্রি</h2><p id="entryWelcome">স্বাগতম</p>
+        <h2 data-i18n="h_entry">Daily Entry</h2><p id="entryWelcome">Welcome</p>
       </div>
       <div class="card">
-        <div class="card-title"><span data-i18n="entryForm">এন্ট্রি ফর্ম</span> <span class="badge" id="todayDate"></span></div>
+        <div class="card-title" data-i18n="c_entryform">Entry Form <span class="badge" id="todayDate"></span></div>
         <div class="form-row">
-          <div class="form-group"><label data-i18n="date">তারিখ</label><input type="date" id="entryDate"></div>
-          <div class="form-group"><label data-i18n="route">রুট</label><select id="entryRoute"></select></div>
+          <div class="form-group"><label>তারিখ</label><input type="date" id="entryDate"></div>
+          <div class="form-group"><label>রুট</label><select id="entryRoute"></select></div>
         </div>
         <div class="form-row">
           <div class="form-group"><label>DSR</label><select id="entryDSR"></select></div>
-          <div class="form-group"><label data-i18n="entryType">এন্ট্রির ধরন</label>
+          <div class="form-group"><label>এন্ট্রির ধরন</label>
             <select id="entryType" onchange="renderEntryProducts()">
-              <option value="order" data-i18n="order">অর্ডার</option>
-              <option value="sales" data-i18n="sales">বিক্রি</option>
-              <option value="damage" data-i18n="damage">ড্যামেজ</option>
-              <option value="commission" data-i18n="commissionTk">কমিশন (৳)</option>
+              <option value="order">অর্ডার</option>
+              <option value="sales">বিক্রি</option>
+              <option value="damage">ড্যামেজ</option>
+              <option value="commission">কমিশন (৳)</option>
             </select>
           </div>
         </div>
         <div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap">
-          <button class="btn-icon" onclick="bulkSet(1)" data-i18n="all1">সব ১</button>
-          <button class="btn-icon" onclick="bulkSet(5)" data-i18n="all5">সব ৫</button>
-          <button class="btn-icon" onclick="bulkSet(10)" data-i18n="all10">সব ১০</button>
-          <button class="btn-icon" onclick="bulkClear()" data-i18n="clear">ক্লিয়ার</button>
+          <button class="btn-icon" onclick="bulkSet(1)">সব ১</button>
+          <button class="btn-icon" onclick="bulkSet(5)">সব ৫</button>
+          <button class="btn-icon" onclick="bulkSet(10)">সব ১০</button>
+          <button class="btn-icon" onclick="bulkClear()">ক্লিয়ার</button>
         </div>
         <div class="search-box" id="prodSearchWrap"><input type="text" id="prodSearch" placeholder="পণ্য খুঁজুন..." oninput="filterProducts(this.value)"></div>
         <div id="productInputs" style="max-height:340px;overflow-y:auto;padding-right:4px"></div>
-        <div class="form-group"><label data-i18n="noteOptional">মন্তব্য (ঐচ্ছিক)</label><textarea id="entryNote" rows="2" style="width:100%;padding:10px;background:var(--surface-2);border:1.5px solid var(--border);border-radius:10px;color:var(--text);font-size:13px;font-family:inherit;resize:vertical"></textarea></div>
+        <div class="form-group"><label>মন্তব্য (ঐচ্ছিক)</label><textarea id="entryNote" rows="2" placeholder="যেমন: দোকান বন্ধ ছিল, কাস্টমার কম টাকা দিয়েছে..." style="width:100%;padding:10px;background:var(--surface-2);border:1.5px solid var(--border);border-radius:10px;color:var(--text);font-size:13px;font-family:inherit;resize:vertical"></textarea></div>
         <div class="btn-row" style="display:flex;gap:8px">
-          <button class="btn-sm green" style="flex:1;padding:12px" onclick="saveEntry()">💾 <span data-i18n="saveEntry">এন্ট্রি সেভ করুন</span></button>
+          <button class="btn-sm green" style="flex:1;padding:12px" onclick="saveEntry()">💾 এন্ট্রি সেভ করুন</button>
           <button class="btn-sm gray" style="flex:0.4;padding:12px" onclick="clearEntry()">🔄</button>
         </div>
       </div>
       <div class="card">
-        <div class="card-title"><span data-i18n="todaySummary">আজকের সারসংক্ষেপ</span>
-          <div class="card-actions">
-            <button class="mini-icon-btn wa" onclick="shareTodaySummaryWA()" title="WhatsApp">📱</button>
-          </div>
-        </div>
+        <div class="card-title" data-i18n="c_todaysummary">Today Summary</div>
         <div class="kpi-grid three">
-          <div class="kpi blue"><div class="kpi-label" data-i18n="orderCtn">অর্ডার কার্টন</div><div class="kpi-value" id="tOrdCtn">0</div></div>
-          <div class="kpi blue"><div class="kpi-label" data-i18n="orderTk">অর্ডার ৳</div><div class="kpi-value" id="tOrdVal">৳0</div></div>
-          <div class="kpi green"><div class="kpi-label" data-i18n="salesCtn">বিক্রি কার্টন</div><div class="kpi-value" id="tSalCtn">0</div></div>
-          <div class="kpi green"><div class="kpi-label" data-i18n="salesTk">বিক্রি ৳</div><div class="kpi-value" id="tSalVal">৳0</div></div>
-          <div class="kpi orange"><div class="kpi-label" data-i18n="damage">ড্যামেজ</div><div class="kpi-value" id="tDmg">0</div></div>
-          <div class="kpi purple"><div class="kpi-label" data-i18n="commission">কমিশন</div><div class="kpi-value" id="tDisc">৳0</div></div>
+          <div class="kpi blue"><div class="kpi-label" data-i18n="k_ordctn">Order Ctn</div><div class="kpi-value" id="tOrdCtn">0</div></div>
+          <div class="kpi blue"><div class="kpi-label" data-i18n="k_ordval">Order ৳</div><div class="kpi-value" id="tOrdVal">৳0</div></div>
+          <div class="kpi green"><div class="kpi-label" data-i18n="k_salctn">Sales Ctn</div><div class="kpi-value" id="tSalCtn">0</div></div>
+          <div class="kpi green"><div class="kpi-label" data-i18n="k_salval">Sales ৳</div><div class="kpi-value" id="tSalVal">৳0</div></div>
+          <div class="kpi orange"><div class="kpi-label" data-i18n="k_dmg2">Damage</div><div class="kpi-value" id="tDmg">0</div></div>
+          <div class="kpi purple"><div class="kpi-label" data-i18n="k_comm2">Commission</div><div class="kpi-value" id="tDisc">৳0</div></div>
         </div>
       </div>
-      <div class="version-stamp">V11.2 PRO</div>
+      <div class="version-stamp">V10.1 PRO</div>
       <div class="watermark">©2026-27. Developed by Maruf@Hossain. All rights reserved.</div>
     </div>
 
@@ -816,77 +610,77 @@ tr:nth-child(even) td{background:var(--surface-2)}
     <div id="sec-setup" class="section">
       <div class="info-banner">
         <div class="banner-clock live-clock">--:--</div>
-        <h2 data-i18n="setup">সেটআপ</h2><p data-i18n="masterData">মাস্টার ডেটা ম্যানেজমেন্ট</p>
+        <h2 data-i18n="h_setup">Setup</h2><p data-i18n="p_setup">Master data management</p>
       </div>
       <div class="card">
-        <div class="card-title"><span data-i18n="productList">পণ্যের তালিকা</span> <span class="badge" id="prodCount">0</span></div>
-        <button class="btn-sm green btn-block" style="margin-bottom:10px" onclick="openProductModal()">➕ <span data-i18n="newProduct">নতুন পণ্য</span></button>
+        <div class="card-title" data-i18n="c_productlist">Product List <span class="badge" id="prodCount">0</span></div>
+        <button class="btn-sm green btn-block" style="margin-bottom:10px" onclick="openProductModal()">➕ নতুন পণ্য</button>
         <div class="search-box"><input type="text" id="prodSearch2" placeholder="পণ্য খুঁজুন..." oninput="renderProductMaster()"></div>
         <div class="tbl-wrap"><table>
-          <thead><tr><th>#</th><th data-i18n="name">নাম</th><th data-i18n="pack">প্যাক</th><th>TP</th><th data-i18n="cartonTP">কার্টন TP</th><th>DP</th><th data-i18n="cartonDP">কার্টন DP</th><th data-i18n="lowStock">লো-স্টক</th><th></th></tr></thead>
+          <thead><tr><th>#</th><th data-i18n="th_name">Name</th><th data-i18n="th_pack">Pack</th><th>TP</th><th data-i18n="th_ctntp">Cartons TP</th><th>DP</th><th data-i18n="th_ctndp">Cartons DP</th><th data-i18n="th_lowstock">Low Stock</th><th></th></tr></thead>
           <tbody id="prodTable"></tbody>
         </table></div>
       </div>
       <div class="card">
-        <div class="card-title"><span data-i18n="salesOfficers">সেলস অফিসার</span> <span class="badge" id="soCount">0</span></div>
-        <button class="btn-sm green btn-block" style="margin-bottom:10px" onclick="openSOModal()">➕ <span data-i18n="newSO">নতুন সেলস অফিসার</span></button>
+        <div class="card-title" data-i18n="c_salesofficers">Sales Officers <span class="badge" id="soCount">0</span></div>
+        <button class="btn-sm green btn-block" style="margin-bottom:10px" onclick="openSOModal()">➕ নতুন সেলস অফিসার</button>
         <div id="soList"></div>
       </div>
       <div class="card">
-        <div class="card-title"><span data-i18n="dsrList">DSR তালিকা</span> <span class="badge" id="dsrCount">0</span></div>
-        <button class="btn-sm green btn-block" style="margin-bottom:10px" onclick="openDSRModal()">➕ <span data-i18n="newDSR">নতুন DSR</span></button>
+        <div class="card-title" data-i18n="c_dsrlist">DSR List <span class="badge" id="dsrCount">0</span></div>
+        <button class="btn-sm green btn-block" style="margin-bottom:10px" onclick="openDSRModal()">➕ নতুন DSR</button>
         <div id="dsrList"></div>
       </div>
       <div class="card">
-        <div class="card-title"><span data-i18n="routeList">রুট তালিকা</span> <span class="badge" id="routeCount">0</span></div>
-        <button class="btn-sm green btn-block" style="margin-bottom:10px" onclick="openRouteModal()">➕ <span data-i18n="newRoute">নতুন রুট</span></button>
+        <div class="card-title" data-i18n="c_routelist">Route List <span class="badge" id="routeCount">0</span></div>
+        <button class="btn-sm green btn-block" style="margin-bottom:10px" onclick="openRouteModal()">➕ নতুন রুট</button>
         <div id="routeList"></div>
       </div>
       <div class="card">
-        <div class="card-title"><span data-i18n="specialGuest">স্পেশাল গেস্ট</span> <span class="badge purple" id="guestCount">0</span></div>
-        <button class="btn-sm green btn-block" style="margin-bottom:10px" onclick="openGuestModal()">➕ <span data-i18n="newGuest">নতুন গেস্ট</span></button>
+        <div class="card-title" data-i18n="c_specialguest">Special Guest <span class="badge purple" id="guestCount">0</span></div>
+        <button class="btn-sm green btn-block" style="margin-bottom:10px" onclick="openGuestModal()">➕ নতুন গেস্ট</button>
         <div id="guestList"></div>
       </div>
       <div class="card">
-        <div class="card-title"><span data-i18n="monthlyTarget">মাসিক টার্গেট সেটআপ</span> <span class="badge">কার্টন</span></div>
+        <div class="card-title" data-i18n="c_targetsetup">Monthly Target Setup <span class="badge" data-i18n="b_cartons">Cartons</span></div>
         <div class="form-row">
-          <div class="form-group"><label data-i18n="salesOfficer">সেলস অফিসার</label><select id="setupSO" onchange="renderTargetInputs()"></select></div>
-          <div class="form-group"><label data-i18n="month">মাস</label><input type="month" id="setupMonth" onchange="renderTargetInputs()"></div>
+          <div class="form-group"><label>সেলস অফিসার</label><select id="setupSO" onchange="renderTargetInputs()"></select></div>
+          <div class="form-group"><label>মাস</label><input type="month" id="setupMonth" onchange="renderTargetInputs()"></div>
         </div>
         <div id="targetInputs" style="max-height:340px;overflow-y:auto"></div>
         <div style="margin-top:12px;padding:12px;background:var(--surface-2);border-radius:10px;border:1px solid var(--border)">
-          <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px"><span style="font-weight:700" data-i18n="totalCarton">মোট কার্টন:</span><span id="tgtTotalCtn" style="font-weight:800;color:var(--primary)">0</span></div>
-          <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px"><span style="font-weight:700" data-i18n="totalValue">মোট মূল্য:</span><span id="tgtTotalVal" style="font-weight:800;color:var(--success)">৳0</span></div>
-          <div style="display:flex;justify-content:space-between;font-size:12px"><span style="font-weight:700" data-i18n="dailyTarget">দৈনিক টার্গেট:</span><span id="tgtDailyVal" style="font-weight:800;color:var(--warning)">৳0</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px"><span style="font-weight:700">মোট কার্টন:</span><span id="tgtTotalCtn" style="font-weight:800;color:var(--primary)">0</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px"><span style="font-weight:700">মোট মূল্য:</span><span id="tgtTotalVal" style="font-weight:800;color:var(--success)">৳0</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:12px"><span style="font-weight:700">দৈনিক টার্গেট:</span><span id="tgtDailyVal" style="font-weight:800;color:var(--warning)">৳0</span></div>
         </div>
-        <button class="btn-sm green btn-block" style="margin-top:10px" onclick="saveTarget()">💾 <span data-i18n="saveTarget">টার্গেট সেভ করুন</span></button>
+        <button class="btn-sm green btn-block" style="margin-top:10px" onclick="saveTarget()">💾 টার্গেট সেভ করুন</button>
       </div>
       <div class="card">
-        <div class="card-title" data-i18n="adminPassword">অ্যাডমিন পাসওয়ার্ড</div>
+        <div class="card-title" data-i18n="c_adminpass">Admin Password</div>
         <div class="form-row">
-          <div class="form-group"><label data-i18n="newPassword">নতুন পাসওয়ার্ড</label><input type="text" id="newAdminPass" placeholder="৪+ ডিজিট" inputmode="numeric"></div>
-          <div class="form-group" style="display:flex;align-items:flex-end"><button class="btn-sm purple btn-block" onclick="changeAdminPass()">🔑 <span data-i18n="change">পরিবর্তন</span></button></div>
+          <div class="form-group"><label>নতুন পাসওয়ার্ড</label><input type="text" id="newAdminPass" placeholder="৪+ ডিজিট" inputmode="numeric"></div>
+          <div class="form-group" style="display:flex;align-items:flex-end"><button class="btn-sm purple btn-block" onclick="changeAdminPass()">🔑 পরিবর্তন</button></div>
         </div>
       </div>
       <div class="card">
-        <div class="card-title" data-i18n="dataManagement">ডেটা ম্যানেজমেন্ট</div>
+        <div class="card-title" data-i18n="c_datamgmt">Data Management</div>
         <div class="btn-row">
-          <button class="btn-sm btn-block" onclick="exportData()">⬇️ <span data-i18n="export">এক্সপোর্ট</span></button>
-          <button class="btn-sm orange btn-block" onclick="document.getElementById('importFile').click()">⬆️ <span data-i18n="import">ইমপোর্ট</span></button>
+          <button class="btn-sm btn-block" onclick="exportData()">⬇️ এক্সপোর্ট</button>
+          <button class="btn-sm orange btn-block" onclick="document.getElementById('importFile').click()">⬆️ ইমপোর্ট</button>
         </div>
         <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
-        <button class="btn-sm red btn-block" style="margin-top:10px" onclick="resetAll()">🗑️ <span data-i18n="resetAll">সব রিসেট করুন</span></button>
+        <button class="btn-sm red btn-block" style="margin-top:10px" onclick="resetAll()">🗑️ সব রিসেট করুন</button>
       </div>
       <div class="card">
-        <div class="card-title">🗂️ <span data-i18n="activityLog">অ্যাক্টিভিটি লগ</span> <span class="badge" id="activityCount">0</span></div>
+        <div class="card-title" data-i18n="c_activitylog">🗂️ Activity Log <span class="badge" id="activityCount">0</span></div>
         <div id="activityLogList" style="max-height:320px;overflow-y:auto"></div>
       </div>
-      <div class="version-stamp">V11.2 PRO</div>
+      <div class="version-stamp">V10.1 PRO</div>
       <div class="watermark">©2026-27. Developed by Maruf@Hossain. All rights reserved.</div>
     </div>
   </div>
 
-  <button class="fab" onclick="switchTab('entry')" title="New Entry">+</button>
+  <button class="fab" onclick="switchTab('entry')" title="নতুন এন্ট্রি">+</button>
   <div class="bottom-nav" id="bottomNav"></div>
 </div>
 
@@ -894,157 +688,16 @@ tr:nth-child(even) td{background:var(--surface-2)}
   <div class="modal" id="modalContent" onclick="event.stopPropagation()"></div>
 </div>
 
-<div class="search-overlay" id="searchOverlay" onclick="if(event.target===this)closeSearch()">
-  <div class="search-panel">
-    <div class="search-input-wrap"><input type="text" id="globalSearchInput" placeholder="সার্চ করুন... (পণ্য, অফিসার, রুট, পার্টি, পেজ)" oninput="doGlobalSearch(this.value)" autocomplete="off"></div>
-    <div class="search-results" id="searchResults"></div>
-    <div class="search-hint">ESC চাপুন বন্ধ করতে • Ctrl+K দিয়ে ওপেন করুন</div>
-  </div>
-</div>
-
 <div class="toast" id="toast"></div>
 
 <script>
 /* ===== CONFIG ===== */
 const SYNC_URL = "https://script.google.com/macros/s/AKfycbwK1Cz32Eo8tXaH5ffWxlpTnbeQUFpl4CSl62GiYFOPc4j8hJ1-SeE4JZMGdXPHjxR4Aw/exec";
-const APP_VERSION = "11.2 PRO";
+const APP_VERSION = "10.1 PRO";
 const SESSION_TIMEOUT = 8 * 60 * 60 * 1000;
 const SESSION_WARNING_TIME = 5 * 60 * 1000;
 const MAX_LOGIN_ATTEMPTS = 5;
 const LOCKOUT_DURATION = 30 * 1000;
-
-/* ===== I18N ===== */
-const I18N = {
-  bn: {
-    offlineMsg:"অফলাইন — ডেটা এই ডিভাইসে জমা থাকছে, নেট এলে সিঙ্ক হবে",
-    loginSub:"সেলস ও ইনভেন্টরি সিস্টেম",
-    selectUser:"ইউজার সিলেক্ট করুন",
-    password:"পাসওয়ার্ড",
-    signIn:"সাইন ইন",
-    dashOverview:"ব্যবসায়িক ওভারভিউ",
-    qaNewEntry:"নতুন এন্ট্রি", qaReport:"রিপোর্ট", qaTop:"সেরা পণ্য", qaExport:"এক্সপোর্ট",
-    dateRange:"ডেট রেঞ্জ", thisMonth:"এই মাস", lastMonth:"গত মাস", last7:"গত ৭ দিন", last30:"গত ৩০ দিন", allTime:"সব সময়", custom:"কাস্টম",
-    totalSales:"মোট বিক্রি", target:"টার্গেট", achievement:"অর্জন", orders:"অর্ডার", damage:"ড্যামেজ", commission:"কমিশন",
-    todayEntryPending:"আজ এন্ট্রি বাকি",
-    monthlyProgress:"মাসিক অগ্রগতি", daysElapsed:"দিন পার হয়েছে", daysLeft:"দিন বাকি",
-    salesVsTarget:"বিক্রি বনাম টার্গেট", weeklyTrend:"৭ দিনের বিক্রি ট্রেন্ড", top5:"সেরা ৫ পণ্য", soRanking:"সেলস অফিসার র‍্যাংকিং",
-    officer:"অফিসার", sales:"বিক্রি", achvPct:"অর্জন%",
-    stockReport:"স্টক রিপোর্ট", warehouseOverview:"গুদামের স্টক ওভারভিউ",
-    opening:"ওপেনিং", lifting:"লিফটিং", present:"বর্তমান",
-    product:"পণ্য", stockEntry:"স্টক এন্ট্রি", type:"ধরন", date:"তারিখ", openingStock:"ওপেনিং স্টক", saveStock:"স্টক সেভ করুন",
-    reports:"রিপোর্ট", performanceAnalytics:"পারফরম্যান্স অ্যানালিটিক্স", soPerformance:"সেলস অফিসার পারফরম্যান্স",
-    dailyTrend:"দৈনিক বিক্রি ট্রেন্ড", routeWiseTop:"রুট-ওয়াইজ সেরা পণ্য", damageReport:"ড্যামেজ রিপোর্ট",
-    route:"রুট", topProduct:"সেরা পণ্য", quantity:"পরিমাণ",
-    topSelling:"সেরা বিক্রিত পণ্য", topPerformers:"সেরা পারফরমারগণ", top10:"সেরা ১০ পণ্য", top10Compare:"সেরা ১০ তুলনা", details:"বিস্তারিত",
-    carton:"কার্টন", value:"মূল্য",
-    automationVC:"অটোমেশন ও ভিসি কুলার", todayOutlet:"আজকের আউটলেট", todayVisit:"আজকের ভিজিট", visitPct:"ভিজিট%",
-    vcCooler:"ভিসি কুলার", vcVisit:"ভিসি ভিজিট", vcPct:"ভিসি%", weeklyReport:"সাপ্তাহিক রিপোর্ট",
-    outlet:"আউটলেট", visit:"ভিজিট", entry:"এন্ট্রি", saveEntry:"এন্ট্রি সেভ করুন",
-    damageCommission:"ড্যামেজ ও কমিশন", warehouseDamageReturn:"গুদাম ড্যামেজ ও রিটার্ন",
-    warehouseDamage:"গুদাম ড্যামেজ", returnToCompany:"কোম্পানিতে ফেরত", totalDamage:"মোট ড্যামেজ স্টক",
-    damageEntry:"ড্যামেজ এন্ট্রি", saveDamage:"ড্যামেজ সেভ করুন", damageByOfficer:"অফিসার অনুযায়ী ড্যামেজ",
-    warehouse:"গুদাম", return:"ফেরত", total:"মোট",
-    ledgerTitle:"হিসাব (বাকি/আদায়)", totalCredit:"মোট বাকি (Credit)", totalDebit:"মোট আদায় (Debit)", netOutstanding:"নীট বকেয়া (Outstanding)",
-    newTransaction:"নতুন লেনদেন", partyName:"দোকান/পার্টির নাম", creditType:"বাকি (Credit)", debitType:"আদায় (Debit)",
-    amountTk:"পরিমাণ (৳)", noteOptional:"মন্তব্য (ঐচ্ছিক)", save:"সেভ করুন",
-    partyWiseDue:"পার্টি-ওয়াইজ বকেয়া", party:"পার্টি", credit:"বাকি", debit:"আদায়", outstanding:"বকেয়া", recentTransactions:"সাম্প্রতিক লেনদেন",
-    dailyEntry:"দৈনিক এন্ট্রি", entryForm:"এন্ট্রি ফর্ম", entryType:"এন্ট্রির ধরন", order:"অর্ডার", commissionTk:"কমিশন (৳)",
-    all1:"সব ১", all5:"সব ৫", all10:"সব ১০", clear:"ক্লিয়ার",
-    todaySummary:"আজকের সারসংক্ষেপ", orderCtn:"অর্ডার কার্টন", orderTk:"অর্ডার ৳", salesCtn:"বিক্রি কার্টন", salesTk:"বিক্রি ৳",
-    setup:"সেটআপ", masterData:"মাস্টার ডেটা ম্যানেজমেন্ট", productList:"পণ্যের তালিকা", newProduct:"নতুন পণ্য",
-    name:"নাম", pack:"প্যাক", cartonTP:"কার্টন TP", cartonDP:"কার্টন DP", lowStock:"লো-স্টক",
-    salesOfficers:"সেলস অফিসার", newSO:"নতুন সেলস অফিসার", dsrList:"DSR তালিকা", newDSR:"নতুন DSR",
-    routeList:"রুট তালিকা", newRoute:"নতুন রুট", specialGuest:"স্পেশাল গেস্ট", newGuest:"নতুন গেস্ট",
-    monthlyTarget:"মাসিক টার্গেট সেটআপ", salesOfficer:"সেলস অফিসার", month:"মাস",
-    totalCarton:"মোট কার্টন:", totalValue:"মোট মূল্য:", dailyTarget:"দৈনিক টার্গেট:", saveTarget:"টার্গেট সেভ করুন",
-    adminPassword:"অ্যাডমিন পাসওয়ার্ড", newPassword:"নতুন পাসওয়ার্ড", change:"পরিবর্তন",
-    dataManagement:"ডেটা ম্যানেজমেন্ট", export:"এক্সপোর্ট", import:"ইমপোর্ট", resetAll:"সব রিসেট করুন",
-    activityLog:"অ্যাক্টিভিটি লগ", sessionExpires:"সেশন শেষ হবে",
-    loading:"লোড হচ্ছে...", saved:"সেভ হয়েছে", exported:"এক্সপোর্ট সম্পন্ন", noData:"কোনো ডেটা নেই",
-    pdfExport:"PDF এক্সপোর্ট", imgExport:"ছবি এক্সপোর্ট", waShare:"WhatsApp শেয়ার",
-    from:"থেকে", to:"পর্যন্ত", apply:"প্রয়োগ", cancel:"বাতিল", confirm:"নিশ্চিত",
-    shareText:"শেয়ার টেক্সট", copy:"কপি", openWA:"WhatsApp খুলুন", copied:"কপি হয়েছে!"
-  },
-  en: {
-    offlineMsg:"Offline — Data saved locally, will sync when online",
-    loginSub:"Sales & Inventory System",
-    selectUser:"Select User",
-    password:"Password",
-    signIn:"Sign In",
-    dashOverview:"Business Overview",
-    qaNewEntry:"New Entry", qaReport:"Report", qaTop:"Top Products", qaExport:"Export",
-    dateRange:"Date Range", thisMonth:"This Month", lastMonth:"Last Month", last7:"Last 7 Days", last30:"Last 30 Days", allTime:"All Time", custom:"Custom",
-    totalSales:"Total Sales", target:"Target", achievement:"Achievement", orders:"Orders", damage:"Damage", commission:"Commission",
-    todayEntryPending:"Today's Entry Pending",
-    monthlyProgress:"Monthly Progress", daysElapsed:"days elapsed", daysLeft:"days left",
-    salesVsTarget:"Sales vs Target", weeklyTrend:"7-Day Sales Trend", top5:"Top 5 Products", soRanking:"SO Ranking",
-    officer:"Officer", sales:"Sales", achvPct:"Achievement %",
-    stockReport:"Stock Report", warehouseOverview:"Warehouse Overview",
-    opening:"Opening", lifting:"Lifting", present:"Present",
-    product:"Product", stockEntry:"Stock Entry", type:"Type", date:"Date", openingStock:"Opening Stock", saveStock:"Save Stock",
-    reports:"Reports", performanceAnalytics:"Performance Analytics", soPerformance:"SO Performance",
-    dailyTrend:"Daily Sales Trend", routeWiseTop:"Route-wise Top Products", damageReport:"Damage Report",
-    route:"Route", topProduct:"Top Product", quantity:"Qty",
-    topSelling:"Top Selling Products", topPerformers:"Top Performers", top10:"Top 10 Products", top10Compare:"Top 10 Comparison", details:"Details",
-    carton:"Carton", value:"Value",
-    automationVC:"Automation & VC Cooler", todayOutlet:"Today's Outlet", todayVisit:"Today's Visit", visitPct:"Visit %",
-    vcCooler:"VC Cooler", vcVisit:"VC Visit", vcPct:"VC %", weeklyReport:"Weekly Report",
-    outlet:"Outlet", visit:"Visit", entry:"Entry", saveEntry:"Save Entry",
-    damageCommission:"Damage & Commission", warehouseDamageReturn:"Warehouse Damage & Return",
-    warehouseDamage:"Warehouse Damage", returnToCompany:"Return to Company", totalDamage:"Total Damage Stock",
-    damageEntry:"Damage Entry", saveDamage:"Save Damage", damageByOfficer:"Damage by Officer",
-    warehouse:"Warehouse", return:"Return", total:"Total",
-    ledgerTitle:"Ledger (Credit/Debit)", totalCredit:"Total Credit", totalDebit:"Total Debit", netOutstanding:"Net Outstanding",
-    newTransaction:"New Transaction", partyName:"Party Name", creditType:"Credit", debitType:"Debit",
-    amountTk:"Amount (৳)", noteOptional:"Note (optional)", save:"Save",
-    partyWiseDue:"Party-wise Due", party:"Party", credit:"Credit", debit:"Debit", outstanding:"Outstanding", recentTransactions:"Recent Transactions",
-    dailyEntry:"Daily Entry", entryForm:"Entry Form", entryType:"Entry Type", order:"Order", commissionTk:"Commission (৳)",
-    all1:"All 1", all5:"All 5", all10:"All 10", clear:"Clear",
-    todaySummary:"Today's Summary", orderCtn:"Order Carton", orderTk:"Order ৳", salesCtn:"Sales Carton", salesTk:"Sales ৳",
-    setup:"Setup", masterData:"Master Data Management", productList:"Product List", newProduct:"New Product",
-    name:"Name", pack:"Pack", cartonTP:"Carton TP", cartonDP:"Carton DP", lowStock:"Low-Stock",
-    salesOfficers:"Sales Officers", newSO:"New Sales Officer", dsrList:"DSR List", newDSR:"New DSR",
-    routeList:"Route List", newRoute:"New Route", specialGuest:"Special Guest", newGuest:"New Guest",
-    monthlyTarget:"Monthly Target Setup", salesOfficer:"Sales Officer", month:"Month",
-    totalCarton:"Total Carton:", totalValue:"Total Value:", dailyTarget:"Daily Target:", saveTarget:"Save Target",
-    adminPassword:"Admin Password", newPassword:"New Password", change:"Change",
-    dataManagement:"Data Management", export:"Export", import:"Import", resetAll:"Reset All",
-    activityLog:"Activity Log", sessionExpires:"Session expires in",
-    loading:"Loading...", saved:"Saved", exported:"Export complete", noData:"No data",
-    pdfExport:"PDF Export", imgExport:"Image Export", waShare:"WhatsApp Share",
-    from:"From", to:"To", apply:"Apply", cancel:"Cancel", confirm:"Confirm",
-    shareText:"Share Text", copy:"Copy", openWA:"Open WhatsApp", copied:"Copied!"
-  }
-};
-let LANG = DB_load('bb_lang', 'bn');
-
-function DB_load(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}}
-function DB_save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){console.warn('Storage full',e)}}
-
-function t(key){return I18N[LANG][key]||key}
-function toggleLang(){
-  LANG = LANG==='bn'?'en':'bn';
-  DB_save('bb_lang',LANG);
-  document.documentElement.lang = LANG;
-  applyTranslations();
-  const labels = {bn:'EN',en:'বাং'};
-  document.querySelectorAll('#langLabel,#loginLangLabel').forEach(el=>{if(el)el.textContent=labels[LANG]});
-  // rebuild dynamic UIs
-  buildTabs(); fillDropdowns(); renderDashboard(); renderEntryProducts(); renderTodaySummary();
-  renderProductMaster(); renderSetupLists(); renderReports(); renderTopProducts(); renderInventory();
-  renderDamage(); renderLedger(); renderAutomation(); renderActivityLog(); setupPermissionUI();
-  renderPresets('drPresets','dashboard'); renderPresets('drStockPresets','stock');
-  renderPresets('drRepPresets','report'); renderPresets('drTopPresets','top'); renderPresets('drDmgPresets','damage');
-  toast(LANG==='bn'?'✅ ভাষা পরিবর্তন হয়েছে':'✅ Language changed','success');
-}
-function applyTranslations(){
-  document.querySelectorAll('[data-i18n]').forEach(el=>{
-    const key = el.getAttribute('data-i18n');
-    if(I18N[LANG][key]) el.textContent = I18N[LANG][key];
-  });
-  const lp = document.getElementById('loginPin'); if(lp) lp.placeholder = LANG==='bn'?'পাসওয়ার্ড দিন':'Enter password';
-  const loader = document.getElementById('loaderText'); if(loader) loader.textContent = t('loading');
-}
 
 /* ===== DEFAULT DATA ===== */
 const DEFAULT_PRODUCTS=[
@@ -1084,7 +737,7 @@ const DEFAULT_ROUTES=["Joydebpur Bazar","Dhaka Road","Mymensingh Road West","Mym
 const DEFAULT_GUESTS=[{id:"ahsanul",name:"Ahsanul Haque (GM)",pass:"1111"},{id:"anisur",name:"Anisur Rahman (TSM)",pass:"2222"},{id:"jahidul",name:"Jahidul Islam (Dealer)",pass:"3333"},{id:"abdul",name:"Abdul Kader (ATSM)",pass:"4444"}];
 
 /* ===== STORAGE ===== */
-const DB={load:DB_load,save:DB_save};
+const DB={load(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}},save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){console.warn('Storage full',e)}}};
 let products=DB.load('bb_products',DEFAULT_PRODUCTS);
 let sos=DB.load('bb_sos',DEFAULT_SOS);
 let dsrs=DB.load('bb_dsrs',DEFAULT_DSRS);
@@ -1099,18 +752,9 @@ let ledger=DB.load('bb_ledger',[]);
 let activityLog=DB.load('bb_activity',[]);
 let adminPass=DB.load('bb_admin_pass','1111');
 let currentUser=null,currentRole=null,topFilter='all';
+let LANG=DB.load('bb_lang','en');
 let loginAttempts=0,lockoutUntil=0;
 let sessionTimer=null,warningTimer=null;
-
-/* ===== DATE RANGE STATE ===== */
-const dateRanges = {
-  dashboard: {preset:'thisMonth', from:null, to:null},
-  stock: {preset:'thisMonth', from:null, to:null},
-  report: {preset:'thisMonth', from:null, to:null},
-  top: {preset:'thisMonth', from:null, to:null},
-  damage: {preset:'thisMonth', from:null, to:null}
-};
-
 function logActivity(action,detail){
   activityLog.unshift({ts:new Date().toISOString(),user:currentUser||'?',role:currentRole||'?',action,detail:detail||''});
   if(activityLog.length>200)activityLog=activityLog.slice(0,200);
@@ -1129,90 +773,6 @@ async function migratePasswords(){
   for(const s of sos){if(!isHashed(s.pass)){s.pass=await hashPass(s.pass);changed=true}}
   for(const g of guests){if(!isHashed(g.pass)){g.pass=await hashPass(g.pass);changed=true}}
   if(changed){DB.save('bb_sos',sos);DB.save('bb_guests',guests)}
-}
-
-/* ===== DATE RANGE HELPERS ===== */
-function getDateRange(scope){
-  const dr = dateRanges[scope];
-  if(dr.preset==='custom'){
-    return {from:dr.from, to:dr.to};
-  }
-  const now = new Date();
-  const today = now.toISOString().split('T')[0];
-  let from, to;
-  if(dr.preset==='thisMonth'){
-    from = today.slice(0,7)+'-01'; to = today;
-  } else if(dr.preset==='lastMonth'){
-    const d=new Date(now.getFullYear(),now.getMonth()-1,1);
-    from = d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-01';
-    const d2=new Date(now.getFullYear(),now.getMonth(),0);
-    to = d2.getFullYear()+'-'+String(d2.getMonth()+1).padStart(2,'0')+'-'+String(d2.getDate()).padStart(2,'0');
-  } else if(dr.preset==='last7'){
-    const d=new Date(now); d.setDate(d.getDate()-6);
-    from = d.toISOString().split('T')[0]; to = today;
-  } else if(dr.preset==='last30'){
-    const d=new Date(now); d.setDate(d.getDate()-29);
-    from = d.toISOString().split('T')[0]; to = today;
-  } else if(dr.preset==='allTime'){
-    from = '2020-01-01'; to = today;
-  }
-  return {from, to};
-}
-function filterByRange(arr, scope){
-  const {from,to} = getDateRange(scope);
-  return arr.filter(e=>e.date && e.date>=from && e.date<=to);
-}
-function filterByMonth(arr,m){return arr.filter(e=>e.date&&e.date.startsWith(m))}
-
-function setRangePreset(scope,preset){
-  dateRanges[scope].preset = preset;
-  if(preset!=='custom'){
-    const {from,to} = getDateRange(scope);
-    dateRanges[scope].from = from;
-    dateRanges[scope].to = to;
-    updateRangeInputs(scope);
-  }
-  renderPresets(scope==='dashboard'?'drPresets':(scope==='stock'?'drStockPresets':(scope==='report'?'drRepPresets':(scope==='top'?'drTopPresets':'drDmgPresets'))), scope);
-  refreshScope(scope);
-}
-function applyCustomRange(scope){
-  const fromEl = document.getElementById(scope==='dashboard'?'drFrom':(scope==='stock'?'drStockFrom':(scope==='report'?'drRepFrom':(scope==='top'?'drTopFrom':'drDmgFrom'))));
-  const toEl = document.getElementById(scope==='dashboard'?'drTo':(scope==='stock'?'drStockTo':(scope==='report'?'drRepTo':(scope==='top'?'drTopTo':'drDmgTo'))));
-  if(!fromEl||!toEl) return;
-  dateRanges[scope].from = fromEl.value;
-  dateRanges[scope].to = toEl.value;
-  dateRanges[scope].preset = 'custom';
-  renderPresets(scope==='dashboard'?'drPresets':(scope==='stock'?'drStockPresets':(scope==='report'?'drRepPresets':(scope==='top'?'drTopPresets':'drDmgPresets'))), scope);
-  refreshScope(scope);
-}
-function applyCustomRangeDash(){applyCustomRange('dashboard')}
-function applyStockRange(){applyCustomRange('stock')}
-function applyRepRange(){applyCustomRange('report')}
-function applyTopRange(){applyCustomRange('top')}
-function applyDmgRange(){applyCustomRange('damage')}
-function updateRangeInputs(scope){
-  const prefix = scope==='dashboard'?'dr':(scope==='stock'?'drStock':(scope==='report'?'drRep':(scope==='top'?'drTop':'drDmg')));
-  const fromEl = document.getElementById(prefix+'From');
-  const toEl = document.getElementById(prefix+'To');
-  if(fromEl) fromEl.value = dateRanges[scope].from||'';
-  if(toEl) toEl.value = dateRanges[scope].to||'';
-  const labelId = scope==='dashboard'?'drLabel':(scope==='stock'?'drStockLabel':(scope==='report'?'drRepLabel':(scope==='top'?'drTopLabel':'drDmgLabel')));
-  const lbl = document.getElementById(labelId);
-  if(lbl) lbl.textContent = t(dateRanges[scope].preset);
-}
-function renderPresets(containerId, scope){
-  const box = document.getElementById(containerId);
-  if(!box) return;
-  const presets = ['thisMonth','lastMonth','last7','last30','allTime','custom'];
-  box.innerHTML = presets.map(p=>`<div class="dr-preset${dateRanges[scope].preset===p?' active':''}" onclick="setRangePreset('${scope}','${p}')">${t(p)}</div>`).join('');
-  updateRangeInputs(scope);
-}
-function refreshScope(scope){
-  if(scope==='dashboard') renderDashboard();
-  else if(scope==='stock') renderInventory();
-  else if(scope==='report') renderReports();
-  else if(scope==='top') renderTopProducts();
-  else if(scope==='damage') renderDamage();
 }
 
 /* ===== SESSION ===== */
@@ -1251,23 +811,104 @@ function toggleTheme(){
   if(btn)btn.textContent=next==='dark'?'☀️':'🌙';
 }
 function applyTheme(){
-  const th=DB.load('bb_theme','light');
-  document.documentElement.setAttribute('data-theme',th);
+  const t=DB.load('bb_theme','light');
+  document.documentElement.setAttribute('data-theme',t);
   const btn=document.getElementById('themeBtn');
-  if(btn)btn.textContent=th==='dark'?'☀️':'🌙';
+  if(btn)btn.textContent=t==='dark'?'☀️':'🌙';
 }
 
-/* ===== LIVE CLOCK ===== */
+/* ============= LANGUAGE (EN default, BN optional) =============
+   Static labels use data-i18n="key" (and data-i18n-ph="key" for
+   input placeholders); the English text already sits in the HTML,
+   and I18N_BN supplies the Bangla swap. Dynamic strings set from JS
+   (toasts, modal content, table rows, role names, activity log,
+   month-end summary) are not covered by this dictionary yet and
+   stay in Bangla regardless of the toggle — a known limitation. */
+const I18N_BN={
+  h_stock:'স্টক রিপোর্ট',p_stock:'গুদামের স্টক ওভারভিউ',
+  h_report:'রিপোর্ট',p_report:'পারফরম্যান্স অ্যানালিটিক্স',
+  h_top:'সেরা বিক্রিত পণ্য',p_top:'সেরা পারফরমারগণ',
+  h_auto:'অটোমেশন ও ভিসি কুলার',p_auto:'SPRO ট্র্যাকিং',
+  h_damage:'ড্যামেজ ও কমিশন',p_damage:'গুদাম ড্যামেজ ও রিটার্ন',
+  h_ledger:'💳 হিসাব (বাকি/আদায়)',p_ledger:'Credit & Debit ট্র্যাকিং',
+  h_entry:'দৈনিক এন্ট্রি',
+  h_setup:'সেটআপ',p_setup:'মাস্টার ডেটা ম্যানেজমেন্ট',
+  k_totalsales:'💰 মোট বিক্রি',k_target:'🎯 টার্গেট',k_achv:'📈 অর্জন',
+  k_order:'🧾 অর্ডার',k_damage:'💥 ড্যামেজ',k_comm:'🎁 কমিশন',
+  k_opening:'📥 ওপেনিং',k_lifting:'🚚 লিফটিং',k_sales:'💰 বিক্রি',k_present:'📦 বর্তমান',
+  k_todayoutlet:'🏬 আজকের আউটলেট',k_todayvisit:'✅ আজকের ভিজিট',k_visitpct:'📊 ভিজিট%',
+  k_vccooler:'🧊 ভিসি কুলার',k_vcvisit:'🧊 ভিসি ভিজিট',k_vcpct:'📊 ভিসি%',
+  k_whdamage:'🏚️ গুদাম ড্যামেজ',k_return:'↩️ কোম্পানিতে ফেরত',k_totaldmgstock:'📦 মোট ড্যামেজ স্টক',
+  k_totalcredit:'মোট বাকি (Credit)',k_totaldebit:'মোট আদায় (Debit)',k_netoutstanding:'নীট বকেয়া (Outstanding)',
+  k_ordctn:'অর্ডার কার্টন',k_ordval:'অর্ডার ৳',k_salctn:'বিক্রি কার্টন',k_salval:'বিক্রি ৳',
+  k_dmg2:'ড্যামেজ',k_comm2:'কমিশন',
+  c_monthprog:'মাসিক অগ্রগতি',c_salesvtarget:'বিক্রি বনাম টার্গেট',c_7daytrend:'৭ দিনের বিক্রি ট্রেন্ড',
+  c_top5:'🏆 সেরা ৫ পণ্য',c_soranking:'সেলস অফিসার র‍্যাংকিং',c_reminder:'⏰ আজ এন্ট্রি বাকি',
+  c_stockreport:'স্টক রিপোর্ট',b_cartons:'কার্টন',c_stockentry:'স্টক এন্ট্রি',b_admin:'অ্যাডমিন',
+  c_soperf:'সেলস অফিসার পারফরম্যান্স',c_dailytrend:'দৈনিক বিক্রি ট্রেন্ড',c_routebreak:'🗺️ রুট-ওয়াইজ সেরা পণ্য',
+  c_damagereport:'ড্যামেজ রিপোর্ট',c_top10:'🏆 সেরা ১০ পণ্য',c_top10compare:'সেরা ১০ তুলনা',c_details:'বিস্তারিত',
+  c_sproweekly:'SPRO — সাপ্তাহিক রিপোর্ট',c_sproentry:'SPRO — এন্ট্রি',c_damageentry:'ড্যামেজ এন্ট্রি',
+  c_damagereport2:'ড্যামেজ রিপোর্ট',c_damagebyofficer:'অফিসার অনুযায়ী ড্যামেজ',
+  c_newtxn:'নতুন লেনদেন',c_partywise:'পার্টি-ওয়াইজ বকেয়া',c_recenttxn:'সাম্প্রতিক লেনদেন',
+  c_entryform:'এন্ট্রি ফর্ম',c_todaysummary:'আজকের সারসংক্ষেপ',
+  c_productlist:'পণ্যের তালিকা',c_salesofficers:'সেলস অফিসার',c_dsrlist:'DSR তালিকা',c_routelist:'রুট তালিকা',
+  c_specialguest:'স্পেশাল গেস্ট',c_targetsetup:'মাসিক টার্গেট সেটআপ',c_adminpass:'অ্যাডমিন পাসওয়ার্ড',
+  c_datamgmt:'ডেটা ম্যানেজমেন্ট',c_activitylog:'🗂️ অ্যাক্টিভিটি লগ',
+  th_officer:'অফিসার',th_sales:'বিক্রি',th_achv:'অর্জন%',th_product:'পণ্য',th_opening:'ওপেনিং',
+  th_lifting:'লিফটিং',th_present:'বর্তমান',th_target:'টার্গেট',th_route:'রুট',th_bestproduct:'সেরা পণ্য',
+  th_qty:'পরিমাণ',th_warehouse:'গুদাম',th_returned:'ফেরত',th_cartons2:'কার্টন',th_value:'মূল্য',
+  th_outlet:'আউটলেট',th_visit:'ভিজিট',th_visitpct:'ভিজিট%',th_total:'মোট',th_party:'পার্টি',
+  th_credit:'বাকি',th_debit:'আদায়',th_outstanding:'বকেয়া',th_name:'নাম',th_pack:'প্যাক',
+  th_ctntp:'কার্টন TP',th_ctndp:'কার্টন DP',th_lowstock:'লো-স্টক',
+  login_sub:'সেলস ও ইনভেন্টরি সিস্টেম',login_selectuser:'ইউজার সিলেক্ট করুন',
+  login_password:'পাসওয়ার্ড',login_password_ph:'পাসওয়ার্ড দিন',login_signin:'সাইন ইন →'
+};
+function applyLang(){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key=el.getAttribute('data-i18n');
+    if(LANG==='bn'&&I18N_BN[key])el.textContent=I18N_BN[key];
+    else if(el.dataset.enText)el.textContent=el.dataset.enText;
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{
+    const key=el.getAttribute('data-i18n-ph');
+    if(LANG==='bn'&&I18N_BN[key])el.setAttribute('placeholder',I18N_BN[key]);
+    else if(el.dataset.enPh)el.setAttribute('placeholder',el.dataset.enPh);
+  });
+  const btn=document.getElementById('langBtn');if(btn)btn.textContent=LANG==='en'?'🇧🇩':'🇬🇧';
+}
+function cacheEnglishText(){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{if(!el.dataset.enText)el.dataset.enText=el.textContent});
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{if(!el.dataset.enPh)el.dataset.enPh=el.getAttribute('placeholder')||''});
+}
+function toggleLang(){
+  LANG=LANG==='en'?'bn':'en';
+  DB.save('bb_lang',LANG);
+  applyLang();
+  if(document.getElementById('appScreen').style.display!=='none'){buildTabs();bootApp()}
+}
+
+/* ===== MY SETTINGS (self password change) ===== */
+function openMySettings(){
+  openModal(`<h3>⚙️ আমার সেটিংস</h3>
+    <div class="form-group"><label>🔑 নতুন পাসওয়ার্ড</label><input type="text" id="myNewPass" placeholder="৪+ ডিজিট" inputmode="numeric"></div>
+    <button class="btn-sm green btn-block" onclick="changeMyPassword()">✅ পরিবর্তন করুন</button>`);
+}
+async function changeMyPassword(){
+  const np=document.getElementById('myNewPass').value.trim();
+  if(np.length<4){toast('কমপক্ষে ৪ ডিজিট',true);return}
+  const hp=await hashPass(np);
+  if(currentRole==='admin'){adminPass=hp;DB.save('bb_admin_pass',adminPass)}
+  else if(currentRole==='so'){const so=sos.find(s=>s.id===currentUser);if(so){so.pass=hp;DB.save('bb_sos',sos);syncToSheet('saveSO',{id:so.id,name:so.name,pass:hp})}}
+  else if(currentRole==='guest'){const g=guests.find(x=>x.id===currentUser);if(g){g.pass=hp;DB.save('bb_guests',guests);syncToSheet('saveGuest',{id:g.id,name:g.name,pass:hp})}}
+  logActivity('password_change','self');
+  closeModal();toast('✅ পাসওয়ার্ড পরিবর্তন হয়েছে');
+}
+
+/* ===== LIVE CLOCK (all tabs) ===== */
 function updateClock(){
   const now=new Date();
   const time=now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',hour12:true});
   document.querySelectorAll('.live-clock').forEach(el=>{el.textContent=time});
-}
-
-/* ===== AUTO-SAVE INDICATOR ===== */
-function flashSaving(){
-  const btn = document.querySelector('.header-right .icon-btn[onclick="loadFromSheet()"]');
-  if(btn){btn.classList.add('saving');setTimeout(()=>btn.classList.remove('saving'),1200)}
 }
 
 /* ===== INIT ===== */
@@ -1276,16 +917,12 @@ window.addEventListener('online',updateOfflineBadge);
 window.addEventListener('offline',updateOfflineBadge);
 window.addEventListener('load',async()=>{
   updateOfflineBadge();
-  document.documentElement.lang = LANG;
-  applyTranslations();
-  const labels = {bn:'EN',en:'বাং'};
-  document.querySelectorAll('#langLabel,#loginLangLabel').forEach(el=>{if(el)el.textContent=labels[LANG]});
   await migratePasswords();
   applyTheme();
+  cacheEnglishText();applyLang();
   buildLoginList();
   updateClock();
   setInterval(updateClock,30000);
-  initRangeInputs();
   const s=DB.load('bb_current_user',null),r=DB.load('bb_current_role',null);
   if(s&&r){
     const saved=DB.load('bb_session_start',Date.now());
@@ -1293,16 +930,7 @@ window.addEventListener('load',async()=>{
     else{['bb_current_user','bb_current_role','bb_session_start'].forEach(k=>localStorage.removeItem(k))}
   }
 });
-function initRangeInputs(){
-  ['dashboard','stock','report','top','damage'].forEach(scope=>{
-    setRangePreset(scope,'thisMonth');
-    renderPresets(scope==='dashboard'?'drPresets':(scope==='stock'?'drStockPresets':(scope==='report'?'drRepPresets':(scope==='top'?'drTopPresets':'drDmgPresets'))), scope);
-  });
-}
-function buildLoginList(){const sel=document.getElementById('loginUser');if(!sel)return;
-  let h=`<option value="">-- ${t('selectUser')} --</option><option value="admin">🔑 Admin</option><optgroup label="সেলস অফিসার">`;
-  sos.forEach(s=>h+=`<option value="so:${s.id}">${s.name}</option>`);h+='</optgroup><optgroup label="স্পেশাল গেস্ট">';
-  guests.forEach(g=>h+=`<option value="guest:${g.id}">${g.name}</option>`);h+='</optgroup>';sel.innerHTML=h}
+function buildLoginList(){const sel=document.getElementById('loginUser');if(!sel)return;let h='<option value="">-- ইউজার সিলেক্ট করুন --</option><option value="admin">🔑 Admin</option><optgroup label="সেলস অফিসার">';sos.forEach(s=>h+=`<option value="so:${s.id}">${s.name}</option>`);h+='</optgroup><optgroup label="স্পেশাল গেস্ট">';guests.forEach(g=>h+=`<option value="guest:${g.id}">${g.name}</option>`);h+='</optgroup>';sel.innerHTML=h}
 
 /* ===== LOGIN ===== */
 async function doLogin(){
@@ -1311,22 +939,22 @@ async function doLogin(){
     toast(`⏳ ${rem} সেকেন্ড অপেক্ষা করুন`,true);return;
   }
   const u=document.getElementById('loginUser').value,p=document.getElementById('loginPin').value.trim();
-  if(!u){toast(t('selectUser'),true);return}
-  if(!p){toast(t('password'),true);return}
+  if(!u){toast('ইউজার সিলেক্ট করুন',true);return}
+  if(!p){toast('পাসওয়ার্ড দিন',true);return}
   const btn=document.getElementById('loginBtn');
-  if(btn){btn.disabled=true;}
+  if(btn){btn.disabled=true;btn.textContent='যাচাই করা হচ্ছে...'}
   const hp=await hashPass(p);
   let success=false;
   if(u==='admin'){if(hp===adminPass){currentUser='admin';currentRole='admin';success=true}}
   else if(u.startsWith('so:')){const id=u.slice(3),so=sos.find(s=>s.id===id);if(so&&so.pass===hp){currentUser=id;currentRole='so';success=true}}
   else if(u.startsWith('guest:')){const id=u.slice(6),g=guests.find(x=>x.id===id);if(g&&g.pass===hp){currentUser=id;currentRole='guest';success=true}}
-  if(btn){btn.disabled=false;}
+  if(btn){btn.disabled=false;btn.textContent='সাইন ইন →'}
   if(success){
     loginAttempts=0;
     DB.save('bb_current_user',currentUser);DB.save('bb_current_role',currentRole);
     DB.save('bb_session_start',Date.now());
     logActivity('login','');
-    bootApp();startSessionTimer();toast('✅ '+(LANG==='bn'?'স্বাগতম!':'Welcome!'),'success');
+    bootApp();startSessionTimer();toast('✅ স্বাগতম!','success');
   }else{
     loginAttempts++;
     if(loginAttempts>=MAX_LOGIN_ATTEMPTS){
@@ -1336,13 +964,13 @@ async function doLogin(){
       setTimeout(()=>{if(lm)lm.style.display='none'},LOCKOUT_DURATION);
       loginAttempts=0;
     }else{
-      toast(`❌ ${LANG==='bn'?'ভুল পাসওয়ার্ড':'Wrong password'}! (${MAX_LOGIN_ATTEMPTS-loginAttempts} ${LANG==='bn'?'বার বাকি':'left'})`,true);
+      toast(`❌ ভুল পাসওয়ার্ড! (${MAX_LOGIN_ATTEMPTS-loginAttempts} বার বাকি)`,true);
     }
   }
 }
 function doLogout(silent){
   clearTimeout(sessionTimer);clearTimeout(warningTimer);
-  if(!silent&&!confirm(LANG==='bn'?'লগআউট করবেন?':'Log out?'))return;
+  if(!silent&&!confirm('লগআউট করবেন?'))return;
   ['bb_current_user','bb_current_role','bb_session_start'].forEach(k=>localStorage.removeItem(k));
   location.reload();
 }
@@ -1354,32 +982,33 @@ function bootApp(){
   let dn='Admin';
   if(currentRole==='so')dn=sos.find(s=>s.id===currentUser)?.name||'SO';
   else if(currentRole==='guest')dn=guests.find(g=>g.id===currentUser)?.name||'Guest';
-  const rl=currentRole==='admin'?'Admin':(currentRole==='so'?'সেলস অফিসার':'স্পেশাল গেস্ট');
+  const rl=currentRole==='admin'?(LANG==='en'?'Admin':'অ্যাডমিন'):(currentRole==='so'?(LANG==='en'?'Sales Officer':'সেলস অফিসার'):(LANG==='en'?'Special Guest':'স্পেশাল গেস্ট'));
   document.getElementById('userName').textContent=dn.split(' ')[0];
   const av=document.getElementById('userAvatar');av.textContent=dn[0];av.className='user-avatar'+(currentRole==='so'?' role-so':currentRole==='guest'?' role-guest':'');
   document.getElementById('hdrSub').textContent=rl;
-  const gr=document.getElementById('dashGreeting');if(gr)gr.textContent=(LANG==='bn'?'স্বাগতম, ':'Welcome, ')+dn.split(' ')[0];
+  const gr=document.getElementById('dashGreeting');if(gr)gr.textContent=(LANG==='en'?'Welcome, ':'স্বাগতম, ')+dn.split(' ')[0];
   buildTabs();
   const today=new Date().toISOString().split('T')[0],nowMonth=today.slice(0,7);
-  ['entryDate','stockDate','dmgDate','autoDate','ledgerDate'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=today});
+  ['entryDate','stockDate','dmgDate','autoDate'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=today});
   const sm=document.getElementById('setupMonth');if(sm)sm.value=nowMonth;
   const td=document.getElementById('todayDate');if(td)td.textContent=today;
-  buildMonthYearSelectors();fillDropdowns();renderDashboard();renderEntryProducts();renderTodaySummary();
-  renderProductMaster();renderSetupLists();renderActivityLog();setupPermissionUI();
-  updateClock();resetSessionTimer();checkMonthEndSummary();
-  initRangeInputs();
+  buildMonthYearSelectors();fillDropdowns();renderDashboard();renderEntryProducts();renderTodaySummary();renderProductMaster();renderSetupLists();renderActivityLog();setupPermissionUI();
+  updateClock();
+  resetSessionTimer();
+  checkMonthEndSummary();
 }
 function renderActivityLog(){
   const list=document.getElementById('activityLogList');if(!list)return;
   const cnt=document.getElementById('activityCount');if(cnt)cnt.textContent=activityLog.length;
   const actionLabel={login:'লগইন',entry:'এন্ট্রি',ledger:'হিসাব',add_product:'পণ্য যোগ',edit_product:'পণ্য এডিট',delete_product:'পণ্য ডিলিট',password_change:'পাসওয়ার্ড বদল'};
   list.innerHTML=activityLog.slice(0,50).map(a=>{
-    const dt=new Date(a.ts);
-    const timeStr=dt.toLocaleDateString('en-GB')+' '+dt.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+    const t=new Date(a.ts);
+    const timeStr=t.toLocaleDateString('en-GB')+' '+t.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
     return `<div class="activity-item"><b>${a.user}</b> (${a.role}) — ${actionLabel[a.action]||a.action} ${a.detail?'• '+a.detail:''}<br><span style="color:var(--muted-2);font-size:10px">${timeStr}</span></div>`;
-  }).join('')||'<div class="empty"><div class="icon">🗂️</div>'+(LANG==='bn'?'এখনো কোনো অ্যাক্টিভিটি নেই':'No activity yet')+'</div>';
+  }).join('')||'<div class="empty"><div class="icon">🗂️</div>এখনো কোনো অ্যাক্টিভিটি নেই</div>';
 }
 
+/* ===== MONTH-END AUTO SUMMARY ===== */
 function checkMonthEndSummary(){
   const now=new Date();
   const thisMonth=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
@@ -1397,14 +1026,14 @@ function checkMonthEndSummary(){
   const bestId=ranked[0]?.[0];
   const best=sos.find(s=>s.id===bestId);
   const [py,pm]=prev.split('-').map(Number);
-  const monthName=new Date(py,pm-1).toLocaleDateString(LANG==='bn'?'bn-BD':'en-GB',{month:'long',year:'numeric'});
-  openModal(`<h3>📅 ${monthName} ${LANG==='bn'?'সামারি':'Summary'}</h3>
+  const monthName=new Date(py,pm-1).toLocaleDateString('bn-BD',{month:'long',year:'numeric'});
+  openModal(`<h3>📅 ${monthName} সামারি</h3>
     <div class="kpi-grid" style="margin-top:10px">
-      <div class="kpi blue"><div class="kpi-label">${t('totalSales')}</div><div class="kpi-value">৳${Math.round(totalSales).toLocaleString()}</div></div>
-      <div class="kpi red"><div class="kpi-label">${t('totalDamage')}</div><div class="kpi-value">${totalDamage}</div></div>
+      <div class="kpi blue"><div class="kpi-label">মোট বিক্রি</div><div class="kpi-value">৳${Math.round(totalSales).toLocaleString()}</div></div>
+      <div class="kpi red"><div class="kpi-label">মোট ড্যামেজ</div><div class="kpi-value">${totalDamage}</div></div>
     </div>
-    ${best?`<div class="card" style="margin-top:10px;background:var(--grad);color:#fff"><div style="font-size:12px;opacity:.85">🏆 ${LANG==='bn'?'সেরা পারফর্মার':'Top Performer'}</div><div style="font-size:18px;font-weight:800;margin-top:4px">${best.name}</div><div style="font-size:13px;margin-top:2px">৳${Math.round(ranked[0][1]).toLocaleString()}</div></div>`:''}
-    <button class="btn-sm green btn-block" style="margin-top:14px" onclick="closeModal()">✅ ${LANG==='bn'?'ঠিক আছে':'OK'}</button>`);
+    ${best?`<div class="card" style="margin-top:10px;background:var(--grad);color:#fff"><div style="font-size:12px;opacity:.85">🏆 সেরা পারফর্মার</div><div style="font-size:18px;font-weight:800;margin-top:4px">${best.name}</div><div style="font-size:13px;margin-top:2px">৳${Math.round(ranked[0][1]).toLocaleString()}</div></div>`:''}
+    <button class="btn-sm green btn-block" style="margin-top:14px" onclick="closeModal()">✅ ঠিক আছে</button>`);
   DB.save(shownKey,true);
 }
 
@@ -1414,33 +1043,33 @@ function setupPermissionUI(){
   const ac=document.getElementById('autoEntryCard');if(ac)ac.style.display=isAdmin?'block':'none';
   const dc=document.getElementById('dmgEntryCard');if(dc)dc.style.display=isAdmin?'block':'none';
   const ew=document.getElementById('entryWelcome');
-  if(ew){if(currentRole==='so'){const so=sos.find(s=>s.id===currentUser);ew.textContent=(LANG==='bn'?'স্বাগতম, ':'Welcome, ')+(so?.name||'')}else if(currentRole==='guest'){ew.textContent=LANG==='bn'?'শুধু দেখার মোড':'View-only mode'}else{ew.textContent=LANG==='bn'?'অ্যাডমিন মোড — যেকোনো অফিসারের হয়ে এন্ট্রি দিন':'Admin mode — enter on behalf of any officer'}}
+  if(ew){if(currentRole==='so'){const so=sos.find(s=>s.id===currentUser);ew.textContent='স্বাগতম, '+(so?.name||'')}else if(currentRole==='guest'){ew.textContent='শুধু দেখার মোড'}else{ew.textContent='অ্যাডমিন মোড — যেকোনো অফিসারের হয়ে এন্ট্রি দিন'}}
 }
 
 /* ===== TABS ===== */
 const TABS=[
-{id:'dashboard',label:'📊 '+ (LANG==='bn'?'ড্যাশবোর্ড':'Dashboard'),icon:'📊',short:LANG==='bn'?'হোম':'Home',roles:['admin','so','guest']},
-{id:'stock',label:'📦 '+ (LANG==='bn'?'স্টক রিপোর্ট':'Stock Report'),icon:'📦',short:LANG==='bn'?'স্টক':'Stock',roles:['admin','so','guest']},
-{id:'report',label:'📈 '+ (LANG==='bn'?'রিপোর্ট':'Reports'),icon:'📈',short:LANG==='bn'?'রিপোর্ট':'Report',roles:['admin','so','guest']},
-{id:'top',label:'🏆 '+ (LANG==='bn'?'সেরা পণ্য':'Top Products'),icon:'🏆',short:LANG==='bn'?'সেরা':'Top',roles:['admin','so','guest']},
-{id:'automation',label:'⚙️ '+(LANG==='bn'?'অটোমেশন':'Automation'),icon:'⚙️',short:LANG==='bn'?'অটো':'Auto',roles:['admin','so','guest']},
-{id:'damage',label:'🔴 '+(LANG==='bn'?'ড্যামেজ':'Damage'),icon:'🔴',short:LANG==='bn'?'ড্যামেজ':'Damage',roles:['admin','so','guest']},
-{id:'ledger',label:'💳 '+(LANG==='bn'?'হিসাব':'Ledger'),icon:'💳',short:LANG==='bn'?'হিসাব':'Ledger',roles:['admin','so','guest']},
-{id:'entry',label:'📝 '+(LANG==='bn'?'এন্ট্রি':'Entry'),icon:'📝',short:LANG==='bn'?'এন্ট্রি':'Entry',roles:['admin','so']},
-{id:'setup',label:'🛠️ '+(LANG==='bn'?'সেটআপ':'Setup'),icon:'🛠️',short:LANG==='bn'?'সেটআপ':'Setup',roles:['admin']}
+{id:'dashboard',label:{en:'📊 Dashboard',bn:'📊 ড্যাশবোর্ড'},icon:'📊',short:{en:'Home',bn:'হোম'},roles:['admin','so','guest']},
+{id:'stock',label:{en:'📦 Stock Report',bn:'📦 স্টক রিপোর্ট'},icon:'📦',short:{en:'Stock',bn:'স্টক'},roles:['admin','so','guest']},
+{id:'report',label:{en:'📈 Report',bn:'📈 রিপোর্ট'},icon:'📈',short:{en:'Report',bn:'রিপোর্ট'},roles:['admin','so','guest']},
+{id:'top',label:{en:'🏆 Top Products',bn:'🏆 সেরা পণ্য'},icon:'🏆',short:{en:'Top',bn:'সেরা'},roles:['admin','so','guest']},
+{id:'automation',label:{en:'⚙️ Automation',bn:'⚙️ অটোমেশন'},icon:'⚙️',short:{en:'Auto',bn:'অটো'},roles:['admin','so','guest']},
+{id:'damage',label:{en:'🔴 Damage',bn:'🔴 ড্যামেজ'},icon:'🔴',short:{en:'Damage',bn:'ড্যামেজ'},roles:['admin','so','guest']},
+{id:'ledger',label:{en:'💳 Ledger',bn:'💳 হিসাব'},icon:'💳',short:{en:'Ledger',bn:'হিসাব'},roles:['admin','so','guest']},
+{id:'entry',label:{en:'📝 Entry',bn:'📝 এন্ট্রি'},icon:'📝',short:{en:'Entry',bn:'এন্ট্রি'},roles:['admin','so']},
+{id:'setup',label:{en:'🛠️ Setup',bn:'🛠️ সেটআপ'},icon:'🛠️',short:{en:'Setup',bn:'সেটআপ'},roles:['admin']}
 ];
-function buildTabs(){const v=TABS.filter(t2=>t2.roles.includes(currentRole));
-document.getElementById('tabNav').innerHTML=v.map((t2,i)=>`<button class="tab-btn${i===0?' active':''}" onclick="switchTab('${t2.id}',this)">${t2.label}</button>`).join('');
-document.getElementById('bottomNav').innerHTML=v.map((t2,i)=>`<div class="nav-item${i===0?' active':''}" onclick="switchTab('${t2.id}',this)"><span class="ico">${t2.icon}</span><span class="lbl">${t2.short}</span></div>`).join('')}
+function buildTabs(){const v=TABS.filter(t=>t.roles.includes(currentRole));
+document.getElementById('tabNav').innerHTML=v.map((t,i)=>`<button class="tab-btn${i===0?' active':''}" onclick="switchTab('${t.id}',this)">${t.label[LANG]}</button>`).join('');
+document.getElementById('bottomNav').innerHTML=v.map((t,i)=>`<div class="nav-item${i===0?' active':''}" onclick="switchTab('${t.id}',this)"><span class="ico">${t.icon}</span><span class="lbl">${t.short[LANG]}</span></div>`).join('')}
 function switchTab(id,el){
-  const tab=TABS.find(t2=>t2.id===id);
-  if(!tab||!tab.roles.includes(currentRole)){toast(LANG==='bn'?'অনুমতি নেই':'No permission',true);return}
+  const tab=TABS.find(t=>t.id===id);
+  if(!tab||!tab.roles.includes(currentRole)){toast('অনুমতি নেই',true);return}
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.getElementById('sec-'+id).classList.add('active');
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   if(el&&el.classList.contains('tab-btn'))el.classList.add('active');
-  const v=TABS.filter(t2=>t2.roles.includes(currentRole)),idx=v.findIndex(t2=>t2.id===id);
+  const v=TABS.filter(t=>t.roles.includes(currentRole)),idx=v.findIndex(t=>t.id===id);
   if(idx>=0){const n=document.querySelectorAll('.nav-item')[idx];if(n)n.classList.add('active')}
   if(id==='dashboard')renderDashboard();
   if(id==='stock'){renderInventory();renderStockInputs()}
@@ -1451,7 +1080,8 @@ function switchTab(id,el){
   if(id==='ledger')renderLedger();
   if(id==='entry'){renderEntryProducts();renderTodaySummary()}
   if(id==='setup'){renderProductMaster();renderSetupLists();fillDropdowns();renderActivityLog()}
-  updateClock();resetSessionTimer();
+  updateClock();
+  resetSessionTimer();
 }
 
 /* ===== MONTH SELECTORS ===== */
@@ -1463,18 +1093,70 @@ function buildMonthYearSelectors(){
   const yo=years.map(y=>`<option value="${y}"${y===cy?' selected':''}>${y}</option>`).join('');
   ['dashMonthSel','repMonthSel','topMonthSel','stockMonthSel','dmgMonthSel'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=mo});
   ['dashYearSel','repYearSel','topYearSel','stockYearSel','dmgYearSel'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=yo});
+  RANGE_PREFIXES.forEach(p=>renderRangeChips(p));
+  const dm=document.getElementById('dashMonth');if(dm)dm.textContent=months[cm]+' '+cy;
 }
-function getPrevMonthKey(month){
-  const [y,m]=month.split('-').map(Number);
-  const d=new Date(y,m-2,1);
-  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
+function monthKey(prefix){const m=document.getElementById(prefix+'MonthSel')?.value||(new Date().getMonth()+1),y=document.getElementById(prefix+'YearSel')?.value||new Date().getFullYear();return `${y}-${String(m).padStart(2,'0')}`}
+function getSelectedMonth(){return monthKey('dash')}
+function getSelectedReportMonth(){return monthKey('rep')}
+function getSelectedTopMonth(){return monthKey('top')}
+function getSelectedStockMonth(){return monthKey('stock')}
+function getSelectedDmgMonth(){return monthKey('dmg')}
+function filterByMonth(arr,m){return arr.filter(e=>e.date&&e.date.startsWith(m))}
+function filterByUser(arr){return arr}
+
+/* ===== CUSTOM DATE RANGE ===== */
+let customRanges={};
+const RANGE_PREFIXES=['dash','stock','rep','top','dmg'];
+function fmtD(d){return d.toISOString().split('T')[0]}
+function renderRangeChips(prefix){
+  const el=document.getElementById('rangeTabs-'+prefix);if(!el)return;
+  const cr=customRanges[prefix];
+  const active=cr?cr.label:'month';
+  const chips=[
+    {key:'month',label:'এই মাস'},
+    {key:'7d',label:'গত ৭ দিন'},
+    {key:'3m',label:'গত ৩ মাস'},
+    {key:'custom',label:cr&&cr.label==='custom'?`${cr.from} → ${cr.to}`:'📅 কাস্টম'}
+  ];
+  el.innerHTML=chips.map(c=>`<div class="chip${active===c.key?' active':''}" onclick="${c.key==='custom'?`openCustomRange('${prefix}')`:`setRangePreset('${prefix}','${c.key}')`}">${c.label}</div>`).join('');
+  const row=document.getElementById('monthSelRow-'+prefix);
+  if(row)row.style.display=cr?'none':'flex';
 }
-function trendHtml(cur,prev){
-  if(!prev)return '';
-  const diff=cur-prev,pct=prev?((diff/prev)*100):0;
-  if(Math.abs(pct)<0.5)return `<span style="color:var(--muted)">— ${LANG==='bn'?'গত মাসের সমান':'Same as last month'}</span>`;
-  const up=diff>0;
-  return `<span class="${up?'trend-up':'trend-down'}">${up?'▲':'▼'} ${Math.abs(pct).toFixed(0)}% ${LANG==='bn'?'গত মাসের চেয়ে':'vs last month'}</span>`;
+function renderTabFor(prefix){
+  renderRangeChips(prefix);
+  if(prefix==='dash')renderDashboard();
+  if(prefix==='rep')renderReports();
+  if(prefix==='top')renderTopProducts();
+  if(prefix==='stock')renderInventory();
+  if(prefix==='dmg')renderDamage();
+}
+function setRangePreset(prefix,preset){
+  if(preset==='month'){customRanges[prefix]=null;renderTabFor(prefix);return}
+  const to=new Date();let from=new Date();
+  if(preset==='7d')from.setDate(to.getDate()-6);
+  if(preset==='3m')from.setMonth(to.getMonth()-3);
+  customRanges[prefix]={from:fmtD(from),to:fmtD(to),label:preset};
+  renderTabFor(prefix);
+}
+function openCustomRange(prefix){
+  const cr=customRanges[prefix];
+  openModal(`<h3>📅 কাস্টম ডেট রেঞ্জ</h3>
+    <div class="form-group"><label>শুরুর তারিখ</label><input type="date" id="crFrom" value="${cr&&cr.label==='custom'?cr.from:''}"></div>
+    <div class="form-group"><label>শেষ তারিখ</label><input type="date" id="crTo" value="${cr&&cr.label==='custom'?cr.to:''}"></div>
+    <button class="btn-sm green btn-block" onclick="applyCustomRange('${prefix}')">✅ প্রয়োগ করুন</button>`);
+}
+function applyCustomRange(prefix){
+  const from=document.getElementById('crFrom').value,to=document.getElementById('crTo').value;
+  if(!from||!to){toast('দুটো তারিখই দিন',true);return}
+  if(from>to){toast('শুরুর তারিখ শেষের আগে হতে হবে',true);return}
+  customRanges[prefix]={from,to,label:'custom'};
+  closeModal();renderTabFor(prefix);
+}
+function filterByPeriod(arr,prefix){
+  const cr=customRanges[prefix];
+  if(cr)return arr.filter(e=>e.date&&e.date>=cr.from&&e.date<=cr.to);
+  return filterByMonth(arr,monthKey(prefix));
 }
 
 /* ===== DROPDOWNS ===== */
@@ -1487,8 +1169,8 @@ function fillDropdowns(){
 }
 
 /* ===== BULK INPUT ===== */
-function bulkSet(val){products.forEach((_,i)=>{const el=document.getElementById('pin_'+i);if(el)el.value=val});toast(`সব ${val} সেট`)}
-function bulkClear(){products.forEach((_,i)=>{const el=document.getElementById('pin_'+i);if(el)el.value=''});toast('ক্লিয়ার')}
+function bulkSet(val){products.forEach((_,i)=>{const el=document.getElementById('pin_'+i);if(el)el.value=val});toast(`সব ${val} সেট করা হয়েছে`)}
+function bulkClear(){products.forEach((_,i)=>{const el=document.getElementById('pin_'+i);if(el)el.value=''});toast('ক্লিয়ার করা হয়েছে')}
 
 /* ===== ENTRY ===== */
 function renderEntryProducts(f){
@@ -1497,11 +1179,11 @@ function renderEntryProducts(f){
   const sw=document.getElementById('prodSearchWrap');if(sw)sw.style.display=type==='commission'?'none':'block';
   if(type==='commission'){
     const prev=document.getElementById('commissionAmount')?.value||'';
-    box.innerHTML=`<div class="form-group"><label>${t('commissionTk')}</label><input type="number" id="commissionAmount" min="0" step="0.01" value="${prev}" placeholder="0" inputmode="decimal" style="padding:10px;background:var(--surface-2);border:1.5px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;text-align:center;width:100%"></div>`;
+    box.innerHTML=`<div class="form-group"><label>কমিশন এমাউন্ট (৳)</label><input type="number" id="commissionAmount" min="0" step="0.01" value="${prev}" placeholder="0" inputmode="decimal" style="padding:10px;background:var(--surface-2);border:1.5px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;text-align:center;width:100%"></div>`;
     return;
   }
   const list=f?products.filter(p=>p.name.toLowerCase().includes(f.toLowerCase())):products;
-  if(list.length===0){box.innerHTML='<div class="empty">😕 '+(LANG==='bn'?'কোনো পণ্য পাওয়া যায়নি':'No products found')+'</div>';return}
+  if(list.length===0){box.innerHTML='<div class="empty">😕 কোনো পণ্য পাওয়া যায়নি</div>';return}
   const ex={};products.forEach((p,i)=>{const el=document.getElementById('pin_'+i);if(el)ex[i]=el.value});
   box.innerHTML=list.map(p=>{
     const i=products.indexOf(p),v=ex[i]||'';
@@ -1511,7 +1193,7 @@ function renderEntryProducts(f){
 function filterProducts(v){renderEntryProducts(v)}
 function clearEntry(){products.forEach((_,i)=>{const el=document.getElementById('pin_'+i);if(el)el.value=''});const ca=document.getElementById('commissionAmount');if(ca)ca.value='';const en=document.getElementById('entryNote');if(en)en.value='';toast('মুছে ফেলা হয়েছে')}
 function saveEntry(){
-  if(currentRole==='guest'){toast(LANG==='bn'?'শুধু দেখার অনুমতি':'View only',true);return}
+  if(currentRole==='guest'){toast('শুধু দেখার অনুমতি',true);return}
   const date=document.getElementById('entryDate').value,route=document.getElementById('entryRoute').value,dsr=document.getElementById('entryDSR').value,type=document.getElementById('entryType').value;
   let userId=currentUser;if(currentRole==='admin')userId='admin';
   const note=(document.getElementById('entryNote')?.value||'').trim();
@@ -1526,8 +1208,7 @@ function saveEntry(){
     if(total===0){toast('কমপক্ষে একটি পণ্যের পরিমাণ দিন',true);return}
     ed={id:Date.now(),date,route,dsr,type,items,amount:0,note,user_id:userId,user_role:currentRole,ts:new Date().toISOString()};
   }
-  entries.push(ed);DB.save('bb_entries',entries);syncToSheet('saveEntry',ed);logActivity('entry',type+' '+date);clearEntry();renderTodaySummary();
-  flashSaving();toast('✅ '+(LANG==='bn'?'এন্ট্রি সেভ হয়েছে!':'Entry saved!'),'success');
+  entries.push(ed);DB.save('bb_entries',entries);syncToSheet('saveEntry',ed);logActivity('entry',type+' '+date);clearEntry();renderTodaySummary();toast('✅ এন্ট্রি সেভ হয়েছে!','success');
   resetSessionTimer();
 }
 function renderTodaySummary(){
@@ -1542,33 +1223,38 @@ function renderTodaySummary(){
 }
 
 /* ===== DASHBOARD ===== */
+function getPrevMonthKey(month){
+  const [y,m]=month.split('-').map(Number);
+  const d=new Date(y,m-2,1);
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
+}
+function trendHtml(cur,prev){
+  if(!prev)return '';
+  const diff=cur-prev,pct=prev?((diff/prev)*100):0;
+  if(Math.abs(pct)<0.5)return '<span style="color:var(--muted)">— গত মাসের সমান</span>';
+  const up=diff>0;
+  return `<span class="${up?'trend-up':'trend-down'}">${up?'▲':'▼'} ${Math.abs(pct).toFixed(0)}% গত মাসের চেয়ে</span>`;
+}
 function renderDashboard(){
-  const rangeEntries = filterByRange(entries,'dashboard');
-  const rangeLabelEl = document.getElementById('dashRangeLabel');
-  if(rangeLabelEl){
-    const {from,to} = getDateRange('dashboard');
-    rangeLabelEl.textContent = from.slice(5)+' ~ '+to.slice(5);
-  }
+  const month=getSelectedMonth(),me=filterByPeriod(entries,'dash'),fl=filterByUser(me);
   let ts=0,to=0,td=0,tc=0;const soSales={};
-  rangeEntries.forEach(e=>{
+  fl.forEach(e=>{
     if(e.type==='sales'){let v=0;products.forEach(p=>v+=(e.items[p.name]||0)*p.tp);ts+=v;soSales[e.user_id]=(soSales[e.user_id]||0)+v}
     if(e.type==='order'){let v=0;products.forEach(p=>v+=(e.items[p.name]||0)*p.tp);to+=v}
     if(e.type==='damage')products.forEach(p=>td+=(e.items[p.name]||0));
     if(e.type==='commission')tc+=(e.amount||0);
   });
-  // last month comparison for this month only
-  const thisMonth = new Date().toISOString().slice(0,7);
-  const prevMonth = getPrevMonthKey(thisMonth);
-  const prevMe=filterByMonth(entries,prevMonth);
+  const prevMonth=getPrevMonthKey(month);
+  const prevMe=filterByMonth(entries,prevMonth),prevFl=filterByUser(prevMe);
   let pts=0,pto=0;
-  prevMe.forEach(e=>{
+  prevFl.forEach(e=>{
     if(e.type==='sales'){let v=0;products.forEach(p=>v+=(e.items[p.name]||0)*p.tp);pts+=v}
     if(e.type==='order'){let v=0;products.forEach(p=>v+=(e.items[p.name]||0)*p.tp);pto+=v}
   });
-  const st=document.getElementById('kpiSalesTrend');if(st)st.innerHTML=dateRanges.dashboard.preset==='thisMonth'?trendHtml(ts,pts):'';
-  const ot=document.getElementById('kpiOrderTrend');if(ot)ot.innerHTML=dateRanges.dashboard.preset==='thisMonth'?trendHtml(to,pto):'';
+  const st=document.getElementById('kpiSalesTrend');if(st)st.innerHTML=trendHtml(ts,pts);
+  const ot=document.getElementById('kpiOrderTrend');if(ot)ot.innerHTML=trendHtml(to,pto);
   let tt=0;
-  sos.forEach(s=>{tt+=(targets[`${s.id}_${thisMonth}`]?.totalValue||0)});
+  sos.forEach(s=>{tt+=(targets[`${s.id}_${month}`]?.totalValue||0)});
   const a=tt?(ts/tt*100):0;
   animateNum('kpiSales',ts,{prefix:'৳'});
   animateNum('kpiTarget',tt,{prefix:'৳'});
@@ -1579,28 +1265,29 @@ function renderDashboard(){
   const achvKpi=document.getElementById('kpiAchv')?.closest('.kpi');
   if(achvKpi)achvKpi.classList.toggle('celebrate',a>=100);
   const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v};
-  const now=new Date();
-  const yy=now.getFullYear(),mm=now.getMonth()+1,dim=new Date(yy,mm,0).getDate();
-  const el=now.getDate();
+  const parts=month.split('-');const yy=Number(parts[0]),mm=Number(parts[1]);
+  const now=new Date(),dim=new Date(yy,mm,0).getDate();
+  let el;
+  if(now.getFullYear()===yy&&(now.getMonth()+1)===mm)el=now.getDate();
+  else if(new Date(yy,mm-1)<now)el=dim;else el=0;
   const pct=(el/dim*100).toFixed(0);
-  const mb=document.getElementById('monthBadge');if(mb)mb.textContent=now.toLocaleDateString(LANG==='bn'?'bn-BD':'en-US',{month:'short',year:'numeric'});
+  const mb=document.getElementById('monthBadge');if(mb)mb.textContent=new Date(yy,mm-1).toLocaleDateString('en-US',{month:'short',year:'numeric'});
   const mp=document.getElementById('monthProgress');if(mp)mp.style.width=pct+'%';
-  set('monthElapsed',el+' '+t('daysElapsed'));set('monthRemain',(dim-el)+' '+t('daysLeft'));
+  set('monthElapsed',el+' days elapsed');set('monthRemain',(dim-el)+' days left');
   const soList=sos;
   drawBarChart('chartSO',soList.map(s=>s.name.split(' ')[0]),[
-    {label:t('sales'),data:soList.map(s=>soSales[s.id]||0),bg:'#0E7C66'},
-    {label:t('target'),data:soList.map(s=>targets[`${s.id}_${thisMonth}`]?.totalValue||0),bg:'#FF7A33'}
+    {label:'বিক্রি',data:soList.map(s=>soSales[s.id]||0),bg:'#0E7C66'},
+    {label:'টার্গেট',data:soList.map(s=>targets[`${s.id}_${month}`]?.totalValue||0),bg:'#FF7A33'}
   ]);
-  const l7=[];const days7=[];
-  for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);const key=d.toISOString().split('T')[0];days7.push(key)}
-  days7.forEach(key=>{let v=0;rangeEntries.filter(e=>e.date===key&&e.type==='sales').forEach(e=>{products.forEach(p=>v+=(e.items[p.name]||0)*p.tp)});l7.push({label:key.slice(8),val:v})});
+  const l7=[];
+  for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);const key=d.toISOString().split('T')[0];let v=0;fl.filter(e=>e.date===key&&e.type==='sales').forEach(e=>{products.forEach(p=>v+=(e.items[p.name]||0)*p.tp)});l7.push({label:key.slice(8),val:v})}
   drawLineChart('chartWeek',l7.map(x=>x.label),l7.map(x=>x.val));
   const prodSales={};
-  rangeEntries.filter(e=>e.type==='sales').forEach(e=>{products.forEach(p=>{const q=e.items[p.name]||0;if(q)prodSales[p.name]=(prodSales[p.name]||0)+q*p.tp})});
+  fl.filter(e=>e.type==='sales').forEach(e=>{products.forEach(p=>{const q=e.items[p.name]||0;if(q)prodSales[p.name]=(prodSales[p.name]||0)+q*p.tp})});
   const t5=Object.entries(prodSales).sort((a,b)=>b[1]-a[1]).slice(0,5);
   const t5el=document.getElementById('top5List');
   if(t5el){
-    if(t5.length===0)t5el.innerHTML='<div class="empty"><div class="icon">📦</div>'+(LANG==='bn'?'এখনো কোনো বিক্রি হয়নি':'No sales yet')+'</div>';
+    if(t5.length===0)t5el.innerHTML='<div class="empty"><div class="icon">📦</div>এখনো কোনো বিক্রি হয়নি — Entry ট্যাব থেকে যোগ করুন</div>';
     else t5el.innerHTML=t5.map((x,i)=>{
       const c=['gold','silver','bronze','normal','normal'];
       return `<div class="list-item" style="margin-bottom:6px"><div style="display:flex;align-items:center;gap:10px"><span class="rank-badge ${c[i]}">${i+1}</span><div><div class="list-item-name">${x[0]}</div></div></div><div style="font-weight:800;color:var(--success);font-size:12px">৳${Math.round(x[1]).toLocaleString()}</div></div>`;
@@ -1608,16 +1295,16 @@ function renderDashboard(){
   }
   const rk=document.getElementById('rankTable');
   if(rk){
-    const ranks=sos.map(s=>({id:s.id,name:s.name,sales:soSales[s.id]||0,target:targets[`${s.id}_${thisMonth}`]?.totalValue||0})).sort((a,b)=>b.sales-a.sales);
+    const ranks=sos.map(s=>({id:s.id,name:s.name,sales:soSales[s.id]||0,target:targets[`${s.id}_${month}`]?.totalValue||0})).sort((a,b)=>b.sales-a.sales);
     rk.innerHTML=ranks.map((r,i)=>{
       const c=i===0?'gold':i===1?'silver':i===2?'bronze':'normal';
-      const pc=r.target?(r.sales/r.target*100).toFixed(1):'0';
-      return `<tr><td><span class="rank-badge ${c}">${i+1}</span></td><td>${r.name}${i===0&&r.sales>0?' 🏅':''}</td><td>৳${Math.round(r.sales).toLocaleString()}</td><td>${pc}%</td></tr>`;
+      const pct=r.target?(r.sales/r.target*100).toFixed(1):'0';
+      return `<tr><td><span class="rank-badge ${c}">${i+1}</span></td><td>${r.name}${i===0&&r.sales>0?' 🏅':''}</td><td>৳${Math.round(r.sales).toLocaleString()}</td><td>${pct}%</td></tr>`;
     }).join('');
     const tpb=document.getElementById('topPerformerBadge');
     if(tpb){
       if(currentRole==='so'&&ranks.length&&ranks[0].id===currentUser&&ranks[0].sales>0){
-        tpb.innerHTML='<span class="badge-hot">🏆 '+(LANG==='bn'?'এই মাসের সেরা পারফর্মার!':'Top performer this month!')+'</span>';
+        tpb.innerHTML='<span class="badge-hot">🏆 এই মাসের সেরা পারফর্মার!</span>';
       } else tpb.innerHTML='';
     }
   }
@@ -1642,7 +1329,7 @@ function renderStockInputs(){
   el.innerHTML=products.map((p,i)=>`<div class="form-row" style="align-items:center;margin-bottom:8px"><div style="font-size:11px;font-weight:600">${p.name}<br><span style="font-size:9px;color:var(--muted)">${p.pcs}pcs/ctn</span></div><input type="number" id="stk_${i}" min="0" placeholder="0" inputmode="numeric" style="padding:9px;background:var(--surface-2);border:1.5px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;text-align:center"></div>`).join('');
 }
 function saveStock(){
-  if(currentRole!=='admin'){toast(LANG==='bn'?'শুধু অ্যাডমিন স্টক এন্ট্রি দিতে পারবে':'Admin only',true);return}
+  if(currentRole!=='admin'){toast('শুধু অ্যাডমিন স্টক এন্ট্রি দিতে পারবে',true);return}
   const type=document.getElementById('stockType').value,date=document.getElementById('stockDate').value,month=date.slice(0,7);
   const items={};let total=0;
   products.forEach((p,i)=>{const el=document.getElementById('stk_'+i);const v=el?Math.max(0,parseInt(el.value)||0):0;if(v>0){items[p.name]=v;total+=v}});
@@ -1652,32 +1339,19 @@ function saveStock(){
   Object.keys(items).forEach(k=>{stock[key][k]=(stock[key][k]||0)+items[k]});
   DB.save('bb_stock',stock);syncToSheet('saveStock',{type,month,items});
   products.forEach((_,i)=>{const el=document.getElementById('stk_'+i);if(el)el.value=''});
-  renderInventory();flashSaving();toast('✅ '+(LANG==='bn'?'স্টক সেভ হয়েছে!':'Stock saved!'),'success');
+  renderInventory();toast('✅ স্টক সেভ হয়েছে!','success');
 }
 function renderInventory(){
-  const rangeEntries = filterByRange(entries,'stock');
-  const {from,to} = getDateRange('stock');
-  // stock keys are month-based; collect all months in range
-  const monthsInRange = [];
-  let d = new Date(from.slice(0,7)+'-01');
-  const endM = to.slice(0,7);
-  while(d.toISOString().slice(0,7) <= endM){
-    monthsInRange.push(d.toISOString().slice(0,7));
-    d.setMonth(d.getMonth()+1);
-  }
-  const op={},lf={};
-  monthsInRange.forEach(m=>{
-    const o=stock[`opening_${m}`]||{};const l=stock[`lifting_${m}`]||{};
-    Object.keys(o).forEach(k=>op[k]=(op[k]||0)+o[k]);
-    Object.keys(l).forEach(k=>lf[k]=(lf[k]||0)+l[k]);
-  });
-  let to2=0,tl=0,tsv=0,tc=0,toV=0,tlV=0,tsvV=0,tcV=0;
+  const month=getSelectedStockMonth();
+  const me=filterByPeriod(entries,'stock');
+  const op=stock[`opening_${month}`]||{},lf=stock[`lifting_${month}`]||{};
+  let to=0,tl=0,tsv=0,tc=0,toV=0,tlV=0,tsvV=0,tcV=0;
   let rows='';
   products.forEach(p=>{
     const o=op[p.name]||0,l=lf[p.name]||0;
-    let s=0;rangeEntries.forEach(e=>{if(e.type==='sales')s+=e.items[p.name]||0});
+    let s=0;me.forEach(e=>{if(e.type==='sales')s+=e.items[p.name]||0});
     const c=(o*p.pcs)+(l*p.pcs)-s;
-    to2+=o*p.pcs;tl+=l*p.pcs;tsv+=s;tc+=c;
+    to+=o*p.pcs;tl+=l*p.pcs;tsv+=s;tc+=c;
     toV+=o*p.pcs*p.dp;tlV+=l*p.pcs*p.dp;tsvV+=s*p.dp;tcV+=(c/p.pcs)*p.pcs*p.dp;
     const presentCtn=c/p.pcs;
     let dotColor='';
@@ -1685,9 +1359,9 @@ function renderInventory(){
     const dot=dotColor?`<span class="low-stock-dot" style="background:${dotColor}"></span>`:'';
     rows+=`<tr><td>${p.name}${dot}</td><td>${o}</td><td>${l}</td><td>${(s/p.pcs).toFixed(1)}</td><td style="font-weight:700;color:${c<0?'var(--danger)':'var(--success)'}">${presentCtn.toFixed(1)}</td></tr>`;
   });
-  const t2=document.getElementById('invTable');if(t2)t2.innerHTML=rows;
+  const t=document.getElementById('invTable');if(t)t.innerHTML=rows;
   const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v};
-  set('invOpening',(to2/24).toFixed(0)+' ctn');set('invOpeningVal','৳'+Math.round(toV).toLocaleString());
+  set('invOpening',(to/24).toFixed(0)+' ctn');set('invOpeningVal','৳'+Math.round(toV).toLocaleString());
   set('invLifting',(tl/24).toFixed(0)+' ctn');set('invLiftingVal','৳'+Math.round(tlV).toLocaleString());
   set('invSales',(tsv/24).toFixed(0)+' ctn');set('invSalesVal','৳'+Math.round(tsvV).toLocaleString());
   set('invPresent',(tc/24).toFixed(0)+' ctn');set('invPresentVal','৳'+Math.round(tcV).toLocaleString());
@@ -1695,16 +1369,16 @@ function renderInventory(){
 
 /* ===== REPORTS ===== */
 function renderReports(){
-  const rangeEntries = filterByRange(entries,'report');
-  const thisMonth = new Date().toISOString().slice(0,7);
+  const month=getSelectedReportMonth();
+  const me=filterByPeriod(entries,'rep'),fl=filterByUser(me);
   const soSales={};
-  rangeEntries.filter(e=>e.type==='sales').forEach(e=>{let v=0;products.forEach(p=>v+=(e.items[p.name]||0)*p.tp);soSales[e.user_id]=(soSales[e.user_id]||0)+v});
+  fl.filter(e=>e.type==='sales').forEach(e=>{let v=0;products.forEach(p=>v+=(e.items[p.name]||0)*p.tp);soSales[e.user_id]=(soSales[e.user_id]||0)+v});
   const q=(document.getElementById('repSearch')?.value||'').toLowerCase();
   const list=sos.filter(s=>s.name.toLowerCase().includes(q));
   const rt=document.getElementById('repTable');
   if(rt){
     rt.innerHTML=list.map(s=>{
-      const tgt=targets[`${s.id}_${thisMonth}`]?.totalValue||0;
+      const tgt=targets[`${s.id}_${month}`]?.totalValue||0;
       const sl=soSales[s.id]||0;
       const a=tgt?(sl/tgt*100).toFixed(1):'0';
       const color=a>=100?'var(--success)':a>=70?'var(--warning)':'var(--danger)';
@@ -1712,11 +1386,11 @@ function renderReports(){
     }).join('');
   }
   const days={};
-  rangeEntries.filter(e=>e.type==='sales').forEach(e=>{let v=0;products.forEach(p=>v+=(e.items[p.name]||0)*p.tp);days[e.date]=(days[e.date]||0)+v});
+  fl.filter(e=>e.type==='sales').forEach(e=>{let v=0;products.forEach(p=>v+=(e.items[p.name]||0)*p.tp);days[e.date]=(days[e.date]||0)+v});
   const sorted=Object.keys(days).sort();
-  drawLineChart('chartTrend',sorted.map(d=>d.slice(5)),Object.values(days));
+  drawLineChart('chartTrend',sorted.map(d=>d.slice(8)),Object.values(days));
   const routeProd={};
-  rangeEntries.filter(e=>e.type==='sales').forEach(e=>{
+  me.filter(e=>e.type==='sales').forEach(e=>{
     if(!routeProd[e.route])routeProd[e.route]={};
     products.forEach(p=>{const q2=e.items[p.name]||0;if(q2)routeProd[e.route][p.name]=(routeProd[e.route][p.name]||0)+q2});
   });
@@ -1727,26 +1401,16 @@ function renderReports(){
       const top=Object.entries(pd).sort((a,b)=>b[1]-a[1])[0];
       return `<tr><td>${r}</td><td>${top?top[0]:'—'}</td><td>${top?top[1]:'—'}</td></tr>`;
     });
-    routeTable.innerHTML=rows.join('')||'<tr><td colspan="3" style="text-align:center;color:var(--muted);padding:16px">'+t('noData')+'</td></tr>';
+    routeTable.innerHTML=rows.join('')||'<tr><td colspan="3" style="text-align:center;color:var(--muted);padding:16px">কোনো ডেটা নেই</td></tr>';
   }
-  // Damage report for range
-  const wh={},rt2={};
-  const {from,to} = getDateRange('report');
-  let dm=new Date(from.slice(0,7)+'-01');
-  const endM=to.slice(0,7);
-  while(dm.toISOString().slice(0,7)<=endM){
-    const m=dm.toISOString().slice(0,7);
-    const w=((damages.warehouse||{})[`warehouse_${m}`])||{};
-    const r=((damages.return||{})[`return_${m}`])||{};
-    Object.keys(w).forEach(k=>wh[k]=(wh[k]||0)+w[k]);
-    Object.keys(r).forEach(k=>rt2[k]=(rt2[k]||0)+r[k]);
-    dm.setMonth(dm.getMonth()+1);
-  }
+  const wh=(damages.warehouse||{})[`warehouse_${month}`]||{};
+  const rt2=(damages.return||{})[`return_${month}`]||{};
   const dmgBySO={};
-  rangeEntries.filter(e=>e.type==='damage').forEach(e=>{let total=0;products.forEach(p=>total+=(e.items[p.name]||0));dmgBySO[e.user_id]=(dmgBySO[e.user_id]||0)+total});
+  me.filter(e=>e.type==='damage').forEach(e=>{let total=0;products.forEach(p=>total+=(e.items[p.name]||0));dmgBySO[e.user_id]=(dmgBySO[e.user_id]||0)+total});
   const dmgTable=document.getElementById('damageReportTable');
   if(dmgTable){
-    dmgTable.innerHTML=sos.map(s=>{
+    const dmgList=sos;
+    dmgTable.innerHTML=dmgList.map(s=>{
       let whs=0,rts=0;
       if(wh[s.id])products.forEach(p=>whs+=(wh[s.id][p.name]||0));
       if(rt2[s.id])products.forEach(p=>rts+=(rt2[s.id][p.name]||0));
@@ -1758,35 +1422,36 @@ function renderReports(){
 
 /* ===== TOP SELLING ===== */
 function renderTopProducts(){
-  const rangeEntries = filterByRange(entries,'top');
+  const month=getSelectedTopMonth();
+  const me=filterByPeriod(entries,'top');
   const chips=document.getElementById('topFilter');
   if(chips){
-    chips.innerHTML=`<div class="chip${topFilter==='all'?' active':''}" onclick="topFilter='all';renderTopProducts()">${LANG==='bn'?'সম্মিলিত':'Combined'}</div>`+sos.map(s=>`<div class="chip${topFilter===s.id?' active':''}" onclick="topFilter='${s.id}';renderTopProducts()">${s.name.split(' ')[0]}</div>`).join('');
+    chips.innerHTML=`<div class="chip${topFilter==='all'?' active':''}" onclick="topFilter='all';renderTopProducts()">সম্মিলিত</div>`+sos.map(s=>`<div class="chip${topFilter===s.id?' active':''}" onclick="topFilter='${s.id}';renderTopProducts()">${s.name.split(' ')[0]}</div>`).join('');
   }
-  let filtered=rangeEntries.filter(e=>e.type==='sales');
+  let filtered=me.filter(e=>e.type==='sales');
   if(topFilter!=='all'){filtered=filtered.filter(e=>e.user_id===topFilter)}
   const prodSales={};
   filtered.forEach(e=>{products.forEach(p=>{const q=e.items[p.name]||0;if(q){if(!prodSales[p.name])prodSales[p.name]={qty:0,val:0,pcs:p.pcs};prodSales[p.name].qty+=q;prodSales[p.name].val+=q*p.tp}})});
   const sorted=Object.entries(prodSales).sort((a,b)=>b[1].val-a[1].val).slice(0,10);
   const totalVal=Object.values(prodSales).reduce((s,x)=>s+x.val,0);
-  const badge=topFilter==='all'?(LANG==='bn'?'সম্মিলিত':'Combined'):(sos.find(s=>s.id===topFilter)?.name.split(' ')[0]||'');
+  const badge=topFilter==='all'?'সম্মিলিত':(sos.find(s=>s.id===topFilter)?.name.split(' ')[0]||'');
   const tb=document.getElementById('topBadge');if(tb)tb.textContent=badge;
   const tl=document.getElementById('topList');
   if(tl){
-    if(sorted.length===0){tl.innerHTML='<div class="empty"><div class="icon">📦</div>'+(LANG==='bn'?'কোনো বিক্রি ডেটা নেই':'No sales data')+'</div>'}
+    if(sorted.length===0){tl.innerHTML='<div class="empty"><div class="icon">📦</div>কোনো বিক্রি ডেটা নেই</div>'}
     else{
       const colors=['gold','silver','bronze','normal','normal','normal','normal','normal','normal','normal'];
       tl.innerHTML=sorted.map(([name,d],i)=>{
-        const pc=totalVal?(d.val/totalVal*100).toFixed(1):0;
-        return `<div class="list-item" style="margin-bottom:6px"><div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0"><span class="rank-badge ${colors[i]}">${i+1}</span><div style="min-width:0;flex:1"><div class="list-item-name">${name}</div><div class="list-item-sub">${(d.qty/d.pcs).toFixed(1)} ctn • ${pc}%</div></div></div><div style="font-weight:800;color:var(--success);font-size:12px">৳${Math.round(d.val).toLocaleString()}</div></div>`;
+        const pct=totalVal?(d.val/totalVal*100).toFixed(1):0;
+        return `<div class="list-item" style="margin-bottom:6px"><div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0"><span class="rank-badge ${colors[i]}">${i+1}</span><div style="min-width:0;flex:1"><div class="list-item-name">${name}</div><div class="list-item-sub">${(d.qty/d.pcs).toFixed(1)} ctn • ${pct}%</div></div></div><div style="font-weight:800;color:var(--success);font-size:12px">৳${Math.round(d.val).toLocaleString()}</div></div>`;
       }).join('');
     }
   }
-  drawBarChart('chartTop',sorted.map(x=>x[0].split(' ')[0]),[{label:t('sales'),data:sorted.map(x=>x[1].val),bg:'#1E9E6B'}]);
+  drawBarChart('chartTop',sorted.map(x=>x[0].split(' ')[0]),[{label:'বিক্রি',data:sorted.map(x=>x[1].val),bg:'#1E9E6B'}]);
   const tt=document.getElementById('topTable');
   if(tt){
-    if(sorted.length===0){tt.innerHTML='<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--muted)">'+t('noData')+'</td></tr>'}
-    else{tt.innerHTML=sorted.map(([name,d],i)=>{const pc=totalVal?(d.val/totalVal*100).toFixed(1):0;return `<tr><td><b>${i+1}</b></td><td>${name}</td><td>${(d.qty/d.pcs).toFixed(1)}</td><td>৳${Math.round(d.val).toLocaleString()}</td><td>${pc}%</td></tr>`}).join('')}
+    if(sorted.length===0){tt.innerHTML='<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--muted)">কোনো ডেটা নেই</td></tr>'}
+    else{tt.innerHTML=sorted.map(([name,d],i)=>{const pct=totalVal?(d.val/totalVal*100).toFixed(1):0;return `<tr><td><b>${i+1}</b></td><td>${name}</td><td>${(d.qty/d.pcs).toFixed(1)}</td><td>৳${Math.round(d.val).toLocaleString()}</td><td>${pct}%</td></tr>`}).join('')}
   }
 }
 
@@ -1812,15 +1477,16 @@ function renderAutomation(){
   });
   const wt=document.getElementById('autoWeekTable');
   if(wt){
-    wt.innerHTML=sos.map(s=>{
+    const list=sos;
+    wt.innerHTML=list.map(s=>{
       const d=weekData[s.id]||{outlet:0,visit:0};
-      const pc=d.outlet?(d.visit/d.outlet*100).toFixed(1)+'%':'0%';
-      return `<tr><td>${s.name.split(' ')[0]}</td><td>${d.outlet}</td><td>${d.visit}</td><td style="font-weight:700;color:var(--success)">${pc}</td></tr>`;
+      const pct=d.outlet?(d.visit/d.outlet*100).toFixed(1)+'%':'0%';
+      return `<tr><td>${s.name.split(' ')[0]}</td><td>${d.outlet}</td><td>${d.visit}</td><td style="font-weight:700;color:var(--success)">${pct}</td></tr>`;
     }).join('');
   }
 }
 function saveAutomation(){
-  if(currentRole!=='admin'){toast(LANG==='bn'?'শুধু অ্যাডমিন এন্ট্রি দিতে পারবে':'Admin only',true);return}
+  if(currentRole!=='admin'){toast('শুধু অ্যাডমিন এন্ট্রি দিতে পারবে',true);return}
   const date=document.getElementById('autoDate').value,so_id=document.getElementById('autoSO').value,route=document.getElementById('autoRoute').value;
   const outlet=Math.max(0,parseInt(document.getElementById('autoOutlet').value)||0);
   const visit=Math.max(0,parseInt(document.getElementById('autoVisit').value)||0);
@@ -1830,7 +1496,7 @@ function saveAutomation(){
   const entry={id:Date.now(),date,so_id,route,outlet,visit,vc,vcv,ts:new Date().toISOString()};
   automations.push(entry);DB.save('bb_automations',automations);syncToSheet('saveAutomation',entry);
   ['autoOutlet','autoVisit','autoVC','autoVCV'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=''});
-  renderAutomation();flashSaving();toast('✅ '+(LANG==='bn'?'সেভ হয়েছে!':'Saved!'),'success');
+  renderAutomation();toast('✅ সেভ হয়েছে!','success');
 }
 
 /* ===== DAMAGE ===== */
@@ -1839,7 +1505,7 @@ function renderDamageInputs(){
   el.innerHTML=products.map((p,i)=>`<div class="form-row" style="align-items:center;margin-bottom:8px"><div style="font-size:11px;font-weight:600">${p.name}<br><span style="font-size:9px;color:var(--muted)">${p.pcs}pcs/ctn</span></div><input type="number" id="dmg_${i}" min="0" placeholder="0" inputmode="numeric" style="padding:9px;background:var(--surface-2);border:1.5px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;text-align:center"></div>`).join('');
 }
 function saveDamage(){
-  if(currentRole!=='admin'){toast(LANG==='bn'?'শুধু অ্যাডমিন এন্ট্রি দিতে পারবে':'Admin only',true);return}
+  if(currentRole!=='admin'){toast('শুধু অ্যাডমিন এন্ট্রি দিতে পারবে',true);return}
   const type=document.getElementById('dmgType').value,date=document.getElementById('dmgDate').value,month=date.slice(0,7);
   const items={};let total=0;
   products.forEach((p,i)=>{const el=document.getElementById('dmg_'+i);const v=el?Math.max(0,parseInt(el.value)||0):0;if(v>0){items[p.name]=v;total+=v}});
@@ -1851,24 +1517,15 @@ function saveDamage(){
   Object.keys(items).forEach(k=>{damages[bucket][key][k]=(damages[bucket][key][k]||0)+items[k]});
   DB.save('bb_damages',damages);syncToSheet('saveDamage',{type,month,items});
   products.forEach((_,i)=>{const el=document.getElementById('dmg_'+i);if(el)el.value=''});
-  renderDamage();flashSaving();toast('✅ '+(LANG==='bn'?'ড্যামেজ সেভ হয়েছে!':'Damage saved!'),'success');
+  renderDamage();toast('✅ ড্যামেজ সেভ হয়েছে!','success');
 }
 function renderDamage(){
-  const rangeEntries = filterByRange(entries,'damage');
-  const {from,to} = getDateRange('damage');
-  let dm=new Date(from.slice(0,7)+'-01');
-  const endM=to.slice(0,7);
-  const wh={},rt={};
-  while(dm.toISOString().slice(0,7)<=endM){
-    const m=dm.toISOString().slice(0,7);
-    const w=((damages.warehouse||{})[`warehouse_${m}`])||{};
-    const r=((damages.return||{})[`return_${m}`])||{};
-    Object.keys(w).forEach(k=>wh[k]=(wh[k]||0)+w[k]);
-    Object.keys(r).forEach(k=>rt[k]=(rt[k]||0)+r[k]);
-    dm.setMonth(dm.getMonth()+1);
-  }
+  const month=getSelectedDmgMonth();
+  const me=filterByPeriod(entries,'dmg');
+  const wh=(damages.warehouse||{})[`warehouse_${month}`]||{};
+  const rt=(damages.return||{})[`return_${month}`]||{};
   const dailyDmg={};
-  rangeEntries.filter(e=>e.type==='damage').forEach(e=>{products.forEach(p=>{const q=e.items[p.name]||0;if(q)dailyDmg[p.name]=(dailyDmg[p.name]||0)+q})});
+  me.filter(e=>e.type==='damage').forEach(e=>{products.forEach(p=>{const q=e.items[p.name]||0;if(q)dailyDmg[p.name]=(dailyDmg[p.name]||0)+q})});
   let tWH=0,tRT=0,tAll=0;let rows='';
   products.forEach(p=>{
     const w=wh[p.name]||0,r=rt[p.name]||0,d=dailyDmg[p.name]||0;
@@ -1882,14 +1539,14 @@ function renderDamage(){
   set('dmgTotal',(tAll/24).toFixed(0)+' ctn');
   const dt=document.getElementById('dmgTable');if(dt)dt.innerHTML=rows;
   const bySO={};
-  rangeEntries.filter(e=>e.type==='damage').forEach(e=>{let total=0;products.forEach(p=>total+=e.items[p.name]||0);bySO[e.user_id]=(bySO[e.user_id]||0)+total});
+  me.filter(e=>e.type==='damage').forEach(e=>{let total=0;products.forEach(p=>total+=e.items[p.name]||0);bySO[e.user_id]=(bySO[e.user_id]||0)+total});
   const soList=sos.map(s=>({name:s.name.split(' ')[0],val:bySO[s.id]||0}));
-  drawBarChart('chartDmg',soList.map(x=>x.name),[{label:t('damage'),data:soList.map(x=>x.val),bg:'#E0393E'}]);
+  drawBarChart('chartDmg',soList.map(x=>x.name),[{label:'ড্যামেজ (পিস)',data:soList.map(x=>x.val),bg:'#E0393E'}]);
 }
 
-/* ===== LEDGER ===== */
+/* ===== LEDGER (Credit & Debit) ===== */
 function saveLedger(){
-  if(currentRole==='guest'){toast(LANG==='bn'?'শুধু দেখার অনুমতি':'View only',true);return}
+  if(currentRole==='guest'){toast('শুধু দেখার অনুমতি',true);return}
   const date=document.getElementById('ledgerDate').value;
   const party=document.getElementById('ledgerParty').value.trim();
   const type=document.getElementById('ledgerType').value;
@@ -1900,12 +1557,12 @@ function saveLedger(){
   const rec={id:Date.now(),date,party,type,amount,note,user_id:userId,ts:new Date().toISOString()};
   ledger.push(rec);DB.save('bb_ledger',ledger);syncToSheet('saveLedger',rec);logActivity('ledger',type+' ৳'+amount+' — '+party);
   document.getElementById('ledgerParty').value='';document.getElementById('ledgerAmount').value='';document.getElementById('ledgerNote').value='';
-  renderLedger();flashSaving();toast('✅ '+(LANG==='bn'?'সেভ হয়েছে':'Saved'),'success');
+  renderLedger();toast('✅ সেভ হয়েছে','success');
 }
 function deleteLedger(id){
-  if(!confirm(LANG==='bn'?'এই লেনদেনটি মুছে ফেলবেন?':'Delete this transaction?'))return;
+  if(!confirm('এই লেনদেনটি মুছে ফেলবেন?'))return;
   ledger=ledger.filter(l=>l.id!==id);DB.save('bb_ledger',ledger);syncToSheet('deleteLedger',{id});
-  renderLedger();toast('🗑️ '+(LANG==='bn'?'মুছে ফেলা হয়েছে':'Deleted'));
+  renderLedger();toast('🗑️ মুছে ফেলা হয়েছে');
 }
 function renderLedger(){
   const card=document.getElementById('ledgerEntryCard');
@@ -1926,27 +1583,27 @@ function renderLedger(){
   const pt=document.getElementById('ledgerPartyTable');
   if(pt){
     const rows=Object.entries(byParty).filter(([p])=>p.toLowerCase().includes(q)).sort((a,b)=>(b[1].credit-b[1].debit)-(a[1].credit-a[1].debit));
-    pt.innerHTML=rows.map(([p,v])=>`<tr><td>${p}</td><td>৳${Math.round(v.credit).toLocaleString()}</td><td>৳${Math.round(v.debit).toLocaleString()}</td><td style="font-weight:700;color:${(v.credit-v.debit)>0?'var(--danger)':'var(--success)'}">৳${Math.round(v.credit-v.debit).toLocaleString()}</td></tr>`).join('')||'<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:16px">'+t('noData')+'</td></tr>';
+    pt.innerHTML=rows.map(([p,v])=>`<tr><td>${p}</td><td>৳${Math.round(v.credit).toLocaleString()}</td><td>৳${Math.round(v.debit).toLocaleString()}</td><td style="font-weight:700;color:${(v.credit-v.debit)>0?'var(--danger)':'var(--success)'}">৳${Math.round(v.credit-v.debit).toLocaleString()}</td></tr>`).join('')||'<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:16px">কোনো লেনদেন নেই</td></tr>';
   }
   const rl=document.getElementById('ledgerRecentList');
   if(rl){
     const recent=[...ledger].sort((a,b)=>b.id-a.id).slice(0,20);
-    rl.innerHTML=recent.map(l=>`<div class="list-item"><div><div class="list-item-name">${l.party} <span style="color:${l.type==='credit'?'var(--danger)':'var(--success)'};font-weight:800">${l.type==='credit'?t('credit'):t('debit')} ৳${Math.round(l.amount).toLocaleString()}</span></div><div class="list-item-sub">${l.date}${l.note?' • '+l.note:''}</div></div>${currentRole==='admin'?`<div class="list-item-actions"><button class="mini-btn del" onclick="deleteLedger(${l.id})">🗑️</button></div>`:''}</div>`).join('')||'<div class="empty"><div class="icon">💳</div>'+(LANG==='bn'?'এখনো কোনো লেনদেন নেই':'No transactions yet')+'</div>';
+    rl.innerHTML=recent.map(l=>`<div class="list-item"><div><div class="list-item-name">${l.party} <span style="color:${l.type==='credit'?'var(--danger)':'var(--success)'};font-weight:800">${l.type==='credit'?'বাকি':'আদায়'} ৳${Math.round(l.amount).toLocaleString()}</span></div><div class="list-item-sub">${l.date}${l.note?' • '+l.note:''}</div></div>${currentRole==='admin'?`<div class="list-item-actions"><button class="mini-btn del" onclick="deleteLedger(${l.id})">🗑️</button></div>`:''}</div>`).join('')||'<div class="empty"><div class="icon">💳</div>এখনো কোনো লেনদেন নেই</div>';
   }
 }
 
 /* ===== SETUP ===== */
 function renderProductMaster(){
   const el=document.getElementById('prodCount');if(el)el.textContent=products.length;
-  const t2=document.getElementById('prodTable');
+  const t=document.getElementById('prodTable');
   const q=(document.getElementById('prodSearch2')?.value||'').toLowerCase();
   const list=products.map((p,i)=>({p,i})).filter(x=>x.p.name.toLowerCase().includes(q));
-  if(t2)t2.innerHTML=list.map(({p,i})=>`<tr><td>${i+1}</td><td>${p.name}</td><td>${p.pcs}</td><td>৳${p.tp}</td><td>৳${(p.tp*p.pcs).toFixed(2)}</td><td>৳${p.dp}</td><td>৳${(p.dp*p.pcs).toFixed(2)}</td><td>${p.min?p.min:'—'}</td><td><button class="mini-btn" style="background:var(--primary-light);color:var(--primary)" onclick="openProductModal(${i})">✏️</button> <button class="mini-btn del" onclick="deleteProduct(${i})">🗑️</button></td></tr>`).join('');
+  if(t)t.innerHTML=list.map(({p,i})=>`<tr><td>${i+1}</td><td>${p.name}</td><td>${p.pcs}</td><td>৳${p.tp}</td><td>৳${(p.tp*p.pcs).toFixed(2)}</td><td>৳${p.dp}</td><td>৳${(p.dp*p.pcs).toFixed(2)}</td><td>${p.min?p.min:'—'}</td><td><button class="mini-btn" style="background:var(--primary-light);color:var(--primary)" onclick="openProductModal(${i})">✏️</button> <button class="mini-btn del" onclick="deleteProduct(${i})">🗑️</button></td></tr>`).join('');
 }
 function renderSetupLists(){
   const sc=document.getElementById('soCount');if(sc)sc.textContent=sos.length;
   const sl=document.getElementById('soList');
-  if(sl)sl.innerHTML=sos.map((s,i)=>`<div class="list-item"><div><div class="list-item-name">${s.name}</div><div class="list-item-sub">🔒 ${LANG==='bn'?'পাসওয়ার্ড সংরক্ষিত':'Password saved'}</div></div><div class="list-item-actions"><button class="mini-btn" style="background:var(--primary-light);color:var(--primary)" onclick="resetSOPassword(${i})">🔑</button><button class="mini-btn del" onclick="deleteSO(${i})">🗑️</button></div></div>`).join('');
+  if(sl)sl.innerHTML=sos.map((s,i)=>`<div class="list-item"><div><div class="list-item-name">${s.name}</div><div class="list-item-sub">🔒 পাসওয়ার্ড সংরক্ষিত আছে</div></div><div class="list-item-actions"><button class="mini-btn" style="background:var(--primary-light);color:var(--primary)" onclick="resetSOPassword(${i})">🔑</button><button class="mini-btn del" onclick="deleteSO(${i})">🗑️</button></div></div>`).join('');
   const dc=document.getElementById('dsrCount');if(dc)dc.textContent=dsrs.length;
   const dl=document.getElementById('dsrList');
   if(dl)dl.innerHTML=dsrs.map((d,i)=>`<div class="list-item"><div><div class="list-item-name">${d}</div></div><div class="list-item-actions"><button class="mini-btn del" onclick="deleteDSR(${i})">🗑️</button></div></div>`).join('');
@@ -1955,7 +1612,7 @@ function renderSetupLists(){
   if(rl)rl.innerHTML=routes.map((r,i)=>`<div class="list-item"><div><div class="list-item-name">${r}</div></div><div class="list-item-actions"><button class="mini-btn del" onclick="deleteRoute(${i})">🗑️</button></div></div>`).join('');
   const gc=document.getElementById('guestCount');if(gc)gc.textContent=guests.length;
   const gl=document.getElementById('guestList');
-  if(gl)gl.innerHTML=guests.map((g,i)=>`<div class="list-item"><div><div class="list-item-name">${g.name}</div><div class="list-item-sub">🔒 ${LANG==='bn'?'পাসওয়ার্ড সংরক্ষিত':'Password saved'}</div></div><div class="list-item-actions"><button class="mini-btn" style="background:var(--primary-light);color:var(--primary)" onclick="resetGuestPassword(${i})">🔑</button><button class="mini-btn del" onclick="deleteGuest(${i})">🗑️</button></div></div>`).join('');
+  if(gl)gl.innerHTML=guests.map((g,i)=>`<div class="list-item"><div><div class="list-item-name">${g.name}</div><div class="list-item-sub">🔒 পাসওয়ার্ড সংরক্ষিত আছে</div></div><div class="list-item-actions"><button class="mini-btn" style="background:var(--primary-light);color:var(--primary)" onclick="resetGuestPassword(${i})">🔑</button><button class="mini-btn del" onclick="deleteGuest(${i})">🗑️</button></div></div>`).join('');
 }
 
 /* TARGET */
@@ -1988,7 +1645,7 @@ function saveTarget(){
   targets[key]={items,totalValue:tv};
   DB.save('bb_targets',targets);
   syncToSheet('saveTarget',{so,month,items,totalValue:tv});
-  flashSaving();toast('✅ '+(LANG==='bn'?'টার্গেট সেভ হয়েছে!':'Target saved!')+' (৳'+Math.round(tv).toLocaleString()+')','success');
+  toast('✅ টার্গেট সেভ হয়েছে! (৳'+Math.round(tv).toLocaleString()+')','success');
 }
 
 /* MODALS */
@@ -1999,16 +1656,16 @@ let editingProductIndex=null;
 function openProductModal(i){
   editingProductIndex=(typeof i==='number')?i:null;
   const p=editingProductIndex!==null?products[editingProductIndex]:null;
-  openModal(`<h3>${p?'✏️ '+(LANG==='bn'?'পণ্য এডিট':'Edit Product'):'➕ '+(LANG==='bn'?'নতুন পণ্য':'New Product')}</h3>
-    <div class="form-group"><label>${t('name')}</label><input type="text" id="np_name" placeholder="Maxx 500ml" value="${p?p.name:''}"></div>
+  openModal(`<h3>${p?'✏️ পণ্য এডিট করুন':'➕ নতুন পণ্য'}</h3>
+    <div class="form-group"><label>নাম</label><input type="text" id="np_name" placeholder="যেমন: Maxx 500ml" value="${p?p.name:''}"></div>
     <div class="form-row">
-      <div class="form-group"><label>${t('pack')}</label><input type="number" id="np_pcs" placeholder="24" inputmode="numeric" value="${p?p.pcs:''}"></div>
-      <div class="form-group"><label>TP</label><input type="number" id="np_tp" placeholder="0" step="0.01" value="${p?p.tp:''}"></div>
+      <div class="form-group"><label>প্যাক সাইজ</label><input type="number" id="np_pcs" placeholder="24" inputmode="numeric" value="${p?p.pcs:''}"></div>
+      <div class="form-group"><label>TP (প্রতি পিস)</label><input type="number" id="np_tp" placeholder="0" step="0.01" value="${p?p.tp:''}"></div>
     </div>
-    <div class="form-group"><label>DP</label><input type="number" id="np_dp" placeholder="0" step="0.01" value="${p?p.dp:''}"></div>
-    <div class="form-group"><label>${t('lowStock')} (ctn)</label><input type="number" id="np_min" min="0" placeholder="10" value="${p&&p.min?p.min:''}"></div>
-    <button class="btn-sm green btn-block" onclick="addProduct()">✅ ${p?(LANG==='bn'?'আপডেট':'Update'):(LANG==='bn'?'যোগ করুন':'Add')}</button>
-    <button class="btn-sm gray btn-block" style="margin-top:8px" onclick="closeModal()">${t('cancel')}</button>`);
+    <div class="form-group"><label>DP (প্রতি পিস)</label><input type="number" id="np_dp" placeholder="0" step="0.01" value="${p?p.dp:''}"></div>
+    <div class="form-group"><label>লো-স্টক লিমিট (কার্টন) — ঐচ্ছিক</label><input type="number" id="np_min" min="0" placeholder="যেমন: 10" value="${p&&p.min?p.min:''}"></div>
+    <button class="btn-sm green btn-block" onclick="addProduct()">✅ ${p?'আপডেট করুন':'যোগ করুন'}</button>
+    <button class="btn-sm gray btn-block" style="margin-top:8px" onclick="closeModal()">বাতিল</button>`);
 }
 function addProduct(){
   const name=document.getElementById('np_name').value.trim();
@@ -2022,118 +1679,134 @@ function addProduct(){
   else{products.push(rec);logActivity('add_product',name)}
   DB.save('bb_products',products);syncToSheet('saveProduct',rec);
   editingProductIndex=null;
-  closeModal();renderProductMaster();renderEntryProducts();renderStockInputs();renderDamageInputs();flashSaving();toast('✅ '+(LANG==='bn'?'সেভ হয়েছে':'Saved'),'success');
+  closeModal();renderProductMaster();renderEntryProducts();renderStockInputs();renderDamageInputs();toast('✅ সেভ হয়েছে','success');
 }
-function deleteProduct(i){if(!confirm(products[i].name+'?'))return;const name=products[i].name;products.splice(i,1);DB.save('bb_products',products);syncToSheet('deleteProduct',{name});logActivity('delete_product',name);renderProductMaster();renderEntryProducts();toast('🗑️ '+(LANG==='bn'?'মুছে ফেলা হয়েছে':'Deleted'))}
+function deleteProduct(i){if(!confirm(products[i].name+' মুছে ফেলবেন?'))return;const name=products[i].name;products.splice(i,1);DB.save('bb_products',products);syncToSheet('deleteProduct',{name});logActivity('delete_product',name);renderProductMaster();renderEntryProducts();toast('🗑️ মুছে ফেলা হয়েছে')}
 
 function openSOModal(){
-  openModal(`<h3>➕ ${t('newSO')}</h3>
-    <div class="form-group"><label>${t('name')}</label><input type="text" id="ns_name"></div>
-    <div class="form-group"><label>${t('password')}</label><input type="text" id="ns_pass" inputmode="numeric"></div>
-    <button class="btn-sm green btn-block" onclick="addSO()">✅ ${LANG==='bn'?'যোগ করুন':'Add'}</button>
-    <button class="btn-sm gray btn-block" style="margin-top:8px" onclick="closeModal()">${t('cancel')}</button>`);
+  openModal(`<h3>➕ নতুন সেলস অফিসার</h3>
+    <div class="form-group"><label>নাম</label><input type="text" id="ns_name" placeholder="যেমন: করিম মিয়া"></div>
+    <div class="form-group"><label>পাসওয়ার্ড</label><input type="text" id="ns_pass" placeholder="৪+ ডিজিট" inputmode="numeric"></div>
+    <button class="btn-sm green btn-block" onclick="addSO()">✅ যোগ করুন</button>
+    <button class="btn-sm gray btn-block" style="margin-top:8px" onclick="closeModal()">বাতিল</button>`);
 }
 async function addSO(){
   const name=document.getElementById('ns_name').value.trim();
   const passRaw=document.getElementById('ns_pass').value.trim();
-  if(!name||passRaw.length<4){toast(LANG==='bn'?'নাম ও ৪+ ডিজিটের পাসওয়ার্ড দিন':'Name & 4+ digit password',true);return}
+  if(!name||passRaw.length<4){toast('নাম ও ৪+ ডিজিটের পাসওয়ার্ড দিন',true);return}
   const id=name.toLowerCase().replace(/\s+/g,'_');
   const pass=await hashPass(passRaw);
   sos.push({id,name,pass});
   DB.save('bb_sos',sos);syncToSheet('saveSO',{id,name,pass});
-  closeModal();buildLoginList();renderSetupLists();fillDropdowns();buildTabs();flashSaving();toast('✅ '+(LANG==='bn'?'যোগ করা হয়েছে':'Added'),'success');
+  closeModal();buildLoginList();renderSetupLists();fillDropdowns();buildTabs();toast('✅ যোগ করা হয়েছে','success');
 }
-function deleteSO(i){if(!confirm(sos[i].name+'?'))return;const id=sos[i].id;sos.splice(i,1);DB.save('bb_sos',sos);syncToSheet('deleteSO',{id});buildLoginList();renderSetupLists();fillDropdowns();buildTabs();toast('🗑️ '+(LANG==='bn'?'মুছে ফেলা হয়েছে':'Deleted'))}
+function deleteSO(i){if(!confirm(sos[i].name+' মুছে ফেলবেন?'))return;const id=sos[i].id;sos.splice(i,1);DB.save('bb_sos',sos);syncToSheet('deleteSO',{id});buildLoginList();renderSetupLists();fillDropdowns();buildTabs();toast('🗑️ মুছে ফেলা হয়েছে')}
 
 function openDSRModal(){
-  openModal(`<h3>➕ ${t('newDSR')}</h3>
-    <div class="form-group"><label>${t('name')}</label><input type="text" id="nd_name"></div>
-    <button class="btn-sm green btn-block" onclick="addDSR()">✅ ${LANG==='bn'?'যোগ করুন':'Add'}</button>
-    <button class="btn-sm gray btn-block" style="margin-top:8px" onclick="closeModal()">${t('cancel')}</button>`);
+  openModal(`<h3>➕ নতুন DSR</h3>
+    <div class="form-group"><label>নাম</label><input type="text" id="nd_name" placeholder="যেমন: তপন দাস"></div>
+    <button class="btn-sm green btn-block" onclick="addDSR()">✅ যোগ করুন</button>
+    <button class="btn-sm gray btn-block" style="margin-top:8px" onclick="closeModal()">বাতিল</button>`);
 }
 function addDSR(){
   const name=document.getElementById('nd_name').value.trim();
   if(!name){toast('নাম দিন',true);return}
   dsrs.push(name);DB.save('bb_dsrs',dsrs);syncToSheet('saveDSR',{name});
-  closeModal();renderSetupLists();fillDropdowns();flashSaving();toast('✅ '+(LANG==='bn'?'যোগ করা হয়েছে':'Added'),'success');
+  closeModal();renderSetupLists();fillDropdowns();toast('✅ যোগ করা হয়েছে','success');
 }
-function deleteDSR(i){if(!confirm(dsrs[i]+'?'))return;const name=dsrs[i];dsrs.splice(i,1);DB.save('bb_dsrs',dsrs);syncToSheet('deleteDSR',{name});renderSetupLists();fillDropdowns();toast('🗑️ '+(LANG==='bn'?'মুছে ফেলা হয়েছে':'Deleted'))}
+function deleteDSR(i){if(!confirm(dsrs[i]+' মুছে ফেলবেন?'))return;const name=dsrs[i];dsrs.splice(i,1);DB.save('bb_dsrs',dsrs);syncToSheet('deleteDSR',{name});renderSetupLists();fillDropdowns();toast('🗑️ মুছে ফেলা হয়েছে')}
 
 function openRouteModal(){
-  openModal(`<h3>➕ ${t('newRoute')}</h3>
-    <div class="form-group"><label>${t('name')}</label><input type="text" id="nr_name"></div>
-    <button class="btn-sm green btn-block" onclick="addRoute()">✅ ${LANG==='bn'?'যোগ করুন':'Add'}</button>
-    <button class="btn-sm gray btn-block" style="margin-top:8px" onclick="closeModal()">${t('cancel')}</button>`);
+  openModal(`<h3>➕ নতুন রুট</h3>
+    <div class="form-group"><label>নাম</label><input type="text" id="nr_name" placeholder="যেমন: নতুন বাজার"></div>
+    <button class="btn-sm green btn-block" onclick="addRoute()">✅ যোগ করুন</button>
+    <button class="btn-sm gray btn-block" style="margin-top:8px" onclick="closeModal()">বাতিল</button>`);
 }
 function addRoute(){
   const name=document.getElementById('nr_name').value.trim();
   if(!name){toast('নাম দিন',true);return}
   routes.push(name);DB.save('bb_routes',routes);syncToSheet('saveRoute',{name});
-  closeModal();renderSetupLists();fillDropdowns();flashSaving();toast('✅ '+(LANG==='bn'?'যোগ করা হয়েছে':'Added'),'success');
+  closeModal();renderSetupLists();fillDropdowns();toast('✅ যোগ করা হয়েছে','success');
 }
-function deleteRoute(i){if(!confirm(routes[i]+'?'))return;const name=routes[i];routes.splice(i,1);DB.save('bb_routes',routes);syncToSheet('deleteRoute',{name});renderSetupLists();fillDropdowns();toast('🗑️ '+(LANG==='bn'?'মুছে ফেলা হয়েছে':'Deleted'))}
+function deleteRoute(i){if(!confirm(routes[i]+' মুছে ফেলবেন?'))return;const name=routes[i];routes.splice(i,1);DB.save('bb_routes',routes);syncToSheet('deleteRoute',{name});renderSetupLists();fillDropdowns();toast('🗑️ মুছে ফেলা হয়েছে')}
 
 function openGuestModal(){
-  openModal(`<h3>➕ ${t('newGuest')}</h3>
-    <div class="form-group"><label>${t('name')}</label><input type="text" id="ng_name"></div>
-    <div class="form-group"><label>${t('password')}</label><input type="text" id="ng_pass" inputmode="numeric"></div>
-    <button class="btn-sm green btn-block" onclick="addGuest()">✅ ${LANG==='bn'?'যোগ করুন':'Add'}</button>
-    <button class="btn-sm gray btn-block" style="margin-top:8px" onclick="closeModal()">${t('cancel')}</button>`);
+  openModal(`<h3>➕ নতুন স্পেশাল গেস্ট</h3>
+    <div class="form-group"><label>নাম</label><input type="text" id="ng_name" placeholder="যেমন: রহিম খান (GM)"></div>
+    <div class="form-group"><label>পাসওয়ার্ড</label><input type="text" id="ng_pass" placeholder="৪+ ডিজিট" inputmode="numeric"></div>
+    <button class="btn-sm green btn-block" onclick="addGuest()">✅ যোগ করুন</button>
+    <button class="btn-sm gray btn-block" style="margin-top:8px" onclick="closeModal()">বাতিল</button>`);
 }
 async function addGuest(){
   const name=document.getElementById('ng_name').value.trim();
   const passRaw=document.getElementById('ng_pass').value.trim();
-  if(!name||passRaw.length<4){toast(LANG==='bn'?'নাম ও ৪+ ডিজিটের পাসওয়ার্ড দিন':'Name & 4+ digit password',true);return}
+  if(!name||passRaw.length<4){toast('নাম ও ৪+ ডিজিটের পাসওয়ার্ড দিন',true);return}
   const id=name.toLowerCase().replace(/\s+/g,'_');
   const pass=await hashPass(passRaw);
   guests.push({id,name,pass});
   DB.save('bb_guests',guests);syncToSheet('saveGuest',{id,name,pass});
-  closeModal();buildLoginList();renderSetupLists();flashSaving();toast('✅ '+(LANG==='bn'?'যোগ করা হয়েছে':'Added'),'success');
+  closeModal();buildLoginList();renderSetupLists();toast('✅ যোগ করা হয়েছে','success');
 }
-function deleteGuest(i){if(!confirm(guests[i].name+'?'))return;const id=guests[i].id;guests.splice(i,1);DB.save('bb_guests',guests);syncToSheet('deleteGuest',{id});buildLoginList();renderSetupLists();toast('🗑️ '+(LANG==='bn'?'মুছে ফেলা হয়েছে':'Deleted'))}
+function deleteGuest(i){if(!confirm(guests[i].name+' মুছে ফেলবেন?'))return;const id=guests[i].id;guests.splice(i,1);DB.save('bb_guests',guests);syncToSheet('deleteGuest',{id});buildLoginList();renderSetupLists();toast('🗑️ মুছে ফেলা হয়েছে')}
 
 async function resetSOPassword(i){
-  const np=prompt(LANG==='bn'?'নতুন পাসওয়ার্ড দিন (৪+ ডিজিট):':'New password (4+ digits):');
+  const np=prompt('নতুন পাসওয়ার্ড দিন (৪+ ডিজিট):');
   if(np===null)return;
-  if(np.trim().length<4){toast(LANG==='bn'?'কমপক্ষে ৪ ডিজিট আবশ্যক':'Min 4 digits',true);return}
+  if(np.trim().length<4){toast('কমপক্ষে ৪ ডিজিট আবশ্যক',true);return}
   sos[i].pass=await hashPass(np.trim());
   DB.save('bb_sos',sos);syncToSheet('saveSO',{id:sos[i].id,name:sos[i].name,pass:sos[i].pass});
-  toast('✅ '+(LANG==='bn'?'পাসওয়ার্ড পরিবর্তন হয়েছে':'Password changed'),'success');
+  toast('✅ পাসওয়ার্ড পরিবর্তন হয়েছে','success');
 }
 async function resetGuestPassword(i){
-  const np=prompt(LANG==='bn'?'নতুন পাসওয়ার্ড দিন (৪+ ডিজিট):':'New password (4+ digits):');
+  const np=prompt('নতুন পাসওয়ার্ড দিন (৪+ ডিজিট):');
   if(np===null)return;
-  if(np.trim().length<4){toast(LANG==='bn'?'কমপক্ষে ৪ ডিজিট আবশ্যক':'Min 4 digits',true);return}
+  if(np.trim().length<4){toast('কমপক্ষে ৪ ডিজিট আবশ্যক',true);return}
   guests[i].pass=await hashPass(np.trim());
   DB.save('bb_guests',guests);syncToSheet('saveGuest',{id:guests[i].id,name:guests[i].name,pass:guests[i].pass});
-  toast('✅ '+(LANG==='bn'?'পাসওয়ার্ড পরিবর্তন হয়েছে':'Password changed'),'success');
+  toast('✅ পাসওয়ার্ড পরিবর্তন হয়েছে','success');
 }
+
 async function changeAdminPass(){
   const np=document.getElementById('newAdminPass').value.trim();
-  if(np.length<4){toast(LANG==='bn'?'কমপক্ষে ৪ ডিজিট':'Min 4 digits',true);return}
+  if(np.length<4){toast('কমপক্ষে ৪ ডিজিট',true);return}
   adminPass=await hashPass(np);DB.save('bb_admin_pass',adminPass);
   document.getElementById('newAdminPass').value='';
-  toast('✅ '+(LANG==='bn'?'অ্যাডমিন পাসওয়ার্ড পরিবর্তন হয়েছে':'Admin password changed'),'success');
+  toast('✅ অ্যাডমিন পাসওয়ার্ড পরিবর্তন হয়েছে','success');
 }
 
-/* MY SETTINGS */
-function openMySettings(){
-  openModal(`<h3>⚙️ ${LANG==='bn'?'আমার সেটিংস':'My Settings'}</h3>
-    <div class="form-group"><label>🔑 ${t('newPassword')}</label><input type="text" id="myNewPass" placeholder="4+" inputmode="numeric"></div>
-    <button class="btn-sm green btn-block" onclick="changeMyPassword()">✅ ${LANG==='bn'?'পরিবর্তন করুন':'Change'}</button>`);
-}
-async function changeMyPassword(){
-  const np=document.getElementById('myNewPass').value.trim();
-  if(np.length<4){toast(LANG==='bn'?'কমপক্ষে ৪ ডিজিট':'Min 4 digits',true);return}
-  const hp=await hashPass(np);
-  if(currentRole==='admin'){adminPass=hp;DB.save('bb_admin_pass',adminPass)}
-  else if(currentRole==='so'){const so=sos.find(s=>s.id===currentUser);if(so){so.pass=hp;DB.save('bb_sos',sos);syncToSheet('saveSO',{id:so.id,name:so.name,pass:hp})}}
-  else if(currentRole==='guest'){const g=guests.find(x=>x.id===currentUser);if(g){g.pass=hp;DB.save('bb_guests',guests);syncToSheet('saveGuest',{id:g.id,name:g.name,pass:hp})}}
-  logActivity('password_change','self');
-  closeModal();toast('✅ '+(LANG==='bn'?'পাসওয়ার্ড পরিবর্তন হয়েছে':'Password changed'),'success');
+/* EXPORT/IMPORT */
+/* ===== IMAGE EXPORT + SHARE ===== */
+async function exportSectionAsImage(elId,filename){
+  if(typeof html2canvas==='undefined'){toast('⚠️ এক্সপোর্ট টুল লোড হয়নি — নেট চেক করে আবার চেষ্টা করুন',true);return}
+  const el=document.getElementById(elId);if(!el)return;
+  showLoader(true);
+  try{
+    const bg=getComputedStyle(document.body).backgroundColor||'#ffffff';
+    const canvas=await html2canvas(el,{backgroundColor:bg,scale:2,useCORS:true});
+    canvas.toBlob(async(blob)=>{
+      showLoader(false);
+      if(!blob){toast('⚠️ ছবি তৈরি করা যায়নি',true);return}
+      const file=new File([blob],filename+'.png',{type:'image/png'});
+      if(navigator.canShare&&navigator.canShare({files:[file]})){
+        try{
+          await navigator.share({files:[file],title:filename,text:'Bhai Bhai Store — '+filename});
+          logActivity('share_image',filename);
+          return;
+        }catch(e){ if(e.name==='AbortError')return; }
+      }
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement('a');a.href=url;a.download=filename+'.png';document.body.appendChild(a);a.click();a.remove();
+      setTimeout(()=>URL.revokeObjectURL(url),2000);
+      logActivity('export_image',filename);
+      toast('✅ ছবি ডাউনলোড হয়েছে — এবার WhatsApp-এ শেয়ার করুন','success');
+    },'image/png');
+  }catch(e){
+    showLoader(false);
+    console.log('export error',e);
+    toast('⚠️ এক্সপোর্ট ব্যর্থ হয়েছে',true);
+  }
 }
 
-/* EXPORT/IMPORT JSON */
 function exportData(){
   const data={products,sos,dsrs,routes,guests,entries,targets,stock,damages,automations,ledger,adminPass,exportedAt:new Date().toISOString(),version:APP_VERSION};
   const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
@@ -2141,7 +1814,7 @@ function exportData(){
   a.href=URL.createObjectURL(blob);
   a.download='bhaibhai_backup_'+new Date().toISOString().split('T')[0]+'.json';
   a.click();
-  toast('✅ '+(LANG==='bn'?'এক্সপোর্ট সম্পন্ন':'Export complete'),'success');
+  toast('✅ এক্সপোর্ট সম্পন্ন হয়েছে','success');
 }
 function importData(e){
   const f=e.target.files[0];if(!f)return;
@@ -2161,239 +1834,44 @@ function importData(e){
       if(d.automations){automations=d.automations;DB.save('bb_automations',automations)}
       if(d.ledger){ledger=d.ledger;DB.save('bb_ledger',ledger)}
       if(d.adminPass){adminPass=d.adminPass;DB.save('bb_admin_pass',adminPass)}
-      toast('✅ '+(LANG==='bn'?'ইমপোর্ট সম্পন্ন':'Import complete'),'success');
+      toast('✅ ইমপোর্ট সম্পন্ন হয়েছে','success');
       setTimeout(()=>location.reload(),800);
-    }catch(err){toast('❌ '+(LANG==='bn'?'ফাইলটি সঠিক নয়':'Invalid file'),true)}
+    }catch(err){toast('ফাইলটি সঠিক নয়',true)}
   };
   r.readAsText(f);
 }
 function resetAll(){
-  if(!confirm('⚠️ '+(LANG==='bn'?'সব ডেটা মুছে যাবে। আগে Export করে ব্যাকআপ নিন। আপনি কি নিশ্চিত?':'All data will be erased. Backup first. Are you sure?')))return;
-  const typed=prompt(LANG==='bn'?'নিশ্চিত করতে বড় হাতের অক্ষরে DELETE লিখুন:':'Type DELETE to confirm:');
-  if(typed!=='DELETE'){toast(LANG==='bn'?'বাতিল করা হয়েছে':'Cancelled');return}
+  if(!confirm('⚠️ সব ডেটা মুছে যাবে। আগে Export করে ব্যাকআপ নিন। আপনি কি নিশ্চিত?'))return;
+  const typed=prompt('নিশ্চিত করতে বড় হাতের অক্ষরে DELETE লিখুন:');
+  if(typed!=='DELETE'){toast('বাতিল করা হয়েছে — কিছু মোছা হয়নি');return}
   localStorage.clear();location.reload();
-}
-
-/* ===== PDF / IMAGE / WHATSAPP EXPORT ===== */
-const { jsPDF } = window.jspdf;
-
-function pdfHeader(doc,title){
-  doc.setFontSize(14);
-  doc.setTextColor(14,124,102);
-  doc.setFont('helvetica','bold');
-  doc.text('Bhai Bhai Store',14,15);
-  doc.setFontSize(9);
-  doc.setTextColor(94,123,116);
-  doc.setFont('helvetica','normal');
-  const {from,to} = getDateRange('dashboard');
-  doc.text('Generated: '+new Date().toLocaleString()+'  |  Range: '+from+' to '+to,14,21);
-  doc.setDrawColor(220,231,226);
-  doc.line(14,24,196,24);
-  doc.setFontSize(12);
-  doc.setTextColor(11,36,31);
-  doc.setFont('helvetica','bold');
-  doc.text(title,14,32);
-}
-function safeFileName(s){return s.replace(/[^a-z0-9\-_]/gi,'_')}
-
-function exportTablePDF(tableId,title){
-  const table = document.getElementById(tableId);
-  if(!table){toast('Table not found',true);return}
-  const rows = Array.from(table.querySelectorAll('tr')).map(tr=>Array.from(tr.querySelectorAll('th,td')).map(td=>td.textContent.trim()));
-  if(!rows.length){toast(t('noData'),true);return}
-  const doc = new jsPDF({orientation:'p',unit:'mm',format:'a4'});
-  pdfHeader(doc,title);
-  doc.autoTable({
-    startY:38,
-    head:[rows[0]],
-    body:rows.slice(1),
-    theme:'grid',
-    headStyles:{fillColor:[14,124,102],textColor:255,fontStyle:'bold',fontSize:9},
-    bodyStyles:{fontSize:9,textColor:[37,69,62]},
-    alternateRowStyles:{fillColor:[234,243,240]},
-    styles:{cellPadding:2}
-  });
-  doc.save(safeFileName(title)+'_'+new Date().toISOString().split('T')[0]+'.pdf');
-  toast('✅ '+(LANG==='bn'?'PDF সেভ হয়েছে':'PDF saved'),'success');
-}
-
-function exportElementPDF(elementId,title){
-  exportTablePDF(elementId,title);
-}
-
-function exportElementImage(elementId,title){
-  const el=document.getElementById(elementId);
-  if(!el){toast('Element not found',true);return}
-  showLoader(true);
-  html2canvas(el,{scale:2,backgroundColor:'#ffffff',useCORS:true}).then(canvas=>{
-    showLoader(false);
-    const link=document.createElement('a');
-    link.download=safeFileName(title)+'_'+new Date().toISOString().split('T')[0]+'.png';
-    link.href=canvas.toDataURL('image/png');
-    link.click();
-    toast('✅ '+(LANG==='bn'?'ছবি সেভ হয়েছে':'Image saved'),'success');
-  }).catch(err=>{
-    showLoader(false);
-    toast('❌ '+(LANG==='bn'?'ছবি তৈরিতে সমস্যা':'Image error'),true);
-  });
-}
-
-function exportChartPDF(canvasId,title){
-  const canvas=document.getElementById(canvasId);
-  if(!canvas){toast('Chart not found',true);return}
-  const imgData=canvas.toDataURL('image/png');
-  const doc=new jsPDF({orientation:'p',unit:'mm',format:'a4'});
-  pdfHeader(doc,title);
-  const pageW=210, margin=14;
-  const imgW=pageW-margin*2;
-  const imgH=(canvas.height/canvas.width)*imgW;
-  doc.addImage(imgData,'PNG',margin,40,imgW,imgH);
-  doc.save(safeFileName(title)+'_'+new Date().toISOString().split('T')[0]+'.pdf');
-  toast('✅ '+(LANG==='bn'?'PDF সেভ হয়েছে':'PDF saved'),'success');
-}
-
-/* WhatsApp Share */
-function buildWAText(title, lines){
-  const {from,to} = getDateRange('dashboard');
-  let txt = `*Bhai Bhai Store*\n*${title}*\n`;
-  txt += `📅 ${from} ~ ${to}\n`;
-  txt += `━━━━━━━━━━━━━━━━━━\n`;
-  txt += lines.join('\n');
-  txt += `\n━━━━━━━━━━━━━━━━━━\n`;
-  txt += `🕐 ${new Date().toLocaleString('en-GB')}\n`;
-  txt += `📱 Bhai Bhai Store v${APP_VERSION}`;
-  return txt;
-}
-function openWAShare(text){
-  openModal(`<h3>📱 ${t('waShare')}</h3>
-    <div class="form-group"><label>${t('shareText')}</label><div class="wa-preview" id="waPreview">${text}</div></div>
-    <div class="btn-row">
-      <button class="btn-sm whatsapp btn-block" onclick="copyWAText()">📋 ${t('copy')}</button>
-      <button class="btn-sm blue btn-block" onclick="window.open('https://wa.me/?text='+encodeURIComponent(document.getElementById('waPreview').textContent),'_blank')">📱 ${t('openWA')}</button>
-    </div>
-    <button class="btn-sm gray btn-block" style="margin-top:8px" onclick="closeModal()">${t('cancel')}</button>`);
-}
-function copyWAText(){
-  const el=document.getElementById('waPreview');
-  if(!el) return;
-  navigator.clipboard.writeText(el.textContent).then(()=>toast('✅ '+t('copied'),'success')).catch(()=>toast('❌ Failed',true));
-}
-
-function shareRankingWA(){
-  const rows=Array.from(document.querySelectorAll('#rankTable tr')).map(tr=>Array.from(tr.querySelectorAll('td')).map(td=>td.textContent.trim()));
-  if(!rows.length){toast(t('noData'),true);return}
-  const lines=rows.map(r=>`${r[0]} ${r[1]} — ${r[2]} (${r[3]})`);
-  openWAShare(buildWAText('🏆 '+t('soRanking'),lines));
-}
-function shareTopProductsWA(){
-  const rows=Array.from(document.querySelectorAll('#topList .list-item')).map(el=>{
-    const nameEl=el.querySelector('.list-item-name');const subEl=el.querySelector('.list-item-sub');const valEl=el.querySelector('div:last-child');
-    return `• ${nameEl?.textContent||''} — ${subEl?.textContent||''} (${valEl?.textContent||''})`;
-  });
-  if(!rows.length){toast(t('noData'),true);return}
-  openWAShare(buildWAText('🏆 '+t('top10'),rows));
-}
-function shareReportWA(){
-  const rows=Array.from(document.querySelectorAll('#repTable tr')).map(tr=>Array.from(tr.querySelectorAll('td')).map(td=>td.textContent.trim()));
-  if(!rows.length){toast(t('noData'),true);return}
-  const lines=rows.map(r=>`👤 ${r[0]}\n   🎯 ${r[1]} | 💰 ${r[2]} | 📈 ${r[3]}`);
-  openWAShare(buildWAText('📈 '+t('soPerformance'),lines));
-}
-function shareStockWA(){
-  const rows=Array.from(document.querySelectorAll('#invTable tr')).slice(0,15).map(tr=>Array.from(tr.querySelectorAll('td')).map(td=>td.textContent.trim()));
-  if(!rows.length){toast(t('noData'),true);return}
-  const lines=rows.map(r=>`📦 ${r[0]}: Opening ${r[1]} | Lifting ${r[2]} | Sales ${r[3]} | Present *${r[4]}*`);
-  openWAShare(buildWAText('📦 '+t('stockReport'),lines));
-}
-function shareDamageWA(){
-  const rows=Array.from(document.querySelectorAll('#dmgTable tr')).filter(tr=>tr.querySelectorAll('td').length).slice(0,15).map(tr=>Array.from(tr.querySelectorAll('td')).map(td=>td.textContent.trim()));
-  if(!rows.length){toast(t('noData'),true);return}
-  const lines=rows.map(r=>`🔴 ${r[0]}: WH ${r[1]} | Return ${r[2]} | Total *${r[3]}*`);
-  openWAShare(buildWAText('🔴 '+t('damageReport'),lines));
-}
-function shareTodaySummaryWA(){
-  const fields = [
-    [t('orderCtn'), document.getElementById('tOrdCtn')?.textContent],
-    [t('orderTk'), document.getElementById('tOrdVal')?.textContent],
-    [t('salesCtn'), document.getElementById('tSalCtn')?.textContent],
-    [t('salesTk'), document.getElementById('tSalVal')?.textContent],
-    [t('damage'), document.getElementById('tDmg')?.textContent],
-    [t('commission'), document.getElementById('tDisc')?.textContent]
-  ];
-  const lines = fields.map(f=>`• ${f[0]}: *${f[1]}*`);
-  const date = document.getElementById('entryDate')?.value||new Date().toISOString().split('T')[0];
-  const txt = `*Bhai Bhai Store*\n*📅 ${t('todaySummary')} — ${date}*\n━━━━━━━━━━━━━━━━━━\n`+lines.join('\n')+`\n━━━━━━━━━━━━━━━━━━\n📱 v${APP_VERSION}`;
-  openWAShare(txt);
-}
-function shareChartWA(canvasId,title){
-  const canvas=document.getElementById(canvasId);
-  if(!canvas){toast('Chart not found',true);return}
-  const txt=`*Bhai Bhai Store*\n*${title}*\n\n📊 Chart image attached separately.\n🕐 ${new Date().toLocaleString('en-GB')}`;
-  openWAShare(txt);
-}
-
-/* ===== GLOBAL SEARCH ===== */
-function openSearch(){
-  const ov=document.getElementById('searchOverlay');
-  ov.classList.add('show');
-  setTimeout(()=>{document.getElementById('globalSearchInput')?.focus()},100);
-  doGlobalSearch('');
-}
-function closeSearch(){document.getElementById('searchOverlay').classList.remove('show')}
-function doGlobalSearch(q){
-  q=(q||'').toLowerCase().trim();
-  const results=[];
-  // Pages
-  TABS.filter(t2=>t2.roles.includes(currentRole)).forEach(t2=>{
-    if(!q||t2.label.toLowerCase().includes(q)||t2.id.includes(q)) results.push({icon:t2.icon,title:t2.label,sub:'পেজ',action:`switchTab('${t2.id}');closeSearch();`});
-  });
-  // Products
-  products.filter(p=>p.name.toLowerCase().includes(q)).slice(0,10).forEach(p=>{
-    results.push({icon:'📦',title:p.name,sub:`TP ৳${p.tp} • ${p.pcs}pcs/ctn`,action:`switchTab('setup');closeSearch();setTimeout(()=>{const i=products.indexOf(products.find(x=>x.name==='${p.name.replace(/'/g,"\\'")}'));if(i>=0)openProductModal(i)},200);`});
-  });
-  // SOs
-  if(currentRole==='admin'){
-    sos.filter(s=>s.name.toLowerCase().includes(q)).forEach(s=>{
-      results.push({icon:'👤',title:s.name,sub:'Sales Officer',action:`switchTab('setup');closeSearch();`});
-    });
-  }
-  // Routes
-  routes.filter(r=>r.toLowerCase().includes(q)).slice(0,8).forEach(r=>{
-    results.push({icon:'🗺️',title:r,sub:'Route',action:`switchTab('report');closeSearch();`});
-  });
-  // Ledger parties
-  const parties=[...new Set(ledger.map(l=>l.party))];
-  parties.filter(p=>p.toLowerCase().includes(q)).slice(0,8).forEach(p=>{
-    results.push({icon:'💳',title:p,sub:'Ledger Party',action:`switchTab('ledger');closeSearch();setTimeout(()=>{const el=document.getElementById('ledgerSearch');if(el){el.value='${p}';renderLedger()}},200);`});
-  });
-  const box=document.getElementById('searchResults');
-  if(!box) return;
-  if(!results.length){box.innerHTML='<div class="empty"><div class="icon">😕</div>'+(LANG==='bn'?'কিছু পাওয়া যায়নি':'Nothing found')+'</div>';return}
-  box.innerHTML=results.slice(0,30).map((r,i)=>`<div class="search-result" onclick="${r.action}"><div class="sr-icon">${r.icon}</div><div class="sr-info"><div class="sr-title">${r.title}</div><div class="sr-sub">${r.sub}</div></div><div class="sr-tag">${i+1}</div></div>`).join('');
 }
 
 /* ===== SYNC ===== */
 async function syncToSheet(action,data){
   const payload=Object.assign({action},data);
-  flashSaving();
   try{
     await fetch(SYNC_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)});
     return true;
   }catch(e){
     console.log('Sync error:',e);
-    toast('⚠️ '+(LANG==='bn'?'ইন্টারনেট নেই — ডেটা শুধু এই ডিভাইসে':'No internet — data saved locally'),true);
+    toast('⚠️ ইন্টারনেট সংযোগ নেই — ডেটা শুধু এই ডিভাইসে সংরক্ষিত হলো',true);
     return null;
   }
 }
-function showLoader(s){const l=document.getElementById('loader');if(l)l.classList.toggle('show',!!s)}
+function showLoader(s){
+  const l=document.getElementById('loader');if(!l)return;
+  if(s){l.classList.remove('done');l.classList.add('show')}
+  else{l.classList.add('done');setTimeout(()=>l.classList.remove('show','done'),450)}
+}
 
 function animateNum(id,end,opts){
   const el=document.getElementById(id);if(!el)return;
   const o=opts||{},prefix=o.prefix||'',suffix=o.suffix||'',decimals=o.decimals||0;
   const start=parseFloat((el.textContent||'0').replace(/[^0-9.\-]/g,''))||0;
   const t0=performance.now(),dur=650;
-  function step(t2){
-    const p=Math.min(1,(t2-t0)/dur),e=1-Math.pow(1-p,3);
+  function step(t){
+    const p=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-p,3);
     const val=start+(end-start)*e;
     el.textContent=prefix+val.toLocaleString('en-US',{minimumFractionDigits:decimals,maximumFractionDigits:decimals})+suffix;
     if(p<1)requestAnimationFrame(step);
@@ -2401,7 +1879,7 @@ function animateNum(id,end,opts){
   requestAnimationFrame(step);
 }
 async function loadFromSheet(){
-  if(!confirm(LANG==='bn'?'শিট থেকে সর্বশেষ ডেটা আনা হবে এবং এই ডিভাইসের বর্তমান ডেটা প্রতিস্থাপিত হবে। চালিয়ে যাবেন?':'Load latest data from Sheet? Current local data will be replaced.'))return;
+  if(!confirm('শিট থেকে সর্বশেষ ডেটা আনা হবে এবং এই ডিভাইসের বর্তমান ডেটা প্রতিস্থাপিত হবে। চালিয়ে যাবেন?'))return;
   showLoader(true);
   let d=null;
   try{
@@ -2410,7 +1888,7 @@ async function loadFromSheet(){
     d=json&&json.data;
   }catch(e){console.log('Load error:',e)}
   showLoader(false);
-  if(!d){toast('⚠️ '+(LANG==='bn'?'সার্ভার থেকে ডেটা আনা যায়নি':'Could not load from server'),true);return}
+  if(!d){toast('⚠️ সার্ভার থেকে ডেটা আনা যায়নি',true);return}
   if(d.products)DB.save('bb_products',d.products);
   if(d.sos)DB.save('bb_sos',d.sos);
   if(d.dsrs)DB.save('bb_dsrs',d.dsrs);
@@ -2422,17 +1900,17 @@ async function loadFromSheet(){
   if(d.damages)DB.save('bb_damages',d.damages);
   if(d.automations)DB.save('bb_automations',d.automations);
   if(d.ledger)DB.save('bb_ledger',d.ledger);
-  toast('✅ '+(LANG==='bn'?'শিট থেকে ডেটা আপডেট হয়েছে':'Data updated from Sheet'),'success');
+  toast('✅ শিট থেকে ডেটা আপডেট হয়েছে','success');
   setTimeout(()=>location.reload(),700);
 }
 
 /* TOAST */
 function toast(msg,type){
-  const t2=document.getElementById('toast');if(!t2)return;
-  t2.textContent=msg;
-  t2.className='toast show'+(type===true||type==='error'?' error':type==='success'?' success':'');
-  clearTimeout(t2._to);
-  t2._to=setTimeout(()=>t2.className='toast',2400);
+  const t=document.getElementById('toast');if(!t)return;
+  t.textContent=msg;
+  t.className='toast show'+(type===true||type==='error'?' error':type==='success'?' success':'');
+  clearTimeout(t._to);
+  t._to=setTimeout(()=>t.className='toast',2200);
 }
 
 /* CHARTS */
@@ -2445,16 +1923,16 @@ function drawBarChart(id,labels,datasets){
 function drawLineChart(id,labels,data){
   const el=document.getElementById(id);if(!el)return;
   if(chartInstances[id])chartInstances[id].destroy();
-  chartInstances[id]=new Chart(el,{type:'line',data:{labels,datasets:[{label:t('sales'),data,borderColor:'#0E7C66',backgroundColor:'rgba(14,124,102,0.12)',fill:true,tension:0.4,pointRadius:3,pointBackgroundColor:'#0E7C66'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#5E7B74',font:{size:10,weight:'600'},boxWidth:12}}},scales:{x:{ticks:{color:'#5E7B74',font:{size:9}},grid:{display:false}},y:{ticks:{color:'#5E7B74',font:{size:9}},grid:{color:'rgba(94,123,116,0.12)'}}}}});
+  chartInstances[id]=new Chart(el,{type:'line',data:{labels,datasets:[{label:'বিক্রি',data,borderColor:'#0E7C66',backgroundColor:'rgba(14,124,102,0.12)',fill:true,tension:0.4,pointRadius:3,pointBackgroundColor:'#0E7C66'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#5E7B74',font:{size:10,weight:'600'},boxWidth:12}}},scales:{x:{ticks:{color:'#5E7B74',font:{size:9}},grid:{display:false}},y:{ticks:{color:'#5E7B74',font:{size:9}},grid:{color:'rgba(94,123,116,0.12)'}}}}});
 }
 
 /* Keyboard shortcuts */
 document.addEventListener('keydown',(e)=>{
   if(e.ctrlKey||e.metaKey){
-    if(e.key==='k'){e.preventDefault();openSearch()}
+    if(e.key==='k'){e.preventDefault();document.getElementById('prodSearch')?.focus()}
     if(e.key==='s'){e.preventDefault();const active=document.querySelector('.section.active');if(active?.id==='sec-entry')saveEntry()}
   }
-  if(e.key==='Escape'){closeModal();closeSearch()}
+  if(e.key==='Escape'){closeModal()}
 });
 </script>
 </body>
