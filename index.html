@@ -272,7 +272,7 @@ tr:nth-child(even) td{background:var(--surface-2)}
     </div>
     <button class="btn" id="loginBtn" onclick="doLogin()" data-i18n="login_signin">Sign In →</button>
     <div id="lockoutMsg" style="display:none;text-align:center;font-size:10px;color:var(--danger);font-weight:700;margin-top:10px"></div>
-    <div class="login-version">V10.1 PRO</div>
+    <div class="login-version">Version 12.3 PRO</div>
     <p style="text-align:center;font-size:10px;color:var(--muted);margin-top:8px">©2026-27. Developed by Maruf@Hossain</p>
   </div>
 </div>
@@ -351,7 +351,7 @@ tr:nth-child(even) td{background:var(--surface-2)}
         <div class="card-title" data-i18n="c_reminder">⏰ Entries Pending Today <span class="badge orange" id="reminderCount">0</span></div>
         <div id="reminderList" style="display:flex;flex-wrap:wrap;gap:6px"></div>
       </div>
-      <div class="version-stamp">V10.1 PRO</div>
+      <div class="version-stamp">Version 12.3 PRO</div>
       <div class="watermark">©2026-27. Developed by Maruf@Hossain. All rights reserved.</div>
     </div>
 
@@ -386,7 +386,7 @@ tr:nth-child(even) td{background:var(--surface-2)}
         <div id="stockInputs" style="max-height:280px;overflow-y:auto"></div>
         <button class="btn-sm green btn-block" style="margin-top:10px" onclick="saveStock()">💾 স্টক সেভ করুন</button>
       </div>
-      <div class="version-stamp">V10.1 PRO</div>
+      <div class="version-stamp">Version 12.3 PRO</div>
       <div class="watermark">©2026-27. Developed by Maruf@Hossain. All rights reserved.</div>
     </div>
 
@@ -408,14 +408,14 @@ tr:nth-child(even) td{background:var(--surface-2)}
         <div class="tbl-wrap"><table><thead><tr><th data-i18n="th_officer">Officer</th><th data-i18n="th_target">Target</th><th data-i18n="th_sales">Sales</th><th data-i18n="th_achv">Achv%</th></tr></thead><tbody id="repTable"></tbody></table></div>
       </div>
       <div class="card"><div class="card-title" data-i18n="c_dailytrend">Daily Sales Trend</div><div class="chart-box"><canvas id="chartTrend"></canvas></div></div>
-      <div class="card"><div class="card-title" data-i18n="c_routebreak">🗺️ Route-wise Best Product</div>
-        <div class="tbl-wrap"><table><thead><tr><th data-i18n="th_route">Route</th><th data-i18n="th_bestproduct">Best Product</th><th data-i18n="th_qty">Qty</th></tr></thead><tbody id="routeReportTable"></tbody></table></div>
+      <div class="card"><div class="card-title" data-i18n="c_routebreak">🗺️ Route-wise Sales</div>
+        <div class="tbl-wrap"><table><thead><tr><th data-i18n="th_route">Route</th><th data-i18n="th_officer">Officer</th><th data-i18n="th_sales">Sales</th><th data-i18n="th_ranking">Ranking</th></tr></thead><tbody id="routeReportTable"></tbody></table></div>
       </div>
       <div class="card"><div class="card-title" data-i18n="c_damagereport">Damage Report</div>
         <div class="tbl-wrap"><table><thead><tr><th data-i18n="th_officer">Officer</th><th data-i18n="th_warehouse">Warehouse</th><th data-i18n="th_returned">Returned</th><th data-i18n="th_present">Present</th></tr></thead><tbody id="damageReportTable"></tbody></table></div>
       </div>
       </div>
-      <div class="version-stamp">V10.1 PRO</div>
+      <div class="version-stamp">Version 12.3 PRO</div>
       <div class="watermark">©2026-27. Developed by Maruf@Hossain. All rights reserved.</div>
     </div>
 
@@ -436,7 +436,7 @@ tr:nth-child(even) td{background:var(--surface-2)}
       <div class="card"><div class="card-title" data-i18n="c_details">Details</div>
         <div class="tbl-wrap"><table><thead><tr><th>#</th><th data-i18n="th_product">Product</th><th data-i18n="th_cartons2">Cartons</th><th data-i18n="th_value">Value</th><th>%</th></tr></thead><tbody id="topTable"></tbody></table></div>
       </div>
-      <div class="version-stamp">V10.1 PRO</div>
+      <div class="version-stamp">Version 12.3 PRO</div>
       <div class="watermark">©2026-27. Developed by Maruf@Hossain. All rights reserved.</div>
     </div>
 
@@ -474,9 +474,16 @@ tr:nth-child(even) td{background:var(--surface-2)}
           <div class="form-group"><label>VC Cooler</label><input type="number" id="autoVC" min="0" placeholder="0" inputmode="numeric"></div>
           <div class="form-group"><label>VC Visit</label><input type="number" id="autoVCV" min="0" placeholder="0" inputmode="numeric"></div>
         </div>
-        <button class="btn-sm green btn-block" onclick="saveAutomation()">💾 এন্ট্রি সেভ করুন</button>
+        <div class="btn-row">
+          <button class="btn-sm green" style="flex:1" onclick="saveAutomation()" id="autoSaveBtn">💾 এন্ট্রি সেভ করুন</button>
+          <button class="btn-sm gray" style="flex:0.4;display:none" onclick="cancelEditAutomation()" id="autoCancelBtn">✖️</button>
+        </div>
       </div>
-      <div class="version-stamp">V10.1 PRO</div>
+      <div class="card" id="autoRecentCard">
+        <div class="card-title">সাম্প্রতিক এন্ট্রি <span class="badge" id="autoRecentCount">0</span></div>
+        <div id="automationRecentList"></div>
+      </div>
+      <div class="version-stamp">Version 12.3 PRO</div>
       <div class="watermark">©2026-27. Developed by Maruf@Hossain. All rights reserved.</div>
     </div>
 
@@ -511,7 +518,7 @@ tr:nth-child(even) td{background:var(--surface-2)}
         <div class="tbl-wrap"><table><thead><tr><th data-i18n="th_product">Product</th><th data-i18n="th_warehouse">Warehouse</th><th data-i18n="th_returned">Returned</th><th data-i18n="th_total">Total</th></tr></thead><tbody id="dmgTable"></tbody></table></div>
       </div>
       <div class="card"><div class="card-title" data-i18n="c_damagebyofficer">Damage by Officer</div><div class="chart-box"><canvas id="chartDmg"></canvas></div></div>
-      <div class="version-stamp">V10.1 PRO</div>
+      <div class="version-stamp">Version 12.3 PRO</div>
       <div class="watermark">©2026-27. Developed by Maruf@Hossain. All rights reserved.</div>
     </div>
 
@@ -550,7 +557,7 @@ tr:nth-child(even) td{background:var(--surface-2)}
         <div class="card-title" data-i18n="c_recenttxn">Recent Transactions</div>
         <div id="ledgerRecentList"></div>
       </div>
-      <div class="version-stamp">V10.1 PRO</div>
+      <div class="version-stamp">Version 12.3 PRO</div>
       <div class="watermark">©2026-27. Developed by Maruf@Hossain. All rights reserved.</div>
     </div>
 
@@ -574,6 +581,7 @@ tr:nth-child(even) td{background:var(--surface-2)}
               <option value="sales">বিক্রি</option>
               <option value="damage">ড্যামেজ</option>
               <option value="commission">কমিশন (৳)</option>
+              <option value="opening">ওপেনিং স্টক</option>
             </select>
           </div>
         </div>
@@ -602,7 +610,7 @@ tr:nth-child(even) td{background:var(--surface-2)}
           <div class="kpi purple"><div class="kpi-label" data-i18n="k_comm2">Commission</div><div class="kpi-value" id="tDisc">৳0</div></div>
         </div>
       </div>
-      <div class="version-stamp">V10.1 PRO</div>
+      <div class="version-stamp">Version 12.3 PRO</div>
       <div class="watermark">©2026-27. Developed by Maruf@Hossain. All rights reserved.</div>
     </div>
 
@@ -675,7 +683,7 @@ tr:nth-child(even) td{background:var(--surface-2)}
         <div class="card-title" data-i18n="c_activitylog">🗂️ Activity Log <span class="badge" id="activityCount">0</span></div>
         <div id="activityLogList" style="max-height:320px;overflow-y:auto"></div>
       </div>
-      <div class="version-stamp">V10.1 PRO</div>
+      <div class="version-stamp">Version 12.3 PRO</div>
       <div class="watermark">©2026-27. Developed by Maruf@Hossain. All rights reserved.</div>
     </div>
   </div>
@@ -845,7 +853,7 @@ const I18N_BN={
   c_monthprog:'মাসিক অগ্রগতি',c_salesvtarget:'বিক্রি বনাম টার্গেট',c_7daytrend:'৭ দিনের বিক্রি ট্রেন্ড',
   c_top5:'🏆 সেরা ৫ পণ্য',c_soranking:'সেলস অফিসার র‍্যাংকিং',c_reminder:'⏰ আজ এন্ট্রি বাকি',
   c_stockreport:'স্টক রিপোর্ট',b_cartons:'কার্টন',c_stockentry:'স্টক এন্ট্রি',b_admin:'অ্যাডমিন',
-  c_soperf:'সেলস অফিসার পারফরম্যান্স',c_dailytrend:'দৈনিক বিক্রি ট্রেন্ড',c_routebreak:'🗺️ রুট-ওয়াইজ সেরা পণ্য',
+  c_soperf:'সেলস অফিসার পারফরম্যান্স',c_dailytrend:'দৈনিক বিক্রি ট্রেন্ড',c_routebreak:'🗺️ রুট-ওয়াইজ সেলস',
   c_damagereport:'ড্যামেজ রিপোর্ট',c_top10:'🏆 সেরা ১০ পণ্য',c_top10compare:'সেরা ১০ তুলনা',c_details:'বিস্তারিত',
   c_sproweekly:'SPRO — সাপ্তাহিক রিপোর্ট',c_sproentry:'SPRO — এন্ট্রি',c_damageentry:'ড্যামেজ এন্ট্রি',
   c_damagereport2:'ড্যামেজ রিপোর্ট',c_damagebyofficer:'অফিসার অনুযায়ী ড্যামেজ',
@@ -859,7 +867,7 @@ const I18N_BN={
   th_qty:'পরিমাণ',th_warehouse:'গুদাম',th_returned:'ফেরত',th_cartons2:'কার্টন',th_value:'মূল্য',
   th_outlet:'আউটলেট',th_visit:'ভিজিট',th_visitpct:'ভিজিট%',th_total:'মোট',th_party:'পার্টি',
   th_credit:'বাকি',th_debit:'আদায়',th_outstanding:'বকেয়া',th_name:'নাম',th_pack:'প্যাক',
-  th_ctntp:'কার্টন TP',th_ctndp:'কার্টন DP',th_lowstock:'লো-স্টক',
+  th_ctntp:'কার্টন TP',th_ctndp:'কার্টন DP',th_lowstock:'লো-স্টক',th_ranking:'র‍্যাংকিং',
   login_sub:'সেলস ও ইনভেন্টরি সিস্টেম',login_selectuser:'ইউজার সিলেক্ট করুন',
   login_password:'পাসওয়ার্ড',login_password_ph:'পাসওয়ার্ড দিন',login_signin:'সাইন ইন →'
 };
@@ -1205,6 +1213,19 @@ function saveEntry(){
     const amount=Math.max(0,parseFloat(document.getElementById('commissionAmount')?.value)||0);
     if(amount<=0){toast('কমিশনের পরিমাণ দিন',true);return}
     ed={id:Date.now(),date,route,dsr,type,items:{},amount,note,user_id:userId,user_role:currentRole,ts:new Date().toISOString()};
+  }else if(type==='opening'){
+    const items={};let total=0;
+    products.forEach((p,i)=>{const el=document.getElementById('pin_'+i);const v=el?Math.max(0,parseInt(el.value)||0):0;if(v>0){items[p.name]=v;total+=v}});
+    if(total===0){toast('কমপক্ষে একটি পণ্যের পরিমাণ দিন',true);return}
+    const month=date.slice(0,7);
+    const key=`opening_${month}`;
+    if(!stock[key])stock[key]={};
+    Object.keys(items).forEach(k=>{stock[key][k]=(stock[key][k]||0)+items[k]});
+    DB.save('bb_stock',stock);syncToSheet('saveStock',{type:'opening',month,items});
+    logActivity('opening_stock',date);clearEntry();
+    toast('✅ ওপেনিং স্টক সেভ হয়েছে!','success');
+    resetSessionTimer();
+    return;
   }else{
     const items={};let total=0;
     products.forEach((p,i)=>{const el=document.getElementById('pin_'+i);const v=el?Math.max(0,parseInt(el.value)||0):0;if(v>0){items[p.name]=v;total+=v}});
@@ -1392,19 +1413,22 @@ function renderReports(){
   fl.filter(e=>e.type==='sales').forEach(e=>{let v=0;products.forEach(p=>v+=(e.items[p.name]||0)*p.tp);days[e.date]=(days[e.date]||0)+v});
   const sorted=Object.keys(days).sort();
   drawLineChart('chartTrend',sorted.map(d=>d.slice(8)),Object.values(days));
-  const routeProd={};
+  const routeSales={};
   me.filter(e=>e.type==='sales').forEach(e=>{
-    if(!routeProd[e.route])routeProd[e.route]={};
-    products.forEach(p=>{const q2=e.items[p.name]||0;if(q2)routeProd[e.route][p.name]=(routeProd[e.route][p.name]||0)+q2});
+    const k=(e.route||'—')+'||'+(e.user_id||'—');
+    let v=0;products.forEach(p=>v+=(e.items[p.name]||0)*p.tp);
+    routeSales[k]=(routeSales[k]||0)+v;
   });
   const routeTable=document.getElementById('routeReportTable');
   if(routeTable){
-    const rows=routes.map(r=>{
-      const pd=routeProd[r]||{};
-      const top=Object.entries(pd).sort((a,b)=>b[1]-a[1])[0];
-      return `<tr><td>${r}</td><td>${top?top[0]:'—'}</td><td>${top?top[1]:'—'}</td></tr>`;
-    });
-    routeTable.innerHTML=rows.join('')||'<tr><td colspan="3" style="text-align:center;color:var(--muted);padding:16px">কোনো ডেটা নেই</td></tr>';
+    const rows=Object.entries(routeSales).map(([k,val])=>{
+      const [r,uid]=k.split('||');
+      const so=sos.find(s=>s.id===uid);
+      const officerName=uid==='admin'?'Admin':(so?so.name.split(' ')[0]:uid);
+      return {route:r,officer:officerName,sales:val};
+    }).sort((a,b)=>b.sales-a.sales);
+    routeTable.innerHTML=rows.map((row,i)=>`<tr><td>${row.route}</td><td>${row.officer}</td><td>৳${Math.round(row.sales).toLocaleString()}</td><td><span class="rank-badge ${i===0?'gold':i===1?'silver':i===2?'bronze':'normal'}">${i+1}</span></td></tr>`).join('')
+      ||'<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:16px">কোনো ডেটা নেই</td></tr>';
   }
   const wh=(damages.warehouse||{})[`warehouse_${month}`]||{};
   const rt2=(damages.return||{})[`return_${month}`]||{};
@@ -1487,7 +1511,17 @@ function renderAutomation(){
       return `<tr><td>${s.name.split(' ')[0]}</td><td>${d.outlet}</td><td>${d.visit}</td><td style="font-weight:700;color:var(--success)">${pct}</td></tr>`;
     }).join('');
   }
+  const rc=document.getElementById('automationRecentList');
+  if(rc){
+    const recent=[...automations].sort((a,b)=>b.id-a.id).slice(0,20);
+    const cnt=document.getElementById('autoRecentCount');if(cnt)cnt.textContent=automations.length;
+    rc.innerHTML=recent.map(a=>{
+      const so=sos.find(s=>s.id===a.so_id);
+      return `<div class="list-item"><div><div class="list-item-name">${so?so.name.split(' ')[0]:a.so_id} — ${a.route||''}</div><div class="list-item-sub">${a.date} • আউটলেট ${a.outlet||0}, ভিজিট ${a.visit||0}, ভিসি ${a.vc||0}/${a.vcv||0}</div></div>${currentRole==='admin'?`<div class="list-item-actions"><button class="mini-btn" style="background:var(--primary-light);color:var(--primary)" onclick="editAutomation(${a.id})">✏️</button><button class="mini-btn del" onclick="deleteAutomation(${a.id})">🗑️</button></div>`:''}</div>`;
+    }).join('')||'<div class="empty"><div class="icon">⚙️</div>এখনো কোনো এন্ট্রি নেই</div>';
+  }
 }
+let editingAutomationId=null;
 function saveAutomation(){
   if(currentRole!=='admin'){toast('শুধু অ্যাডমিন এন্ট্রি দিতে পারবে',true);return}
   const date=document.getElementById('autoDate').value,so_id=document.getElementById('autoSO').value,route=document.getElementById('autoRoute').value;
@@ -1496,10 +1530,51 @@ function saveAutomation(){
   const vc=Math.max(0,parseInt(document.getElementById('autoVC').value)||0);
   const vcv=Math.max(0,parseInt(document.getElementById('autoVCV').value)||0);
   if(!outlet&&!visit&&!vc&&!vcv){toast('অন্তত একটি মান দিন',true);return}
-  const entry={id:Date.now(),date,so_id,route,outlet,visit,vc,vcv,ts:new Date().toISOString()};
-  automations.push(entry);DB.save('bb_automations',automations);syncToSheet('saveAutomation',entry);
+  if(editingAutomationId!==null){
+    const idx=automations.findIndex(a=>a.id===editingAutomationId);
+    if(idx>-1){
+      automations[idx]={...automations[idx],date,so_id,route,outlet,visit,vc,vcv};
+      DB.save('bb_automations',automations);syncToSheet('saveAutomation',automations[idx]);
+      logActivity('edit_automation',date);
+      toast('✅ আপডেট হয়েছে!','success');
+    }
+    cancelEditAutomation();
+  }else{
+    const entry={id:Date.now(),date,so_id,route,outlet,visit,vc,vcv,ts:new Date().toISOString()};
+    automations.push(entry);DB.save('bb_automations',automations);syncToSheet('saveAutomation',entry);
+    logActivity('automation',date);
+    ['autoOutlet','autoVisit','autoVC','autoVCV'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=''});
+    toast('✅ সেভ হয়েছে!','success');
+  }
+  renderAutomation();
+}
+function editAutomation(id){
+  const a=automations.find(x=>x.id===id);if(!a)return;
+  editingAutomationId=id;
+  document.getElementById('autoDate').value=a.date;
+  document.getElementById('autoSO').value=a.so_id;
+  document.getElementById('autoRoute').value=a.route||'';
+  document.getElementById('autoOutlet').value=a.outlet||'';
+  document.getElementById('autoVisit').value=a.visit||'';
+  document.getElementById('autoVC').value=a.vc||'';
+  document.getElementById('autoVCV').value=a.vcv||'';
+  document.getElementById('autoSaveBtn').textContent='✅ আপডেট করুন';
+  document.getElementById('autoCancelBtn').style.display='block';
+  document.getElementById('autoEntryCard').scrollIntoView({behavior:'smooth'});
+}
+function cancelEditAutomation(){
+  editingAutomationId=null;
   ['autoOutlet','autoVisit','autoVC','autoVCV'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=''});
-  renderAutomation();toast('✅ সেভ হয়েছে!','success');
+  document.getElementById('autoSaveBtn').textContent='💾 এন্ট্রি সেভ করুন';
+  document.getElementById('autoCancelBtn').style.display='none';
+}
+function deleteAutomation(id){
+  if(!confirm('এই এন্ট্রিটি মুছে ফেলবেন?'))return;
+  automations=automations.filter(a=>a.id!==id);
+  DB.save('bb_automations',automations);syncToSheet('deleteAutomation',{id});
+  logActivity('delete_automation','');
+  if(editingAutomationId===id)cancelEditAutomation();
+  renderAutomation();toast('🗑️ মুছে ফেলা হয়েছে');
 }
 
 /* ===== DAMAGE ===== */
